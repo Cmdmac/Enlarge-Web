@@ -2,6 +2,7 @@
     <div>
         <div id="box">
             <div id="boxHeader">
+                <div id="title">{{title}}</div>
                 <div id="button">
                     <div class="minimize"></div>
                     <div class="maximize"></div>
@@ -32,21 +33,7 @@
 
         data() {
             return {
-//                _disY: 0,
-//                _bMousedowning: false,
-//                bLeft: false,
-//                bTop: false,
-//                _bRight: false,
-//                bBottom: false,
-//                _bIsMax: false,
-//                _bIsMin: false,
-//                _display: "block",
-//                _top: 0,
-//                _left: 0,
-//                _right: 0,
-//                _bottom: 0,
-//                _width: 0,
-//                _height: 0
+                title: "Test title"
             }
         },
 
@@ -98,7 +85,8 @@
             changeSize() {
                 var box = document.getElementById("box");
                 var virtualBox = document.getElementById("virtualBox");
-                var boxSide = document.getElementById("boxSide").getElementsByTagName("div");
+                var content = document.getElementById("boxSide");
+                var boxSide = content.getElementsByTagName("div");
                 var bSizeChanging = false;
                 var bMousedowning = false;
                 //box是否正在改变 & 鼠标是否正在按下
@@ -247,12 +235,27 @@
                         bLeft = false;
                     }
                 };
+                //获取style样式的css属性,考虑兼容;ie,火狐/谷歌;
+                var getStyle = function getStyle(parm1,parm2) {
+                    return parm1.currentStyle ? parm1.currentStyle[parm2] : getComputedStyle(parm1)[parm2];
+                    //parm1,要改变的元素代替名;parm2,要改变的属性名
+                };
                 var changeBoxSize = function (virtualBox) {
 //                    with (box.style) {
                     box.style.left = virtualBox.style.left;
                     box.style.top = virtualBox.style.top;
                     box.style.width = virtualBox.style.width;
                     box.style.height = virtualBox.style.height;
+
+//                    content.style.left = box.style.left;
+//                    content.style.top = box.style.top - 30;
+                    content.style.width = parseInt(getStyle(box, "width")) + "px";
+                    content.style.height = parseInt(getStyle(box, "height")) - 31 + "px";
+                    //eslint-disable-next-line
+                    console.log(box.style.height);
+                    //eslint-disable-next-line
+                    console.log("content:" + content.style.height);
+
 //                    }
                 }
             },
@@ -260,6 +263,7 @@
             boxButton() {
                 var box = document.getElementById("box");
                 var boxHeader = document.getElementById("boxHeader");
+                var content = document.getElementById("boxSide");
                 var aButton = document.getElementById("button").getElementsByTagName("div");
                 var showButton = document.getElementById("showButton");
                 var span = showButton.getElementsByTagName("span")[0];
@@ -319,6 +323,12 @@
                         box.style.height = document.body.scrollHeight - 10 + "px";
                         box.style.left = "5px";
                         box.style.top = "5px";
+
+                        content.style.width = document.body.scrollWidth - 10 + "px";
+                        content.style.height = document.body.scrollHeight - 41 + "px";
+                        content.style.left = "2px";
+                        content.style.top = "37px";
+
                         bIsMax = true;
                         bIsMin = false;
                     }
@@ -332,6 +342,9 @@
                     box.style.left = "40%";
                     box.style.width = "250px";
                     box.style.height = "150px";
+
+                    content.style.width = "250px";
+                    content.style.height = "119px";
                 };
                 showButton.onmousedown = function () {
                     span.innerHTML = "^o^";
@@ -347,7 +360,7 @@
     }
 </script>
 
-<style type="text/css" media="screen">
+<style lang="less" media="screen">
     html, body, div {
         margin: 0;
         padding: 0;
@@ -360,26 +373,35 @@
         overflow: hidden;
     }
 
+    #title {
+        float:left;
+        padding: 5px;
+    }
+
     #box {
         position: absolute;
         top: 30%;
         left: 40%;
-        width: 250px;
-        height: 150px;
+        width: 500px;
+        height: 300px;
         background: #EEE;
         border: 1px solid #666;
         border-radius: 8px;
-        box-shadow: 2px 2px 5px #777;
     }
 
     /*标题栏*/
     #boxHeader {
         width: 100%;
         height: 30px;
-        background: none !important;
-        background: #EEE;
-        border-bottom: 2px solid #AAA;
+        background: #AAAAAA !important;
+        border-bottom: 1px solid #AAA;
         border-radius: 5px 5px 0 0;
+    }
+
+    #boxSide {
+        width: 100%;
+        background-color: white;
+        border-radius: 0 0 8px 8px;
     }
 
     #button {
@@ -439,8 +461,8 @@
         position: absolute;
         bottom: 0;
         left: 0;
-        width: 100%;
         height: 5px;
+        width: 100%;
         overflow: hidden;
     }
 
