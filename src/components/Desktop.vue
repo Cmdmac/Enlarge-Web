@@ -62,16 +62,20 @@
                     }]
                 ],
                 launchers: [
-                    {name: "dd", extras: {name: "hello"}},
-                    {name: "tt", extras: {name: "挺好用的啊"}},
+//                    {name: "dd", extras: {name: "hello"}},
+                    //{name: "tt", extras: {name: "挺好用的啊"}},
                 ]
             }
         },
         methods: {
             onLaunchApp(name) {
-                alert(name)
+                var d = {name: name, extras: {name: name}};
+//                this.$set(this.launchers, d);
+                this.launchers.push(d);
+                //不set不会更新的
+                this.$set(this, 'launchers', this.launchers);
 //                eslint-disable-next-line
-//                console.log("click");
+//                console.log(this.launchers);
             }
         }
     }

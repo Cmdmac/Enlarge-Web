@@ -41,7 +41,19 @@
             this.changeSize();
             this.dragDiv();
             this.boxButton();
-            //console.log("mounted");
+            //eslint-disable-next-line
+//            console.log("mounted");
+            //eslint-disable-next-line
+//            console.log(this.extras);
+//            this.$set(this.title, this.$props['extras']);
+        },
+
+        activated: function () {
+            //eslint-disable-next-line
+            console.log("mounted");
+            //eslint-disable-next-line
+            console.log(this.extras.name);
+            this.$set(this.title, this.extras.name);
         },
 
         methods: {
