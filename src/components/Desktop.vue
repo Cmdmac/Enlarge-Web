@@ -13,7 +13,7 @@
             </tbody>
         </table>
         <div id="windows" v-for="(app, index) in launchers" :key="index">
-            <Window :tag="app.name"/>
+            <Window :extras="app.extras"/>
         </div>
         <div class="bottom-bar">
             <div class="task-bar"></div>
@@ -62,7 +62,8 @@
                     }]
                 ],
                 launchers: [
-                    {name: "dd", extras: {}},
+                    {name: "dd", extras: {name: "hello"}},
+                    {name: "tt", extras: {name: "挺好用的啊"}},
                 ]
             }
         },

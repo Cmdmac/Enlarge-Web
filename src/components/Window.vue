@@ -20,9 +20,9 @@
                 <div ref="boxWN" class="boxWN"></div>
             </div>
         </div>
-        <button ref="showButton" class="showButton"><span>[_]</span>
-            <p>居然关掉人家，讨厌~</p>
-            <p>快打开</p></button>
+        <!--<button ref="showButton" class="showButton"><span>[_]</span>-->
+            <!--<p>居然关掉人家，讨厌~</p>-->
+            <!--<p>快打开</p></button>-->
         <div id="virtualBox" class="virtualBox"></div>
     </div>
 </template>
@@ -30,10 +30,10 @@
 <script>
     export default {
         name: 'Window',
-
+        props: {extras: Object},
         data() {
             return {
-                title: "Test title"
+                title:  this.extras.name
             }
         },
 
@@ -265,8 +265,8 @@
                 var boxHeader = this.$refs.boxHeader;
                 var content = this.$refs.boxSide;
                 var aButton = this.$refs.button.getElementsByTagName("div");
-                var showButton = this.$refs.showButton;
-                var span = showButton.getElementsByTagName("span")[0];
+//                var showButton = this.$refs.showButton;
+//                var span = showButton.getElementsByTagName("span")[0];
                 var bIsMin = false;
                 var bIsMax = false;
                 //目前状态是否最小 or 最大
@@ -335,7 +335,7 @@
                 };
                 var close = function () {
                     box.style.display = "none";
-                    showButton.style.display = "block";
+//                    showButton.style.display = "block";
                 };
                 var resumeBox = function () {
                     box.style.top = "30%";
@@ -346,15 +346,15 @@
                     content.style.width = "250px";
                     content.style.height = "119px";
                 };
-                showButton.onmousedown = function () {
-                    span.innerHTML = "^o^";
-                };
-                showButton.onclick = function () {
-                    this.style.display = "none";
-                    span.innerHTML = ">_<";
-                    resumeBox();
-                    box.style.display = "block";
-                };
+//                showButton.onmousedown = function () {
+//                    span.innerHTML = "^o^";
+//                };
+//                showButton.onclick = function () {
+//                    this.style.display = "none";
+//                    span.innerHTML = ">_<";
+//                    resumeBox();
+//                    box.style.display = "block";
+//                };
             }
         }
     }
