@@ -28,16 +28,18 @@
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
 
+    <Window></Window>
     <Desktop></Desktop>
   </div>
 </template>
 
 <script>
     import Desktop from "@/components/Desktop";
+    import Window from "@/components/Window";
 
     export default {
   name: 'HelloWorld',
-        components: {"Desktop": Desktop},
+        components: {"Window": Window, "Desktop": Desktop},
   props: {
     msg: String
   }
