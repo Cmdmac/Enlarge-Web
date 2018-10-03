@@ -12,8 +12,8 @@
             </tr>
             </tbody>
         </table>
-        <div id="windows" v-for="(app, index) in launchers" :key="index">
-            <Window :extras="app.extras"/>
+        <div id="app.name" v-for="(app, index) in launchers" :key="index">
+            <Window :extras="app.extras" v-on:onClose="onWindowClose(app.name)"/>
         </div>
         <div class="bottom-bar">
             <div class="task-bar"></div>
@@ -76,6 +76,19 @@
                 this.$set(this, 'launchers', this.launchers);
 //                eslint-disable-next-line
 //                console.log(this.launchers);
+            },
+
+            onWindowClose(name) {
+                // eslint-disable-next-line
+                console.log(name);
+                for(let i = 0; i < this.launchers.length; i++) {
+                    let item = this.launchers[i];
+                    if (item.name == name) {
+                        this.launchers.splice(i, 1);
+                        break;
+                    }
+                }
+                this.$set(this, 'launchers', this.launchers);
             }
         }
     }

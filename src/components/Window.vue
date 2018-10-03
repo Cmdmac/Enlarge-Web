@@ -50,10 +50,10 @@
 
         activated: function () {
             //eslint-disable-next-line
-            console.log("mounted");
+//            console.log("mounted");
             //eslint-disable-next-line
-            console.log(this.extras.name);
-            this.$set(this.title, this.extras.name);
+//            console.log(this.extras.name);
+//            this.$set(this.title, this.extras.name);
         },
 
         methods: {
@@ -345,8 +345,10 @@
                         bIsMin = false;
                     }
                 };
+                var that = this;
                 var close = function () {
                     box.style.display = "none";
+                    that.$emit('onClose', that.extras);
 //                    showButton.style.display = "block";
                 };
                 var resumeBox = function () {
