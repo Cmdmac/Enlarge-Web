@@ -1,29 +1,29 @@
 <template>
     <div>
-        <div id="box">
-            <div id="boxHeader">
-                <div id="title">{{title}}</div>
-                <div id="button">
+        <div ref="box" class="box">
+            <div ref="boxHeader" class="boxHeader">
+                <div ref="title" class="title">{{title}}</div>
+                <div ref="button" class="button">
                     <div class="minimize"></div>
                     <div class="maximize"></div>
                     <div class="close"></div>
                 </div>
             </div>
-            <div id="boxSide">
-                <div id="boxN"></div>
-                <div id="boxE"></div>
-                <div id="boxS"></div>
-                <div id="boxW"></div>
-                <div id="boxNE"></div>
-                <div id="boxES"></div>
-                <div id="boxSW"></div>
-                <div id="boxWN"></div>
+            <div ref="boxSide" class="boxSide">
+                <div ref="boxN" class="boxN"></div>
+                <div ref="boxE" class="boxE"></div>
+                <div ref="boxS" class="boxS"></div>
+                <div ref="boxW" class="boxW"></div>
+                <div ref="boxNE" class="boxNE"></div>
+                <div ref="boxES" class="boxES"></div>
+                <div ref="boxSW" class="boxSW"></div>
+                <div ref="boxWN" class="boxWN"></div>
             </div>
         </div>
-        <button id="showButton"><span>[_]</span>
+        <button ref="showButton" class="showButton"><span>[_]</span>
             <p>居然关掉人家，讨厌~</p>
             <p>快打开</p></button>
-        <div id="virtualBox"></div>
+        <div id="virtualBox" class="virtualBox"></div>
     </div>
 </template>
 
@@ -47,8 +47,8 @@
         methods: {
             //拖扯box函数
             dragDiv() {
-                var box = document.getElementById("box");
-                var boxHeader = document.getElementById("boxHeader");
+                var box = this.$refs.box;
+                var boxHeader = this.$refs.boxHeader;
                 var bDraging = false;
                 var disX = 0;
                 var disY = 0;
@@ -83,9 +83,9 @@
                 };
             },
             changeSize() {
-                var box = document.getElementById("box");
-                var virtualBox = document.getElementById("virtualBox");
-                var content = document.getElementById("boxSide");
+                var box = this.$refs.box;
+                var virtualBox = this.$refs.virtualBox;
+                var content = this.$refs.boxSide;
                 var boxSide = content.getElementsByTagName("div");
                 var bSizeChanging = false;
                 var bMousedowning = false;
@@ -261,11 +261,11 @@
             },
             //窗口按钮函数
             boxButton() {
-                var box = document.getElementById("box");
-                var boxHeader = document.getElementById("boxHeader");
-                var content = document.getElementById("boxSide");
-                var aButton = document.getElementById("button").getElementsByTagName("div");
-                var showButton = document.getElementById("showButton");
+                var box = this.$refs.box;
+                var boxHeader = this.$refs.boxHeader;
+                var content = this.$refs.boxSide;
+                var aButton = this.$refs.button.getElementsByTagName("div");
+                var showButton = this.$refs.showButton;
                 var span = showButton.getElementsByTagName("span")[0];
                 var bIsMin = false;
                 var bIsMax = false;
@@ -373,12 +373,12 @@
         overflow: hidden;
     }
 
-    #title {
+    .title {
         float:left;
         padding: 5px;
     }
 
-    #box {
+    .box {
         position: absolute;
         top: 30%;
         left: 40%;
@@ -390,7 +390,7 @@
     }
 
     /*标题栏*/
-    #boxHeader {
+    .boxHeader {
         width: 100%;
         height: 30px;
         background: #AAAAAA !important;
@@ -398,13 +398,13 @@
         border-radius: 5px 5px 0 0;
     }
 
-    #boxSide {
+    .boxSide {
         width: 100%;
         background-color: white;
         border-radius: 0 0 8px 8px;
     }
 
-    #button {
+    .button {
         float: right;
         width: 79px;
         height: 15px;
@@ -414,19 +414,19 @@
         border-radius: 5px;
     }
 
-    #button div {
+    .button div {
         float: left;
         width: 25px;
         height: 15px;
         border-right: 2px #AAA solid;
     }
 
-    #button .close {
+    .button .close {
         border: none;
         border-radius: 0px 5px 5px 0;
     }
 
-    #button .minimize {
+    .button .minimize {
         border-radius: 5px 0 0 5px;
     }
 
@@ -448,7 +448,7 @@
         overflow: hidden;
     }
 
-    #boxE {
+    .boxE {
         position: absolute;
         top: 0;
         right: 0;
@@ -457,7 +457,7 @@
         overflow: hidden;
     }
 
-    #boxS {
+    .boxS {
         position: absolute;
         bottom: 0;
         left: 0;
@@ -466,7 +466,7 @@
         overflow: hidden;
     }
 
-    #boxW {
+    .boxW {
         position: absolute;
         top: 0;
         left: 0;
@@ -475,7 +475,7 @@
         overflow: hidden;
     }
 
-    #boxNE {
+    .boxNE {
         position: absolute;
         right: 0;
         top: 0;
@@ -484,7 +484,7 @@
         overflow: hidden;
     }
 
-    #boxES {
+    .boxES {
         position: absolute;
         right: 0;
         bottom: 0;
@@ -493,7 +493,7 @@
         overflow: hidden;
     }
 
-    #boxSW {
+    .boxSW {
         position: absolute;
         left: 0;
         bottom: 0;
@@ -502,7 +502,7 @@
         overflow: hidden;
     }
 
-    #boxWN {
+    .boxWN {
         position: absolute;
         left: 0;
         top: 0;
@@ -512,7 +512,7 @@
     }
 
     /*显示按钮*/
-    #showButton {
+    .showButton {
         display: none;
         position: absolute;
         top: 50%;
@@ -522,12 +522,12 @@
         height: 150px;
     }
 
-    #showButton span {
+    .showButton span {
         font: 50px bolder;
     }
 
     /*改变大小时的预览DIV*/
-    #virtualBox {
+    .virtualBox {
         position: absolute;
         background: #8EC6FF;
         border: 1px solid #147AFF;

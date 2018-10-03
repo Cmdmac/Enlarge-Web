@@ -3,8 +3,8 @@
         <table class="apps">
             <tbody>
             <tr v-for="(row, index) in apps" :key="index">
-                <td v-for="app in row" v-bind:key="app.name">
-                    <div>
+                <td class="app-item" v-for="app in row" v-bind:key="app.name">
+                    <div @click="onLaunchApp(app.name)">
                         <img :src="app.icon"/>
                         <div>{{app.name}}</div>
                     </div>
@@ -12,17 +12,25 @@
             </tr>
             </tbody>
         </table>
+        <div id="windows" v-for="(app, index) in launchers" :key="index">
+            <Window :tag="app.name"/>
+        </div>
         <div class="bottom-bar">
             <div class="task-bar"></div>
             <div class="status-bar">
+                <img class="status-icon" :src='require("../assets/compatible_chrome.png")'/>
+                <img class="status-icon" :src='require("../assets/compatible_safari.png")'/>
+                <img class="status-icon" :src='require("../assets/compatible_opera.png")'/>
                 <img class="status-icon" :src='require("../assets/compatible_ie.png")'/>
             </div>
         </div>
     </div>
 </template>
 <script>
+    import Window from '@/components/Window.vue'
     export default {
         name: "Desktop",
+        components: {Window},
         data() {
             return {
                 apps: [
@@ -52,12 +60,15 @@
                         name: "safari",
                         icon: require("../assets/compatible_safari.png")
                     }]
+                ],
+                launchers: [
+                    {name: "dd", extras: {}},
                 ]
             }
         },
         methods: {
-            onDefaultClick() {
-                alert("ccc")
+            onLaunchApp(name) {
+                alert(name)
 //                eslint-disable-next-line
 //                console.log("click");
             }
@@ -68,10 +79,14 @@
     .apps {
     }
 
-    table tr td
+    .app-item
     {
         width: 90px;
         height: 90px;
+    }
+
+    .app-item:active {
+        background-color: lightgray;
     }
 
     .bottom-bar {
@@ -97,6 +112,8 @@
     .status-icon {
         width: 20px;
         height: 20px;
+        margin-left: 5px;
+        margin-right: 5px;
     }
 
 </style>
