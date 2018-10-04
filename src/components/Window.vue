@@ -423,7 +423,7 @@
             isShow() {
                 var box = this.$refs.box;
                 //eslint-disable-next-line
-                console.log(box.style.display != 'none');
+//                console.log(box.style.display != 'none');
                 return box.style.display != 'none';
             },
 

@@ -144,6 +144,9 @@
     }
 </script>
 <style>
+    body {
+        background-color: #8EC6FF;
+    }
     .apps {
     }
 
@@ -162,18 +165,20 @@
         bottom: 0px;
         width: 100%;
         height: 30px;
-        background-color: lightgray;
+        background-color: #AAAAAADD;
     }
 
     .task-bar {
-
     }
 
     .task-item {
         float: left;
-        min-width: 60px;
+        height: 100%;
+        line-height: 30px;
+        min-width: 100px;
         text-align: center;
-        background-color: lightblue;
+        color: white;
+        background-color: #708090AA;
         margin-left: 1px;
         margin-right: 1px;
     }
