@@ -23,7 +23,7 @@
         <!--<button ref="showButton" class="showButton"><span>[_]</span>-->
             <!--<p>居然关掉人家，讨厌~</p>-->
             <!--<p>快打开</p></button>-->
-        <div id="virtualBox" class="virtualBox"></div>
+        <div ref="virtualBox" class="virtualBox"></div>
     </div>
 </template>
 
@@ -347,9 +347,11 @@
                 };
                 var that = this;
                 var close = function () {
+                    //eslint-disable-next-line
+//                    console.log(that.extras);
                     box.style.display = "none";
-                    that.$emit('onClose', that.extras);
 //                    showButton.style.display = "block";
+                    that.$emit('onClose', that.extras);
                 };
                 var resumeBox = function () {
                     box.style.top = "30%";

@@ -12,11 +12,17 @@
             </tr>
             </tbody>
         </table>
-        <div id="app.name" v-for="(app, index) in launchers" :key="index">
-            <Window :extras="app.extras" v-on:onClose="onWindowClose(app.name)"/>
+        <div ref="windows">
+            <div v-for="(app, index) in launchers" :key="index">
+                <Window :extras="app.extras" v-on:onClose="onWindowClose(index)"></Window>
+            </div>
         </div>
         <div class="bottom-bar">
-            <div class="task-bar"></div>
+            <div class="task-bar">
+                <div class="task-item" v-for="(app, index) in launchers" :key="index">
+                    <div>{{app.name}}</div>
+                </div>
+            </div>
             <div class="status-bar">
                 <img class="status-icon" :src='require("../assets/compatible_chrome.png")'/>
                 <img class="status-icon" :src='require("../assets/compatible_safari.png")'/>
@@ -78,17 +84,28 @@
 //                console.log(this.launchers);
             },
 
-            onWindowClose(name) {
+            onWindowClose(index) {
                 // eslint-disable-next-line
-                console.log(name);
-                for(let i = 0; i < this.launchers.length; i++) {
-                    let item = this.launchers[i];
-                    if (item.name == name) {
-                        this.launchers.splice(i, 1);
-                        break;
-                    }
-                }
-                this.$set(this, 'launchers', this.launchers);
+                console.log(index);
+//                for(let i = 0; i < this.launchers.length; i++) {
+//                    let item = this.launchers[i];
+//                    if (item.name == name) {
+//                        // eslint-disable-next-line
+//                        console.log(item.name);
+//                        // eslint-disable-next-line
+////                        console.log(item.name);
+//                        this.launchers.splice(i, 1);
+//                        break;
+//                    }
+//                }
+                this.launchers[index];
+                let list = this.$refs.windows;
+                let nodes = list.childNodes[index];
+                // eslint-disable-next-line
+                console.log(nodes);
+                list.removeChild(nodes);
+//                this.launchers.splice(index, 1);
+//                this.$set(this, 'launchers', this.launchers);
             }
         }
     }
@@ -117,6 +134,15 @@
 
     .task-bar {
 
+    }
+
+    .task-item {
+        float: left;
+        min-width: 60px;
+        text-align: center;
+        background-color: lightblue;
+        margin-left: 1px;
+        margin-right: 1px;
     }
 
     .status-bar {
