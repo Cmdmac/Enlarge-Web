@@ -39,7 +39,12 @@
         data() {
             return {
                 target: this.args.target,
-                title:  this.args.id
+                title:  this.args.id,
+
+                left: 0,
+                top: 0,
+                width: 0,
+                height: 0
             }
         },
 
@@ -317,19 +322,41 @@
                         }
                     };
                 }
+                var that = this;
                 var minimize = function () {
                     if (bIsMin) {
-                        resumeBox();
                         bIsMin = false;
                     }
-                    else {
-                        box.style.width = "89px";
-                        box.style.height = "32px";
-                        box.style.left = "2%";
-                        box.style.top = document.body.offsetHeight - box.offsetHeight - 15 + "px";
+//                        resumeBox();
+//                        bIsMin = false;
+//                    }
+//                    else {
+//                        box.style.width = "89px";
+//                        box.style.height = "32px";
+//                        box.style.left = "2%";
+//                        box.style.top = document.body.offsetHeight - box.offsetHeight - 15 + "px";
+                    if (bIsMax) {
+                        that.left = box.offsetLeft;
+                        that.top = box.offsetTop;
+                        that.width = box.offsetWidth;
+                        that.height = box.offsetHeight;
+                        box.style.display = 'none';
+//                        box.style.width = "89px";
+//                        box.style.height = "32px";
+//                        box.style.left = "2%";
+//                        box.style.top = document.body.offsetHeight - box.offsetHeight - 15 + "px";
+                    } else {
+                        //remember origin size and position
+                        that.left = box.offsetLeft;
+                        that.top = box.offsetTop;
+                        that.width = box.offsetWidth;
+                        that.height = box.offsetHeight;
+
+                        box.style.display = 'none';
+                    }
                         bIsMin = true;
                         bIsMax = false;
-                    }
+//                    }
                 };
                 var maximize = function () {
                     if (bIsMax) {
@@ -337,6 +364,12 @@
                         bIsMax = false;
                     }
                     else {
+                        //remember origin size and position
+                        that.left = box.offsetLeft;
+                        that.top = box.offsetTop;
+                        that.width = box.offsetWidth;
+                        that.height = box.offsetHeight;
+
                         box.style.width = document.body.scrollWidth - 10 + "px";
                         box.style.height = document.body.scrollHeight - 10 + "px";
                         box.style.left = "5px";
@@ -351,7 +384,6 @@
                         bIsMin = false;
                     }
                 };
-                var that = this;
                 var close = function () {
                     //eslint-disable-next-line
 //                    console.log("close:" + that.extras.name);
@@ -359,14 +391,23 @@
 //                    showButton.style.display = "block";
                     that.$emit('onClose', that.args.id);
                 };
-                var resumeBox = function () {
-                    box.style.top = "30%";
-                    box.style.left = "40%";
-                    box.style.width = "250px";
-                    box.style.height = "150px";
 
-                    content.style.width = "250px";
-                    content.style.height = "119px";
+                var resumeBox = function () {
+//                    box.style.top = "30%";
+//                    box.style.left = "40%";
+//                    box.style.width = "250px";
+//                    box.style.height = "150px";
+//                    content.style.width = parseInt(that.getStyle(box, "width")) + "px";
+//                    content.style.height = parseInt(that.getStyle(box, "height")) - 31 + "px";
+                    box.style.left = that.left + "px";
+                    box.style.top = that.top + "px";
+                    box.style.width = that.width + "px";
+                    box.style.height = that.height + "px";
+
+                    content.style.width = that.width + "px";
+                    content.style.height = that.height - 31 + "px";
+
+
                 };
 //                showButton.onmousedown = function () {
 //                    span.innerHTML = "^o^";
@@ -377,6 +418,29 @@
 //                    resumeBox();
 //                    box.style.display = "block";
 //                };
+            },
+
+            isShow() {
+                var box = this.$refs.box;
+                //eslint-disable-next-line
+                console.log(box.style.display != 'none');
+                return box.style.display != 'none';
+            },
+
+            resume() {
+                //eslint-disable-next-line
+                console.log("component resume");
+                var box = this.$refs.box;
+                var content = this.$refs.boxSide;
+                box.style.display = 'block';
+
+                box.style.left = this.left + "px";
+                box.style.top = this.top + "px";
+                box.style.width = this.width + "px";
+                box.style.height = this.height + "px";
+
+                content.style.width = this.width + "px";
+                content.style.height = this.height - 31 + "px";
             }
         }
     }

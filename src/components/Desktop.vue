@@ -13,12 +13,12 @@
             </tbody>
         </table>
         <div id="window" v-for="app in launchers" :key="app.id">
-            <Window :args="app" v-on:onClose="onWindowClose">
+            <Window :ref="app.id" :args="app" v-on:onClose="onWindowClose">
             </Window>
         </div>
         <div class="bottom-bar">
             <div class="task-bar">
-                <div class="task-item" v-for="app in launchers" :key="app.id">
+                <div class="task-item" v-for="app in launchers" :key="app.id" @click="onResumeWindow(app.id)">
                     <div>{{app.id}}</div>
                 </div>
             </div>
@@ -120,6 +120,25 @@
 //                list.removeChild(nodes);
 //                this.launchers.splice(index, 1);
 //                this.$set(this, 'launchers', this.launchers);
+            },
+
+            onResumeWindow(id) {
+                //eslint-disable-next-line
+                console.log("resume:" + id);
+                //eslint-disable-next-line
+//                console.log(this.$refs);
+                for (let ref in this.$refs) {
+                    //eslint-disable-next-line
+//                    console.log("ref:" + ref);
+                    if (ref == id) {
+                        //eslint-disable-next-line
+                        let r = this.$refs[ref][0];
+                        if (r.isShow() == false) {
+                            r.resume();
+                        }
+                        break;
+                    }
+                }
             }
         }
     }
