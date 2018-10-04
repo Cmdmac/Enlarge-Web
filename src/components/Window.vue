@@ -18,7 +18,9 @@
                 <div ref="boxES" class="boxES"></div>
                 <div ref="boxSW" class="boxSW"></div>
                 <div ref="boxWN" class="boxWN"></div>
-                <component :is="target" :args="args"/>
+                <div ref="content" class="content">
+                    <component :is="target" :args="args"/>
+                </div>
             </div>
         </div>
         <!--<button ref="showButton" class="showButton"><span>[_]</span>-->
@@ -117,7 +119,7 @@
                 //box最原始宽度
                 var originalHeight = box.offsetHeight;
                 //box最原始高度
-                for (var i = 0; i < boxSide.length; i++) {
+                for (var i = 0; i < boxSide.length - 1; i++) {
                     //遍历boxside，监听鼠标
                     boxSide[i].index = i;
                     boxSide[i].onmouseover = function () {
@@ -275,9 +277,9 @@
                     content.style.width = parseInt(getStyle(box, "width")) + "px";
                     content.style.height = parseInt(getStyle(box, "height")) - 31 + "px";
                     //eslint-disable-next-line
-                    console.log(box.style.height);
+//                    console.log(box.style.height);
                     //eslint-disable-next-line
-                    console.log("content:" + content.style.height);
+//                    console.log("content:" + content.style.height);
 
 //                    }
                 }
@@ -446,19 +448,7 @@
     }
 </script>
 
-<style lang="less" media="screen">
-    html, body, div {
-        margin: 0;
-        padding: 0;
-    }
-
-    html, body {
-        background: #FEFEFE;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
-
+<style media="screen">
     .title {
         float:left;
         padding: 5px;
@@ -488,6 +478,11 @@
         width: 100%;
         background-color: #FCFCFC;
         border-radius: 0 0 8px 8px;
+    }
+
+    .content {
+        width: 100%;
+        height: 100%;
     }
 
     .button {

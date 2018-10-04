@@ -144,9 +144,9 @@
     }
 </script>
 <style>
-    body {
-        background-color: #8EC6FF;
-    }
+    /*body {*/
+        /*background-color: #8EC6FF;*/
+    /*}*/
     .apps {
     }
 
