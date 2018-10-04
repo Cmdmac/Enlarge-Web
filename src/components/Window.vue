@@ -383,7 +383,7 @@
     }
 
     html, body {
-        background: #FFFFFF;
+        background: #FEFEFE;
         width: 100%;
         height: 100%;
         overflow: hidden;
@@ -400,8 +400,8 @@
         left: 40%;
         width: 500px;
         height: 300px;
-        background: #EEE;
-        border: 1px solid #666;
+        background: #FCFCFC;
+        border: 1px solid lightgray;
         border-radius: 8px;
     }
 
@@ -409,14 +409,14 @@
     .boxHeader {
         width: 100%;
         height: 30px;
-        background: #AAAAAA !important;
-        border-bottom: 1px solid #AAA;
+        background: #CCCCCC !important;
+        border-bottom: 1px solid #CCC;
         border-radius: 5px 5px 0 0;
     }
 
     .boxSide {
         width: 100%;
-        background-color: white;
+        background-color: #FCFCFC;
         border-radius: 0 0 8px 8px;
     }
 
@@ -426,7 +426,7 @@
         height: 15px;
         margin: 5px 5px 0 0 !important;
         margin: 5px 2px 0 0;
-        background: #CCC;
+        background: #DDD;
         border-radius: 5px;
     }
 
@@ -434,7 +434,7 @@
         float: left;
         width: 25px;
         height: 15px;
-        border-right: 2px #AAA solid;
+        border-right: 2px #CCC solid;
     }
 
     .button .close {
