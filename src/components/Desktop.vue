@@ -12,10 +12,9 @@
             </tr>
             </tbody>
         </table>
-        <div ref="windows">
-            <div v-for="app in launchers" :key="app.id">
-                <Window :args="app" v-on:onClose="onWindowClose"></Window>
-            </div>
+        <div id="window" v-for="app in launchers" :key="app.id">
+            <Window :args="app" v-on:onClose="onWindowClose">
+            </Window>
         </div>
         <div class="bottom-bar">
             <div class="task-bar">
@@ -34,6 +33,7 @@
 </template>
 <script>
     import Window from '@/components/Window.vue'
+
     export default {
         name: "Desktop",
         components: {Window},
@@ -41,10 +41,10 @@
             return {
                 apps: [
                     [{
-                        name: "ie",
+                        name: "FileManager",
                         icon: require("../assets/compatible_ie.png")
                     }, {
-                        name: "chrome",
+                        name: "Calendar",
                         icon: require("../assets/compatible_chrome.png")
                     }, {
                         name: "opera",
@@ -89,7 +89,7 @@
                 if (this.isAppLaunched(name)) {
                     return;
                 }
-                var d = {id: name, extras: {name: name}};
+                var d = {id: name, target: name, extras: {name: name}};
 //                this.$set(this.launchers, d);
                 this.launchers.push(d);
                 //不set不会更新的

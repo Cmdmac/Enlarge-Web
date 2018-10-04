@@ -18,6 +18,7 @@
                 <div ref="boxES" class="boxES"></div>
                 <div ref="boxSW" class="boxSW"></div>
                 <div ref="boxWN" class="boxWN"></div>
+                <component :is="target" :args="args"/>
             </div>
         </div>
         <!--<button ref="showButton" class="showButton"><span>[_]</span>-->
@@ -28,11 +29,16 @@
 </template>
 
 <script>
+    import FileManager from "@/components/FileManager.vue";
+    import Calendar from "@/components/Calendar.vue";
+
     export default {
         name: 'Window',
+        components: { FileManager, Calendar },
         props: {args: Object},
         data() {
             return {
+                target: this.args.target,
                 title:  this.args.id
             }
         },
