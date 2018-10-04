@@ -3,7 +3,7 @@
         <table class="apps">
             <tbody>
             <tr v-for="(row, index) in apps" :key="index">
-                <td class="app-item" v-for="app in row" v-bind:key="app.name">
+                <td class="app-item" v-for="app in row" v-bind:key="app.id">
                     <div @click="onLaunchApp(app.name)">
                         <img :src="app.icon"/>
                         <div>{{app.name}}</div>
@@ -13,14 +13,14 @@
             </tbody>
         </table>
         <div ref="windows">
-            <div v-for="(app, index) in launchers" :key="index">
-                <Window :extras="app.extras" v-on:onClose="onWindowClose(index)"></Window>
+            <div v-for="app in launchers" :key="app.id">
+                <Window :args="app" v-on:onClose="onWindowClose"></Window>
             </div>
         </div>
         <div class="bottom-bar">
             <div class="task-bar">
-                <div class="task-item" v-for="(app, index) in launchers" :key="index">
-                    <div>{{app.name}}</div>
+                <div class="task-item" v-for="app in launchers" :key="app.id">
+                    <div>{{app.id}}</div>
                 </div>
             </div>
             <div class="status-bar">
@@ -74,8 +74,22 @@
             }
         },
         methods: {
+            isAppLaunched(id) {
+                for(let i = 0; i < this.launchers.length; i++) {
+                    let item = this.launchers[i];
+                    if (item.id == id) {
+//                        console.log(item.name);
+                        return true;
+                    }
+                }
+                return false;
+            },
+
             onLaunchApp(name) {
-                var d = {name: name, extras: {name: name}};
+                if (this.isAppLaunched(name)) {
+                    return;
+                }
+                var d = {id: name, extras: {name: name}};
 //                this.$set(this.launchers, d);
                 this.launchers.push(d);
                 //不set不会更新的
@@ -84,26 +98,26 @@
 //                console.log(this.launchers);
             },
 
-            onWindowClose(index) {
+            onWindowClose(id) {
                 // eslint-disable-next-line
-                console.log(index);
-//                for(let i = 0; i < this.launchers.length; i++) {
-//                    let item = this.launchers[i];
-//                    if (item.name == name) {
-//                        // eslint-disable-next-line
+//                console.log(id);
+                for(let i = 0; i < this.launchers.length; i++) {
+                    let item = this.launchers[i];
+                    if (item.id == id) {
+                        // eslint-disable-next-line
+                        console.log("close:" + item.id);
+                        // eslint-disable-next-line
 //                        console.log(item.name);
-//                        // eslint-disable-next-line
-////                        console.log(item.name);
-//                        this.launchers.splice(i, 1);
-//                        break;
-//                    }
-//                }
-                this.launchers[index];
-                let list = this.$refs.windows;
-                let nodes = list.childNodes[index];
-                // eslint-disable-next-line
-                console.log(nodes);
-                list.removeChild(nodes);
+                        this.launchers.splice(i, 1);
+                        break;
+                    }
+                }
+//                this.launchers[index];
+//                let list = this.$refs.windows;
+//                let nodes = list.childNodes[index];
+//                 eslint-disable-next-line
+//                console.log(this.launchers);
+//                list.removeChild(nodes);
 //                this.launchers.splice(index, 1);
 //                this.$set(this, 'launchers', this.launchers);
             }

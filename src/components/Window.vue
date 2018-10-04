@@ -30,10 +30,10 @@
 <script>
     export default {
         name: 'Window',
-        props: {extras: Object},
+        props: {args: Object},
         data() {
             return {
-                title:  this.extras.name
+                title:  this.args.id
             }
         },
 
@@ -98,7 +98,7 @@
                 var box = this.$refs.box;
                 var virtualBox = this.$refs.virtualBox;
                 var content = this.$refs.boxSide;
-                var boxSide = content.getElementsByTagName("div");
+                var boxSide = content.childNodes;//getElementsByTagName("div");
                 var bSizeChanging = false;
                 var bMousedowning = false;
                 //box是否正在改变 & 鼠标是否正在按下
@@ -276,7 +276,7 @@
                 var box = this.$refs.box;
                 var boxHeader = this.$refs.boxHeader;
                 var content = this.$refs.boxSide;
-                var aButton = this.$refs.button.getElementsByTagName("div");
+                var aButton = this.$refs.button.childNodes;//.getElementsByTagName("div");
 //                var showButton = this.$refs.showButton;
 //                var span = showButton.getElementsByTagName("span")[0];
                 var bIsMin = false;
@@ -348,10 +348,10 @@
                 var that = this;
                 var close = function () {
                     //eslint-disable-next-line
-//                    console.log(that.extras);
-                    box.style.display = "none";
+//                    console.log("close:" + that.extras.name);
+//                    that.$refs.box.style.display = "none";
 //                    showButton.style.display = "block";
-                    that.$emit('onClose', that.extras);
+                    that.$emit('onClose', that.args.id);
                 };
                 var resumeBox = function () {
                     box.style.top = "30%";
