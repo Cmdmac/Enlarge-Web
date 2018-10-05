@@ -143,7 +143,7 @@
         }
     }
 </script>
-<style>
+<style scoped>
     /*body {*/
         /*background-color: #8EC6FF;*/
     /*}*/

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <div class="header">
             <input placeholder="搜索"/>
             <button>列表</button>
@@ -25,7 +25,7 @@
             <div class="right">
                 <el-table
                         :data="tableData"
-                        style="width: 100%; height: 100%;">
+                        :max-height="800">
                     <el-table-column
                             prop="date"
                             label="日期"
@@ -140,6 +140,10 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
+    .container {
+        height: 100%;
+    }
+
     .header {
         width: 100%;
         display: flex;
@@ -153,20 +157,24 @@
     .content {
         display: flex;
         width: 100%;
+        height: 100%;
+        max-height: 900px;
         padding-bottom: 5px;
     }
 
     .left {
         width: 30%;
         height: 100%;
-        border-width: 1px;
-        border-color: lightgrey;
-        border-style: solid;
+        border: solid 1px lightgrey;
     }
 
     .right {
-        width: 100%;
+        width: 70%;
         padding-bottom: 5px;
         border: solid 1px lightgrey;
+    }
+
+    .table_header {
+        height: 50px;
     }
 </style>

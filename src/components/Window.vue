@@ -448,7 +448,7 @@
     }
 </script>
 
-<style media="screen">
+<style media="screen" scoped>
     .title {
         float:left;
         padding: 5px;
@@ -456,10 +456,11 @@
 
     .box {
         position: absolute;
-        top: 30%;
-        left: 40%;
-        width: 500px;
-        height: 300px;
+        top: 20%;
+        left: 20%;
+        width: 800px;
+        height: 500px;
+        max-height: 900px;
         background: #FCFCFC;
         border: 1px solid lightgray;
         border-radius: 8px;
