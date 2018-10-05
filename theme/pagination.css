@@ -948,7 +948,7 @@
   .el-popper[x-placement^="top"] .popper__arrow::after {
     bottom: 1px;
     margin-left: -6px;
-    border-top-color: #fff;
+    border-top-color: transparent;
     border-bottom-width: 0; }
 
 .el-popper[x-placement^="bottom"] {
@@ -964,7 +964,7 @@
     top: 1px;
     margin-left: -6px;
     border-top-width: 0;
-    border-bottom-color: #fff; }
+    border-bottom-color: transparent; }
 
 .el-popper[x-placement^="right"] {
   margin-left: 12px; }
@@ -978,7 +978,7 @@
   .el-popper[x-placement^="right"] .popper__arrow::after {
     bottom: -6px;
     left: 1px;
-    border-right-color: #fff;
+    border-right-color: transparent;
     border-left-width: 0; }
 
 .el-popper[x-placement^="left"] {
@@ -995,22 +995,22 @@
     bottom: -6px;
     margin-left: -6px;
     border-right-width: 0;
-    border-left-color: #fff; }
+    border-left-color: transparent; }
 
 .el-select-dropdown {
   position: absolute;
   z-index: 1001;
   border: solid 1px #e4e7ed;
   border-radius: 4px;
-  background-color: #fff;
+  background-color: transparent;
   -webkit-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   margin: 5px 0; }
   .el-select-dropdown.is-multiple .el-select-dropdown__item.selected {
-    color: red;
-    background-color: #fff; }
+    color: #409EFF;
+    background-color: transparent; }
     .el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover {
       background-color: #f5f7fa; }
     .el-select-dropdown.is-multiple .el-select-dropdown__item.selected::after {
@@ -1287,7 +1287,7 @@
     width: 100%;
     font-size: inherit;
     color: #606266;
-    background-color: #fff;
+    background-color: transparent;
     background-image: none;
     border: 1px solid #dcdfe6;
     border-radius: 4px;
@@ -1303,7 +1303,7 @@
       border-color: #c0c4cc; }
     .el-textarea__inner:focus {
       outline: none;
-      border-color: red; }
+      border-color: #409EFF; }
   .el-textarea.is-disabled .el-textarea__inner {
     background-color: #f5f7fa;
     border-color: #e4e7ed;
@@ -1348,7 +1348,7 @@
       color: #909399; }
   .el-input__inner {
     -webkit-appearance: none;
-    background-color: #fff;
+    background-color: transparent;
     background-image: none;
     border-radius: 4px;
     border: 1px solid #dcdfe6;
@@ -1374,7 +1374,7 @@
       border-color: #c0c4cc; }
     .el-input__inner:focus {
       outline: none;
-      border-color: red; }
+      border-color: #409EFF; }
   .el-input__suffix {
     position: absolute;
     height: 100%;
@@ -1413,7 +1413,7 @@
     pointer-events: none; }
   .el-input.is-active .el-input__inner {
     outline: none;
-    border-color: red; }
+    border-color: #409EFF; }
   .el-input.is-disabled .el-input__inner {
     background-color: #f5f7fa;
     border-color: #e4e7ed;
@@ -1750,17 +1750,17 @@
 /* Break-point
 --------------------------*/
 .el-tag {
-  background-color: rgba(255, 0, 0, 0.1);
+  background-color: rgba(64, 158, 255, 0.1);
   display: inline-block;
   padding: 0 10px;
   height: 32px;
   line-height: 30px;
   font-size: 12px;
-  color: red;
+  color: #409EFF;
   border-radius: 4px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  border: 1px solid rgba(255, 0, 0, 0.2);
+  border: 1px solid rgba(64, 158, 255, 0.2);
   white-space: nowrap; }
   .el-tag .el-icon-close {
     border-radius: 50%;
@@ -1774,12 +1774,12 @@
     vertical-align: middle;
     top: -1px;
     right: -5px;
-    color: red; }
+    color: #409EFF; }
     .el-tag .el-icon-close::before {
       display: block; }
     .el-tag .el-icon-close:hover {
-      background-color: red;
-      color: #fff; }
+      background-color: #409EFF;
+      color: transparent; }
   .el-tag--info {
     background-color: rgba(144, 147, 153, 0.1);
     border-color: rgba(144, 147, 153, 0.2);
@@ -1790,7 +1790,7 @@
       color: #909399; }
     .el-tag--info .el-tag__close:hover {
       background-color: #909399;
-      color: #fff; }
+      color: transparent; }
   .el-tag--success {
     background-color: rgba(103, 194, 58, 0.1);
     border-color: rgba(103, 194, 58, 0.2);
@@ -1801,7 +1801,7 @@
       color: #67c23a; }
     .el-tag--success .el-tag__close:hover {
       background-color: #67c23a;
-      color: #fff; }
+      color: transparent; }
   .el-tag--warning {
     background-color: rgba(230, 162, 60, 0.1);
     border-color: rgba(230, 162, 60, 0.2);
@@ -1812,7 +1812,7 @@
       color: #e6a23c; }
     .el-tag--warning .el-tag__close:hover {
       background-color: #e6a23c;
-      color: #fff; }
+      color: transparent; }
   .el-tag--danger {
     background-color: rgba(245, 108, 108, 0.1);
     border-color: rgba(245, 108, 108, 0.2);
@@ -1823,7 +1823,7 @@
       color: #f56c6c; }
     .el-tag--danger .el-tag__close:hover {
       background-color: #f56c6c;
-      color: #fff; }
+      color: transparent; }
   .el-tag--medium {
     height: 28px;
     line-height: 26px; }
@@ -2093,11 +2093,11 @@
     color: #c0c4cc;
     cursor: not-allowed; }
     .el-select-dropdown__item.is-disabled:hover {
-      background-color: #fff; }
+      background-color: transparent; }
   .el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
     background-color: #f5f7fa; }
   .el-select-dropdown__item.selected {
-    color: red;
+    color: #409EFF;
     font-weight: bold; }
 
 /* BEM support Func
@@ -2641,7 +2641,7 @@
     cursor: pointer;
     padding-right: 35px; }
     .el-select .el-input__inner:focus {
-      border-color: red; }
+      border-color: #409EFF; }
   .el-select .el-input .el-select__caret {
     color: #c0c4cc;
     font-size: 14px;
@@ -2671,7 +2671,7 @@
     .el-select .el-input.is-disabled .el-input__inner:hover {
       border-color: #e4e7ed; }
   .el-select .el-input.is-focus .el-input__inner {
-    border-color: red; }
+    border-color: #409EFF; }
   .el-select > .el-input {
     display: block; }
   .el-select__input {
@@ -2727,7 +2727,7 @@
       background-color: #c0c4cc;
       right: -7px;
       top: 0;
-      color: #fff; }
+      color: transparent; }
       .el-select .el-tag__close.el-icon-close:hover {
         background-color: #909399; }
       .el-select .el-tag__close.el-icon-close::before {
@@ -2777,16 +2777,16 @@
     .el-pagination button:focus {
       outline: none; }
     .el-pagination button:hover {
-      color: red; }
+      color: #409EFF; }
     .el-pagination button:disabled {
       color: #c0c4cc;
-      background-color: #fff;
+      background-color: transparent;
       cursor: not-allowed; }
   .el-pagination .btn-prev,
   .el-pagination .btn-next {
     background: center center no-repeat;
     background-size: 16px;
-    background-color: #fff;
+    background-color: transparent;
     cursor: pointer;
     margin: 0;
     color: #303133; }
@@ -2834,7 +2834,7 @@
       font-size: 13px;
       padding-left: 8px; }
       .el-pagination__sizes .el-input .el-input__inner:hover {
-        border-color: red; }
+        border-color: #409EFF; }
   .el-pagination__total {
     margin-right: 10px;
     font-weight: normal;
@@ -2868,7 +2868,7 @@
   .el-pagination.is-background .btn-next,
   .el-pagination.is-background .el-pager li {
     margin: 0 5px;
-    background-color: #f4f4f5;
+    background-color: rgba(144, 147, 153, 0.1);
     color: #606266;
     min-width: 30px;
     border-radius: 2px; }
@@ -2881,10 +2881,10 @@
     .el-pagination.is-background .btn-prev:disabled, .el-pagination.is-background .btn-next:disabled {
       color: #c0c4cc; }
   .el-pagination.is-background .el-pager li:not(.disabled):hover {
-    color: red; }
+    color: #409EFF; }
   .el-pagination.is-background .el-pager li:not(.disabled).active {
-    background-color: red;
-    color: #fff; }
+    background-color: #409EFF;
+    color: transparent; }
   .el-pagination.is-background.el-pagination--small .btn-prev,
   .el-pagination.is-background.el-pagination--small .btn-next,
   .el-pagination.is-background.el-pagination--small .el-pager li {
@@ -2906,7 +2906,7 @@
     line-height: 30px; }
   .el-pager li {
     padding: 0 4px;
-    background: #fff;
+    background: transparent;
     vertical-align: top;
     display: inline-block;
     font-size: 13px;
@@ -2930,7 +2930,7 @@
     .el-pager li.active + li {
       border-left: 0; }
     .el-pager li:hover {
-      color: red; }
+      color: #409EFF; }
     .el-pager li.active {
-      color: red;
+      color: #409EFF;
       cursor: default; }

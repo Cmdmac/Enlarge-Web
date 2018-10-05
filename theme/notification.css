@@ -239,7 +239,7 @@
   box-sizing: border-box;
   border: 1px solid #ebeef5;
   position: fixed;
-  background-color: #fff;
+  background-color: transparent;
   -webkit-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   -webkit-transition: opacity .3s, left .3s, right .3s, top 0.4s, bottom .3s, -webkit-transform .3s;

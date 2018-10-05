@@ -246,7 +246,7 @@
     transition: .3s;
     border-radius: 50%;
     background-color: rgba(31, 45, 61, 0.11);
-    color: #fff;
+    color: transparent;
     position: absolute;
     top: 50%;
     z-index: 10;
@@ -310,7 +310,7 @@
     opacity: 0.48;
     width: 30px;
     height: 2px;
-    background-color: #fff;
+    background-color: transparent;
     border: none;
     outline: none;
     padding: 0;

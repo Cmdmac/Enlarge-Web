@@ -391,7 +391,7 @@
 .el-dialog {
   position: relative;
   margin: 0 auto 50px;
-  background: #fff;
+  background: transparent;
   border-radius: 2px;
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -428,7 +428,7 @@
     .el-dialog__headerbtn .el-dialog__close {
       color: #909399; }
     .el-dialog__headerbtn:focus .el-dialog__close, .el-dialog__headerbtn:hover .el-dialog__close {
-      color: red; }
+      color: #409EFF; }
   .el-dialog__title {
     line-height: 24px;
     font-size: 18px;

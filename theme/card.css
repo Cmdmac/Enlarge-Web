@@ -231,7 +231,7 @@
 .el-card {
   border-radius: 4px;
   border: 1px solid #ebeef5;
-  background-color: #fff;
+  background-color: transparent;
   overflow: hidden;
   color: #303133;
   -webkit-transition: 0.3s;

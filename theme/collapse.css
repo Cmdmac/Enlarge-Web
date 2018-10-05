@@ -461,7 +461,7 @@
 .el-collapse-item__header {
   height: 48px;
   line-height: 48px;
-  background-color: #fff;
+  background-color: transparent;
   color: #303133;
   cursor: pointer;
   border-bottom: 1px solid #ebeef5;
@@ -483,13 +483,13 @@
       -webkit-transform: rotate(90deg);
       transform: rotate(90deg); }
   .el-collapse-item__header.focusing:focus:not(:hover) {
-    color: red; }
+    color: #409EFF; }
   .el-collapse-item__header.is-active {
     border-bottom-color: transparent; }
 
 .el-collapse-item__wrap {
   will-change: height;
-  background-color: #fff;
+  background-color: transparent;
   overflow: hidden;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;

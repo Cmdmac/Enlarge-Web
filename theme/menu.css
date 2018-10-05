@@ -460,7 +460,7 @@
   position: relative;
   margin: 0;
   padding-left: 0;
-  background-color: #fff; }
+  background-color: transparent; }
   .el-menu::before,
   .el-menu::after {
     display: table;
@@ -490,7 +490,7 @@
         .el-menu--horizontal > .el-submenu:focus .el-submenu__title, .el-menu--horizontal > .el-submenu:hover .el-submenu__title {
           color: #303133; }
       .el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
-        border-bottom: 2px solid red;
+        border-bottom: 2px solid #409EFF;
         color: #303133; }
       .el-menu--horizontal > .el-submenu .el-submenu__title {
         height: 60px;
@@ -506,7 +506,7 @@
         margin-top: -3px; }
     .el-menu--horizontal .el-menu .el-menu-item,
     .el-menu--horizontal .el-menu .el-submenu__title {
-      background-color: #fff;
+      background-color: transparent;
       float: none;
       height: 36px;
       line-height: 36px;
@@ -520,7 +520,7 @@
       outline: none;
       color: #303133; }
     .el-menu--horizontal > .el-menu-item.is-active {
-      border-bottom: 2px solid red;
+      border-bottom: 2px solid #409EFF;
       color: #303133; }
   .el-menu--collapse {
     width: 64px; }
@@ -593,7 +593,7 @@
     color: #909399; }
   .el-menu-item:hover, .el-menu-item:focus {
     outline: none;
-    background-color: #ffe6e6; }
+    background-color: rgba(64, 158, 255, 0.1); }
   .el-menu-item.is-disabled {
     opacity: 0.25;
     cursor: not-allowed;
@@ -605,7 +605,7 @@
     font-size: 18px;
     vertical-align: middle; }
   .el-menu-item.is-active {
-    color: red; }
+    color: #409EFF; }
     .el-menu-item.is-active i {
       color: inherit; }
 
@@ -633,13 +633,13 @@
       color: #909399; }
     .el-submenu__title:hover, .el-submenu__title:focus {
       outline: none;
-      background-color: #ffe6e6; }
+      background-color: rgba(64, 158, 255, 0.1); }
     .el-submenu__title.is-disabled {
       opacity: 0.25;
       cursor: not-allowed;
       background: none !important; }
     .el-submenu__title:hover {
-      background-color: #ffe6e6; }
+      background-color: rgba(64, 158, 255, 0.1); }
   .el-submenu .el-menu {
     border: none; }
   .el-submenu .el-menu-item {
@@ -658,7 +658,7 @@
     transition: transform .3s, -webkit-transform .3s;
     font-size: 12px; }
   .el-submenu.is-active .el-submenu__title {
-    border-bottom-color: red; }
+    border-bottom-color: #409EFF; }
   .el-submenu.is-opened > .el-submenu__title .el-submenu__icon-arrow {
     -webkit-transform: rotateZ(180deg);
     transform: rotateZ(180deg); }

@@ -299,23 +299,23 @@
       border-left-color: #303133; }
   .el-tooltip__popper.is-dark {
     background: #303133;
-    color: #fff; }
+    color: transparent; }
   .el-tooltip__popper.is-light {
-    background: #fff;
+    background: transparent;
     border: 1px solid #303133; }
     .el-tooltip__popper.is-light[x-placement^="top"] .popper__arrow {
       border-top-color: #303133; }
       .el-tooltip__popper.is-light[x-placement^="top"] .popper__arrow::after {
-        border-top-color: #fff; }
+        border-top-color: transparent; }
     .el-tooltip__popper.is-light[x-placement^="bottom"] .popper__arrow {
       border-bottom-color: #303133; }
       .el-tooltip__popper.is-light[x-placement^="bottom"] .popper__arrow::after {
-        border-bottom-color: #fff; }
+        border-bottom-color: transparent; }
     .el-tooltip__popper.is-light[x-placement^="left"] .popper__arrow {
       border-left-color: #303133; }
       .el-tooltip__popper.is-light[x-placement^="left"] .popper__arrow::after {
-        border-left-color: #fff; }
+        border-left-color: transparent; }
     .el-tooltip__popper.is-light[x-placement^="right"] .popper__arrow {
       border-right-color: #303133; }
       .el-tooltip__popper.is-light[x-placement^="right"] .popper__arrow::after {
-        border-right-color: #fff; }
+        border-right-color: transparent; }

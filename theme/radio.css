@@ -360,7 +360,7 @@
     box-sizing: border-box;
     height: 40px; }
     .el-radio.is-bordered.is-checked {
-      border-color: red; }
+      border-color: #409EFF; }
     .el-radio.is-bordered.is-disabled {
       cursor: not-allowed;
       border-color: #ebeef5; }
@@ -421,33 +421,33 @@
       color: #c0c4cc;
       cursor: not-allowed; }
     .el-radio__input.is-checked .el-radio__inner {
-      border-color: red;
-      background: red; }
+      border-color: #409EFF;
+      background: #409EFF; }
       .el-radio__input.is-checked .el-radio__inner::after {
         -webkit-transform: translate(-50%, -50%) scale(1);
         transform: translate(-50%, -50%) scale(1); }
     .el-radio__input.is-checked + .el-radio__label {
-      color: red; }
+      color: #409EFF; }
     .el-radio__input.is-focus .el-radio__inner {
-      border-color: red; }
+      border-color: #409EFF; }
   .el-radio__inner {
     border: 1px solid #dcdfe6;
     border-radius: 100%;
     width: 14px;
     height: 14px;
-    background-color: #fff;
+    background-color: transparent;
     position: relative;
     cursor: pointer;
     display: inline-block;
     -webkit-box-sizing: border-box;
     box-sizing: border-box; }
     .el-radio__inner:hover {
-      border-color: red; }
+      border-color: #409EFF; }
     .el-radio__inner::after {
       width: 4px;
       height: 4px;
       border-radius: 100%;
-      background-color: #fff;
+      background-color: transparent;
       content: "";
       position: absolute;
       left: 50%;
@@ -471,8 +471,8 @@
   .el-radio:focus:not(.is-focus):not(:active):not(.is-disabled) {
     /*获得焦点时 样式提醒*/ }
     .el-radio:focus:not(.is-focus):not(:active):not(.is-disabled) .el-radio__inner {
-      -webkit-box-shadow: 0 0 2px 2px red;
-      box-shadow: 0 0 2px 2px red; }
+      -webkit-box-shadow: 0 0 2px 2px #409EFF;
+      box-shadow: 0 0 2px 2px #409EFF; }
   .el-radio__label {
     font-size: 14px;
     padding-left: 10px; }
