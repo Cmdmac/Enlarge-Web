@@ -8,7 +8,7 @@
         <div class="navigator">
             <button>Test</button>
         </div>
-        <div class="content">
+        <div ref="content" class="content">
             <div class="left">
                 <el-tree
                         :props="tree_items"
@@ -25,6 +25,7 @@
             <div class="right">
                 <el-table
                         :data="tableData"
+                        height="tableHeight"
                         :max-height="800">
                     <el-table-column
                             prop="date"
@@ -62,7 +63,8 @@
                 files: [
                     {name: "360", isDir: true, icon: "el-icon-info" }, {name: "tencent", isDir: true }, {name: "xiaomi", isDir: true, leaf: true}, {name: "test.txt", isDir: false, leaf: true}, {name: "中文.doc", isDir: false, leaf: true}
                 ],
-                tableData: []
+                tableData: [],
+                tableHeight: window.innerHeight - 300
             };
         },
         methods: {
@@ -141,7 +143,11 @@
 <style scoped>
 
     .container {
+        width: 100%;
         height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
     }
 
     .header {
@@ -169,9 +175,11 @@
     }
 
     .right {
+        height: 100%;
         width: 70%;
-        padding-bottom: 5px;
         border: solid 1px lightgrey;
+        display: flex;
+        align-items: stretch;
     }
 
     .table_header {

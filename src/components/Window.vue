@@ -111,6 +111,14 @@
                 var box = this.$refs.box;
                 var virtualBox = this.$refs.virtualBox;
                 var content = this.$refs.boxSide;
+
+                //init
+                box.style.width = "800px";
+                box.style.height = "500px";
+
+                content.style.width = "800px";
+                content.style.height = 500 - 31 + "px";
+
                 var boxSide = content.childNodes;//getElementsByTagName("div");
                 var bSizeChanging = false;
                 var bMousedowning = false;
@@ -448,7 +456,7 @@
     }
 </script>
 
-<style media="screen" scoped>
+<style media="screen">
     .title {
         float:left;
         padding: 5px;
