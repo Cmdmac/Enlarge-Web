@@ -13,13 +13,17 @@
                 <el-tree
                         :props="tree_items"
                         :load="loadNode"
-                        :accordion = "true"
+                        :accordion = "false"
                         @node-click="onNodeClick"
                         :expand-on-click-node="false"
                         lazy>
-                     <span class="custom-tree-node" slot-scope="{ node, data }">
-                          <span> <i v-if="node.data.isDir" class="el-icon-info"></i>{{ node.label }}</span>
-                     </span>
+                     <div class="custom-tree-node" slot-scope="{ node, data }" style="display: flex; justify-content: center">
+                              <img v-if="node.data.isDir"
+                                   style="width: 22px; height: 22px; "
+                                   :src="require('../assets/grid_dirempty.png')"/>
+                              <span style="line-height: 24px; height: 100%; text-align: center; ">{{ node.label
+                                  }}</span>
+                     </div>
                 </el-tree>
             </div>
             <div class="right">
@@ -28,18 +32,22 @@
                         height="tableHeight"
                         :max-height="800">
                     <el-table-column
-                            prop="date"
-                            label="日期"
-                            width="180">
-                    </el-table-column>
-                    <el-table-column
                             prop="name"
-                            label="姓名"
+                            label="名称"
                             width="180">
                     </el-table-column>
                     <el-table-column
-                            prop="address"
-                            label="地址">
+                            prop="date"
+                            label="修改日期"
+                            width="180">
+                    </el-table-column>
+                    <el-table-column
+                            prop="type"
+                            label="类型">
+                    </el-table-column>
+                    <el-table-column
+                            prop="size"
+                            label="大小">
                     </el-table-column>
                 </el-table>
             </div>
@@ -72,17 +80,69 @@
                 setTimeout(() => {
                     const data = this.files;
                     resolve(data);
-                }, 500);
+                }, 100);
             },
 
             loadNode(node, resolve) {
                 if (node.level === 0) {
-                    return resolve([{name: 'region', isDir: true, path: "/sss/ddd"}]);
+                    return resolve([{name: 'Android', isDir: true, path: "/sdcard/Android"}]);
                 }
 //                if (node.level > 1) return resolve([]);
                 if (!node.isLeaf) {
-                    this.getFiles(node.data.path, resolve);
+//                    this.getFiles(node.data.path, resolve);
+                    setTimeout(() => {
+                        var data = [];
+                        if (node.data.path == "/sdcard/Android") {
+                            data.push({name: "tencent", path: "/sdcard/Android/tencent", isDir: true, leaf: false});
+                            data.push({name: "xiaomi", path: "/sdcard/Android/xiaomi", isDir: true, leaf: false});
+                            data.push({name: "huawei", path: "/sdcard/Android/huawei", isDir: true, leaf: false});
+                            data.push({name: "SangSumg", path: "/sdcard/Android/SangSumg", isDir: true, leaf: false});
+                        } else if (node.data.path == "/sdcard/Android/tencent") {
+                            data.push({name: "QQ", path: "/sdcard/Android/tencent/QQ", isDir: true, leaf: false});
+                            data.push({name: "MicroMsg", path: "/sdcard/Android/tencent/MicroMsg", isDir: true, leaf: false});
+                        } else if (node.data.path == "/sdcard/Android/xiaomi") {
+                            data.push({name: "cc.bak", path: "/sdcard/Android/xiaomi/cc", isDir: false, leaf: true});
+                        } else if (node.data.path == "/sdcard/Android/huawei") {
+                            data.push({name: "dd.mp4", path: "/sdcard/Android/huawei/dd", isDir: false, leaf: true});
+                        } else if (node.data.path == "/sdcard/Android/SangSumg") {
+                            data.push({name: "ff.apk", path: "/sdcard/Android/SangSumg/ff", isDir: false, leaf: true});
+                            data.push({name: "dd.mp3", path: "/sdcard/Android/SangSumg/dd", isDir: false, leaf: true});
+                        } else if (node.data.path == "/sdcard/Android/tencent/QQ") {
+                            data.push({name: "abc.txt", path: "/sdcard/Android/tencent/QQ/abc", isDir: false, leaf: true});
+                            data.push({name: "123.doc", path: "/sdcard/Android/tencent/QQ/123", isDir: false, leaf: true});
+                        } else if (node.data.path == "/sdcard/Android/tencent/MicroMsg") {
+                            data.push({name: "你好.txt", path: "/sdcard/Android/tencent/MicroMsg/abc", isDir: false, leaf: true});
+                            data.push({name: "test.html", path: "/sdcard/Android/tencent/MicroMsg/123", isDir: false, leaf: true});
+                        }
+                        resolve(data);
+                        var that = this;
+                        if (node.loadFromClk != undefined) {
+                            //
+                            that.showFiles(node, data);
+                            node.loadFromClk = undefined;
+                        }
+                    }, 100);
+                } else {
+                    return resolve([]);
                 }
+            },
+
+            showFiles(node, data) {
+                //eslint-disable-next-line
+                console.log(data);
+                //eslint-disable-next-line
+                console.log(node);
+                var files = [];
+                var nodes = node.childNodes;
+                for (let i = 0; i < nodes.length; i++) {
+                    //eslint-disable-next-line
+//                    console.log(nodes[i].data);
+//                    files.push(nodes[i].data);
+                    files.push({date: '2018-10-04', name: nodes[i].data.name, type: '文件', size: "1.2M"});
+                }
+                //eslint-disable-next-line
+                console.log(files);
+                this.$set(this, 'tableData', files);
             },
 
             onNodeClick(data, node) {
@@ -98,42 +158,11 @@
                     }
                     //eslint-disable-next-line
                     console.log(path);
-
+                    node.loadFromClk = true;
                     node.loadData();
+                } else {
+                    this.showFiles(node, data);
                 }
-                //eslint-disable-next-line
-                console.log(data);
-                //eslint-disable-next-line
-                console.log(node);
-                var files = [];
-                var nodes = node.childNodes;
-                /*
-                {
-                    date: '2016-05-02',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1517 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1516 弄'
-                }
-                 */
-                for(let i =  0; i < nodes.length; i++) {
-                    //eslint-disable-next-line
-//                    console.log(nodes[i].data);
-//                    files.push(nodes[i].data);
-                    this.tableData.push({date: '2018-10-04', name: nodes[i].data.name, address: 'hhaha'});
-                }
-                //eslint-disable-next-line
-                console.log(files);
             }
         }
     }
