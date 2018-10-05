@@ -68,53 +68,135 @@
                     children: 'zones',
                     isLeaf: 'leaf'
                 },
-                files: [
-                    {name: "360", isDir: true, icon: "el-icon-info" }, {name: "tencent", isDir: true }, {name: "xiaomi", isDir: true, leaf: true}, {name: "test.txt", isDir: false, leaf: true}, {name: "中文.doc", isDir: false, leaf: true}
-                ],
+                fileTree: {
+                    name: "Android", isDir: true, modifyDateTime: "2018-10-04 11:30:12",
+                    children: [
+                            {name: "tencent", isDir: true, modifyDateTime: "2018-11-03 11:32:40",
+                                children: [
+                                    {name: "QQ", isDir: true, modifyDateTime: "2017-11-03 10:32:40",
+                                        children: [
+                                            {name: "abc.txt", isDir: false, modifyDateTime: "2018-11-03 11:32:40", size: "2 KB"},
+                                            {name: "秘密.doc", isDir: false, modifyDateTime: "2012-11-03 11:32:40", size: "10 KB"},
+                                        ]
+                                    },
+                                    {name: "MicroMsg", isDir: true, modifyDateTime: "2016-11-03 9:32:40",
+                                        children: [
+                                            {name: "收集.xsl", isDir: false, modifyDateTime: "2008-11-03 11:32:40", size: "302 KB"},
+                                            {name: "H.apk", isDir: false, modifyDateTime: "2011-11-03 11:32:40", size: "12 KB"},
+                                        ]},
+                                    {name: "update.log", isDir: false, modifyDateTime: "2018-11-03 11:32:40", size: "102 KB"},
+                                ]
+                            },
+                            {name: "xiaomi", isDir: true, modifyDateTime: "2018-10-14 12:30:12",
+                                children: [
+                                    {name: "dd.log", isDir: false, modifyDateTime: "2018-11-03 11:32:40", size: "2 KB"},
+                                ]
+                            },
+                            {name: "huwwei", isDir: true, modifyDateTime: "2018-9-04 11:30:12",
+                                children: [
+                                    {name: "aaa.mp4", isDir: false, modifyDateTime: "2018-11-03 11:32:40", size: "2 MB"},
+                                ]},
+                            {name: "SangSumg", isDir: true, modifyDateTime: "2018-5-09 10:32:12",
+                                children: [
+                                    {name: "tt.mp3", isDir: false, modifyDateTime: "2018-11-03 11:32:40", size: "4 MB"},
+                                ]},
+                            {name: "update.bin", isDir: false, modifyDateTime: "2018-10-04 11:30:12", size: "1 G"},
+                        ]
+                    },
                 tableData: [],
                 tableHeight: window.innerHeight - 300
             };
         },
         methods: {
-            getFiles(dir, resolve) {
-                setTimeout(() => {
-                    const data = this.files;
-                    resolve(data);
-                }, 100);
+            getNextPath(path) {
+                let index = path.indexOf('/');
+                if (index != -1) {
+                    return path.substring(index + 1);
+                } else {
+                    return undefined;
+                }
+            },
+
+            findFromTree(path, tree) {
+                //eslint-disable-next-line
+                console.log("entry:" + path);
+                let index = path.indexOf('/');
+                // Android/tencent/QQ
+                if (index != -1) {
+                    // tencent/QQ
+                    let name = path.substring(0, index);
+                    if (name == tree.name) {
+                        let leftPath = path.substring(index + 1);
+                        if (leftPath != undefined) {
+                            let next = leftPath.indexOf('/');
+                            if (next != -1) {
+                                let nextPath = leftPath.substring(0, next);
+                                for (let i = 0; i < tree.children.length; i++) {
+                                    let item = tree.children[i];
+                                    if (item.isDir == true && item.name == nextPath) {
+                                        return this.findFromTree(leftPath, item);
+                                    }
+                                }
+                            } else {
+                                for (let i = 0; i < tree.children.length; i++) {
+                                    let item = tree.children[i];
+                                    if (item.isDir == true && item.name == leftPath) {
+                                        return this.findFromTree(leftPath, item);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return undefined;
+                } else {
+                    return tree.children;
+                }
+//                if (index != -1) {
+//                    let name = path.substring(0, index);
+//                    if ((typeof(tree) != Array) && name == tree.name) {
+//                        //current level
+//                        let leftPath = path.substring(index + 1);
+//                        return this.findFromTree(leftPath, tree.children);
+//                    } else {
+//                        for (let i = 0; i < tree.length; i++) {
+//                            let item = tree[i];
+//                            if (item.isDir == true && item.name == path) {
+//                                let leftPath = path.substring(index + 1);
+//                                return this.findFromTree(leftPath, tree.children);
+//                            }
+//                        }
+//                    }
+//                    return undefined;
+//                } else {
+//                    if ((typeof(tree) != Array) && path == tree.name) {
+//                        return tree.children;
+//                    } else {
+//                        for (let i = 0; i < tree.length; i++) {
+//                            let item = tree[i];
+//                            if (item.isDir == true && item.name == path) {
+//                                return item.children;
+//                            }
+//                        }
+//                        return undefined;
+//                    }
+//                }
+            },
+
+            getFiles(node, resolve) {
+                let path = this.buildPath(node);
+                let data = this.findFromTree(path, this.fileTree);
+                resolve(data);
             },
 
             loadNode(node, resolve) {
                 if (node.level === 0) {
-                    return resolve([{name: 'Android', isDir: true, path: "/sdcard/Android"}]);
+                    return resolve([{name: 'Android', isDir: true}]);
                 }
 //                if (node.level > 1) return resolve([]);
                 if (!node.isLeaf) {
 //                    this.getFiles(node.data.path, resolve);
                     setTimeout(() => {
-                        var data = [];
-                        if (node.data.path == "/sdcard/Android") {
-                            data.push({name: "tencent", path: "/sdcard/Android/tencent", isDir: true, leaf: false});
-                            data.push({name: "xiaomi", path: "/sdcard/Android/xiaomi", isDir: true, leaf: false});
-                            data.push({name: "huawei", path: "/sdcard/Android/huawei", isDir: true, leaf: false});
-                            data.push({name: "SangSumg", path: "/sdcard/Android/SangSumg", isDir: true, leaf: false});
-                        } else if (node.data.path == "/sdcard/Android/tencent") {
-                            data.push({name: "QQ", path: "/sdcard/Android/tencent/QQ", isDir: true, leaf: false});
-                            data.push({name: "MicroMsg", path: "/sdcard/Android/tencent/MicroMsg", isDir: true, leaf: false});
-                        } else if (node.data.path == "/sdcard/Android/xiaomi") {
-                            data.push({name: "cc.bak", path: "/sdcard/Android/xiaomi/cc", isDir: false, leaf: true});
-                        } else if (node.data.path == "/sdcard/Android/huawei") {
-                            data.push({name: "dd.mp4", path: "/sdcard/Android/huawei/dd", isDir: false, leaf: true});
-                        } else if (node.data.path == "/sdcard/Android/SangSumg") {
-                            data.push({name: "ff.apk", path: "/sdcard/Android/SangSumg/ff", isDir: false, leaf: true});
-                            data.push({name: "dd.mp3", path: "/sdcard/Android/SangSumg/dd", isDir: false, leaf: true});
-                        } else if (node.data.path == "/sdcard/Android/tencent/QQ") {
-                            data.push({name: "abc.txt", path: "/sdcard/Android/tencent/QQ/abc", isDir: false, leaf: true});
-                            data.push({name: "123.doc", path: "/sdcard/Android/tencent/QQ/123", isDir: false, leaf: true});
-                        } else if (node.data.path == "/sdcard/Android/tencent/MicroMsg") {
-                            data.push({name: "你好.txt", path: "/sdcard/Android/tencent/MicroMsg/abc", isDir: false, leaf: true});
-                            data.push({name: "test.html", path: "/sdcard/Android/tencent/MicroMsg/123", isDir: false, leaf: true});
-                        }
-                        resolve(data);
+                        var data = this.getFiles(node, resolve);
                         var that = this;
                         if (node.loadFromClk != undefined) {
                             //
@@ -145,19 +227,20 @@
                 this.$set(this, 'tableData', files);
             },
 
+            buildPath(node) {
+                var path = node.data.name;
+                var tmp = node.parent;
+                while (tmp != null && tmp.data != undefined) {
+                    path = tmp.data.name + '/' + path;
+                    tmp = tmp.parent;
+                }
+                //eslint-disable-next-line
+                console.log(path);
+                return path;
+            },
+
             onNodeClick(data, node) {
                 if (node.childNodes.length <= 0 && !node.isloded && !node.isloading) {
-                    //load data
-//                    node.data = this.files;
-                    //build path
-                    var path = node.data.name;
-                    var tmp = node.parent;
-                    while (tmp != null && tmp.data != undefined) {
-                        path = tmp.data.name + '/' + path;
-                        tmp = tmp.parent;
-                    }
-                    //eslint-disable-next-line
-                    console.log(path);
                     node.loadFromClk = true;
                     node.loadData();
                 } else {
