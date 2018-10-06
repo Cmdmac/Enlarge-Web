@@ -381,12 +381,12 @@
                         that.height = box.offsetHeight;
 
                         box.style.width = document.body.scrollWidth - 10 + "px";
-                        box.style.height = document.body.scrollHeight - 10 + "px";
+                        box.style.height = document.body.scrollHeight - 10 - 30 + "px";
                         box.style.left = "5px";
                         box.style.top = "5px";
 
                         content.style.width = document.body.scrollWidth - 10 + "px";
-                        content.style.height = document.body.scrollHeight - 41 + "px";
+                        content.style.height = document.body.scrollHeight - 40 - 30 + "px";
                         content.style.left = "2px";
                         content.style.top = "37px";
 
@@ -415,7 +415,7 @@
                     box.style.height = that.height + "px";
 
                     content.style.width = that.width + "px";
-                    content.style.height = that.height - 31 + "px";
+                    content.style.height = that.height - 31+ "px";
 
 
                 };

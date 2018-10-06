@@ -6,7 +6,7 @@
             <button>网格</button>
         </div>
         <div class="navigator">
-            <button>后退</button><button>前进</button> <PathNavigator :currentPath="currentPath" style="margin-left: 10px"></PathNavigator>
+            <button>后退</button><button>前进</button> <PathNavigator :currentPath="currentPath" style="margin-left: 10px" v-on:onNavigatorTo="onNavigatorTo"></PathNavigator>
         </div>
         <div ref="content" class="content">
             <div class="left">
@@ -254,7 +254,16 @@
                     this.$set(this, 'currentPath', enterPath);
                 }
                 event.name;
+            },
+
+            onNavigatorTo(to) {
+//                alert(to);
+                let enterPath = to.substring(1);
+                let data = this.findFromTree(enterPath, this.fileTree);
+                this.showFiles(data);
+                this.$set(this, 'currentPath', enterPath);
             }
+
         }
     }
 </script>
@@ -290,7 +299,6 @@
         width: 100%;
         height: 100%;
         max-height: 900px;
-        padding-bottom: 5px;
     }
 
     .left {
