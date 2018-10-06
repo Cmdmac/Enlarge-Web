@@ -216,7 +216,16 @@
                     //eslint-disable-next-line
 //                    console.log(nodes[i].data);
 //                    files.push(nodes[i].data);
-                    files.push({name: children[i].name, isDir: children[i].isDir, date: children[i].modifyDateTime, type: children[i].type, size: children[i].size});
+                    let type = '';
+                    if (children[i].isDir) {
+                        type = '文件夹';
+                    } else {
+                        let index = children[i].name.lastIndexOf('.');
+                        if (index != -1) {
+                            type = children[i].name.substring(index + 1);
+                        }
+                    }
+                    files.push({name: children[i].name, isDir: children[i].isDir, date: children[i].modifyDateTime, type: type, size: children[i].size});
                 }
                 //eslint-disable-next-line
 //                console.log(files);
