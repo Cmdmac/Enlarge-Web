@@ -75,6 +75,9 @@
                     return false;
                 }
 
+                if (b.isDir) {
+                    return true;
+                }
                 return true;
             },
 

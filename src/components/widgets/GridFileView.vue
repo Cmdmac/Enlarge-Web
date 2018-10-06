@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="grid">
-            <div class="gridItem" v-for="(item, index) in files" :key="index">
+            <div class="gridItem" v-for="(item, index) in files" :key="index" @dblclick="onItemDoubleClick(item)">
                 <img v-if="item.isDir" class="icon" :src="require('../../assets/grid_dirempty.png')" />
                 <img v-else class="icon" :src="require('../../assets/unknow.png')" />
                 <div>{{item.name}}</div>
@@ -16,6 +16,12 @@
         props: {files: Array},
         data() {
             return {};
+        },
+        methods: {
+            onItemDoubleClick(item) {
+//                alert(item);
+                this.$emit('onTableRowDbClick', item);
+            }
         }
     }
 </script>
