@@ -13,6 +13,7 @@
         <div ref="content" class="content">
             <div class="left">
                 <el-tree
+                        :default-expanded-keys='["0-Android"]'
                         nodeKey="id"
                         ref="folderTree"
                         :props="tree_items"
@@ -59,7 +60,7 @@
                     isLeaf: 'leaf'
                 },
                 fileTree: {
-                    name: "Android", isDir: true, modifyDateTime: "2018-10-04 11:30:12",
+                    name: "Android", isDir: true, modifyDateTime: "2018-10-04 11:30:12", id: "0-Android",
                     children: [
                             {name: "tencent", isDir: true, modifyDateTime: "2018-11-03 11:32:40",
                                 children: [
@@ -108,6 +109,11 @@
                     },
             };
         },
+
+        mounted() {
+//            let tree = this.$refs.folderTree;
+        },
+
         methods: {
             getNextPath(path) {
                 let index = path.indexOf('/');
@@ -162,7 +168,7 @@
 
             loadNode(node, resolve) {
                 if (node.level === 0) {
-                    return resolve([{name: 'Android', isDir: true}]);
+                    return resolve([this.fileTree]);
                 }
 //                if (node.level > 1) return resolve([]);
                 if (!node.isLeaf) {
@@ -171,13 +177,15 @@
                         var data = this.getFiles(node);
                         let treeData = [];
                         for (let i = 0; i < data.length; i++) {
-                            if (data[i].isDir) {
-                                if (data[i].children.length > 0) {
-                                    data[i].leaf = false;
+                            let item = data[i];
+                            if (item.isDir) {
+                                item.id = node.level + item.name;
+                                if (item.children.length > 0) {
+                                    item.leaf = false;
                                 } else {
-                                    data[i].leaf = true;
+                                    item.leaf = true;
                                 }
-                                treeData.push(data[i]);
+                                treeData.push(item);
                             }
                         }
                         resolve(treeData);
