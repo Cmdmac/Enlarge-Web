@@ -11,11 +11,13 @@
         <div ref="content" class="content">
             <div class="left">
                 <el-tree
+                        nodeKey="id"
+                        ref="folderTree"
                         :props="tree_items"
                         :load="loadNode"
                         :accordion = "false"
+                        :expand-on-click-node="true"
                         @node-click="onNodeClick"
-                        :expand-on-click-node="false"
                         lazy>
                      <div class="custom-tree-node" slot-scope="{ node, data }" style="display: flex; justify-content: center">
                               <img v-if="node.data.isDir"
@@ -194,11 +196,11 @@
                         }
                         resolve(treeData);
                         var that = this;
-                        if (node.loadFromClk != undefined) {
+//                        if (node.loadFromClk != undefined) {
                             //
                             that.showFiles(data);
-                            node.loadFromClk = undefined;
-                        }
+//                            node.loadFromClk = undefined;
+//                        }
                     }, 100);
                 } else {
                     return resolve([]);
@@ -229,17 +231,14 @@
                     tmp = tmp.parent;
                 }
                 //eslint-disable-next-line
-                console.log(path);
+//                console.log(path);
                 return path;
             },
 
             onNodeClick(data, node) {
                 let path = this.buildPath(node);
                 this.$set(this, 'currentPath', path);
-                if (!node.loaded && !node.loading) {
-                    node.loadFromClk = true;
-                    node.loadData();
-                } else {
+                if (node.loaded) {
                     var r = this.getFiles(node);
                     this.showFiles(r);
                 }
@@ -254,6 +253,12 @@
                     this.$set(this, 'currentPath', enterPath);
                 }
                 event.name;
+                let node = this.$refs.folderTree.store.currentNode;
+//                if (node == undefined) {
+//                    node = this.$refs.folderTree.currentNode;
+//                }
+                node.expand();
+                this.$refs.folderTree.store.currentNode = node;
             },
 
             onNavigatorTo(to) {
