@@ -6,7 +6,7 @@
             <button>网格</button>
         </div>
         <div class="navigator">
-            <button>Test</button>
+            <button>后退</button><button>前进</button> <span style="margin-left: 10px">{{ currentPath }}</span>
         </div>
         <div ref="content" class="content">
             <div class="left">
@@ -28,7 +28,9 @@
             </div>
             <div class="right">
                 <el-table
+                        :highlight-current = "true"
                         :data="tableData"
+                        @row-dblclick="onTableRowDbClick"
                         height="tableHeight"
                         :max-height="800">
                     <el-table-column
@@ -71,6 +73,7 @@
         },
         data() {
             return {
+                currentPath: "/",
                 tree_items: {
                     label: 'name',
                     children: 'children',
@@ -178,8 +181,12 @@
                         var data = this.getFiles(node);
                         let treeData = [];
                         for (let i = 0; i < data.length; i++) {
-                            if (data[i].isDir && data[i].children.length > 0) {
-                                data[i].leaf = false;
+                            if (data[i].isDir) {
+                                if (data[i].children.length > 0) {
+                                    data[i].leaf = false;
+                                } else {
+                                    data[i].leaf = true;
+                                }
                                 treeData.push(data[i]);
                             }
                         }
@@ -187,7 +194,7 @@
                         var that = this;
                         if (node.loadFromClk != undefined) {
                             //
-                            that.showFiles(node, data);
+                            that.showFiles(data);
                             node.loadFromClk = undefined;
                         }
                     }, 100);
@@ -196,9 +203,9 @@
                 }
             },
 
-            showFiles(node, data) {
+            showFiles(data) {
                 //eslint-disable-next-line
-                console.log(data);
+//                console.log(data);
                 var files = [];
                 let children = data;
                 for (let i = 0; i < children.length; i++) {
@@ -225,14 +232,27 @@
             },
 
             onNodeClick(data, node) {
+                let path = this.buildPath(node);
+                this.$set(this, 'currentPath', path);
                 if (!node.loaded && !node.loading) {
                     node.loadFromClk = true;
                     node.loadData();
                 } else {
                     var r = this.getFiles(node);
-                    this.showFiles(node, r);
+                    this.showFiles(r);
                 }
             },
+
+            onTableRowDbClick(row, event) {
+                //eslint-disable-next-line
+                if (row.isDir) {
+                    let enterPath = this.currentPath + '/' + row.name;
+                    let data = this.findFromTree(enterPath, this.fileTree);
+                    this.showFiles(data);
+                    this.$set(this, 'currentPath', enterPath);
+                }
+                event.name;
+            }
         }
     }
 </script>
@@ -251,11 +271,16 @@
     .header {
         width: 100%;
         display: flex;
+        height: 30px;
+        margin: 5px;
     }
 
     .navigator {
         width: 100%;
         display: flex;
+        align-items: center;
+        height: 30px;
+        margin: 5px;
     }
 
     .content {
