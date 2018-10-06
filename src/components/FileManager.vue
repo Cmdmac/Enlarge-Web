@@ -65,7 +65,7 @@
             return {
                 tree_items: {
                     label: 'name',
-                    children: 'zones',
+                    children: 'children',
                     isLeaf: 'leaf'
                 },
                 fileTree: {
@@ -151,41 +151,12 @@
                 } else {
                     return tree.children;
                 }
-//                if (index != -1) {
-//                    let name = path.substring(0, index);
-//                    if ((typeof(tree) != Array) && name == tree.name) {
-//                        //current level
-//                        let leftPath = path.substring(index + 1);
-//                        return this.findFromTree(leftPath, tree.children);
-//                    } else {
-//                        for (let i = 0; i < tree.length; i++) {
-//                            let item = tree[i];
-//                            if (item.isDir == true && item.name == path) {
-//                                let leftPath = path.substring(index + 1);
-//                                return this.findFromTree(leftPath, tree.children);
-//                            }
-//                        }
-//                    }
-//                    return undefined;
-//                } else {
-//                    if ((typeof(tree) != Array) && path == tree.name) {
-//                        return tree.children;
-//                    } else {
-//                        for (let i = 0; i < tree.length; i++) {
-//                            let item = tree[i];
-//                            if (item.isDir == true && item.name == path) {
-//                                return item.children;
-//                            }
-//                        }
-//                        return undefined;
-//                    }
-//                }
             },
 
-            getFiles(node, resolve) {
+            getFiles(node) {
                 let path = this.buildPath(node);
                 let data = this.findFromTree(path, this.fileTree);
-                resolve(data);
+                return data;
             },
 
             loadNode(node, resolve) {
@@ -196,7 +167,15 @@
                 if (!node.isLeaf) {
 //                    this.getFiles(node.data.path, resolve);
                     setTimeout(() => {
-                        var data = this.getFiles(node, resolve);
+                        var data = this.getFiles(node);
+                        for (let i = 0; i < data.length; i++) {
+                            if (data[i].isDir) {
+                                data[i].leaf = false;
+                            } else {
+                                data[i].leaf = true;
+                            }
+                        }
+                        resolve(data);
                         var that = this;
                         if (node.loadFromClk != undefined) {
                             //
@@ -212,8 +191,6 @@
             showFiles(node, data) {
                 //eslint-disable-next-line
                 console.log(data);
-                //eslint-disable-next-line
-                console.log(node);
                 var files = [];
                 var nodes = node.childNodes;
                 for (let i = 0; i < nodes.length; i++) {
@@ -246,7 +223,7 @@
                 } else {
                     this.showFiles(node, data);
                 }
-            }
+            },
         }
     }
 </script>
