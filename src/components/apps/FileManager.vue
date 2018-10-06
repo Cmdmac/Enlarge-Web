@@ -1,9 +1,11 @@
 <template>
     <div class="container">
         <div class="header">
-            <input placeholder="搜索"/>
-            <button>列表</button>
-            <button>网格</button>
+            <input style="width: 300px;" placeholder="搜索"/>
+            <div>
+                <button>列表</button>
+                <button>网格</button>
+            </div>
         </div>
         <div class="navigator">
             <button>后退</button><button>前进</button> <PathNavigator :currentPath="currentPath" style="margin-left: 10px" v-on:onNavigatorTo="onNavigatorTo"></PathNavigator>
@@ -29,45 +31,7 @@
                 </el-tree>
             </div>
             <div class="right">
-                <el-table
-                        :highlight-current = "true"
-                        :data="tableData"
-                        @row-dblclick="onTableRowDbClick"
-                        :default-sort = "{prop: 'name', order: 'descending'}"
-                        height="tableHeight"
-                        :max-height="800">
-                    <el-table-column
-                            prop="name"
-                            label="名称"
-                            :sort-method="sortFiles"
-                            sortable>
-                        <template slot-scope="scope" >
-                            <div style="display: flex; width: 100% ">
-                                <img v-if="scope.row.isDir"
-                                        style="width: 22px; height: 22px; margin-right: 5px"
-                                        :src="require('../../assets/grid_dirempty.png')"/>
-                                <span>{{ scope.row.name }}</span>
-                            </div>
-                        </template>
-                    </el-table-column>
-                    <el-table-column
-                            prop="date"
-                            label="修改日期"
-                            sortable
-                            width="180">
-                    </el-table-column>
-                    <el-table-column
-                            prop="type"
-                            label="类型"
-                            width="180">
-                    </el-table-column>
-                    <el-table-column
-                            prop="size"
-                            sortable
-                            label="大小"
-                            width="180">
-                    </el-table-column>
-                </el-table>
+                <FileView v-on:onTableRowDbClick="onTableRowDbClick" :files="tableData"/>
             </div>
         </div>
     </div>
@@ -75,14 +39,17 @@
 
 <script>
     import PathNavigator from '@/components/widgets/PathNavigator.vue';
+    import FileView from '@/components/widgets/FileView.vue'
+
     export default {
         name: 'FileManager',
-        components: { PathNavigator },
+        components: { PathNavigator, FileView },
         props: {
             msg: String
         },
         data() {
             return {
+                tableData: [],
                 currentPath: "/",
                 tree_items: {
                     label: 'name',
@@ -124,8 +91,6 @@
                             {name: "update.bin", isDir: false, modifyDateTime: "2018-10-04 11:30:12", size: "1 G"},
                         ]
                     },
-                tableData: [],
-                tableHeight: window.innerHeight - 300
             };
         },
         methods: {
@@ -213,16 +178,6 @@
                 }
             },
 
-            sortFiles(a, b) {
-              if (a.isDir && b.isDir) {
-                  return true;
-              } else if (a.isDir && !b.isDir) {
-                  return true;
-              } else if (!a.isDir && b.isDir) {
-                  return true
-              }
-            },
-
             showFiles(data) {
                 //eslint-disable-next-line
 //                console.log(data);
@@ -269,7 +224,7 @@
                 }
             },
 
-            onTableRowDbClick(row, event) {
+            onTableRowDbClick(row) {
                 //eslint-disable-next-line
                 if (row.isDir) {
                     let enterPath = this.currentPath + '/' + row.name;
@@ -277,7 +232,6 @@
                     this.showFiles(data);
                     this.$set(this, 'currentPath', enterPath);
                 }
-                event.name;
                 let node = this.$refs.folderTree.store.currentNode;
 //                if (node == undefined) {
 //                    node = this.$refs.folderTree.currentNode;
@@ -292,8 +246,7 @@
                 let data = this.findFromTree(enterPath, this.fileTree);
                 this.showFiles(data);
                 this.$set(this, 'currentPath', enterPath);
-            }
-
+            },
         }
     }
 </script>
@@ -333,7 +286,7 @@
     }
 
     .left {
-        width: 30%;
+        width: 25%;
         height: 100%;
         border: solid 1px lightgrey;
         border-radius: 0 0 0 8px;
@@ -341,14 +294,11 @@
 
     .right {
         height: 100%;
-        width: 70%;
+        width: 75%;
         border: solid 1px lightgrey;
         display: flex;
         align-items: stretch;
         border-radius: 0 0 8px 0;
     }
 
-    .table_header {
-        height: 50px;
-    }
 </style>

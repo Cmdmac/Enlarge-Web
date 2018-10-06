@@ -1,7 +1,7 @@
 <template>
     <div>
         <span v-for="(item, index) in pathItems" :key="index">
-            <span>/</span><span @click="onNavigatorTo(index)" style="margin-left: 5px; margin-right: 5px">{{item}}</span>
+            <span>/</span><span @click="onNavigatorTo(index)" style="margin-left: 5px; margin-right: 5px; cursor: pointer">{{item}}</span>
         </span>
     </div>
 </template>
