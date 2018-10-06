@@ -33,14 +33,16 @@
                         :highlight-current = "true"
                         :data="tableData"
                         @row-dblclick="onTableRowDbClick"
+                        :default-sort = "{prop: 'name', order: 'descending'}"
                         height="tableHeight"
                         :max-height="800">
                     <el-table-column
                             prop="name"
                             label="名称"
-                            width="180">
+                            :sort-method="sortFiles"
+                            sortable>
                         <template slot-scope="scope" >
-                            <div style="display: flex; ">
+                            <div style="display: flex; width: 100% ">
                                 <img v-if="scope.row.isDir"
                                         style="width: 22px; height: 22px; margin-right: 5px"
                                         :src="require('../../assets/grid_dirempty.png')"/>
@@ -51,15 +53,19 @@
                     <el-table-column
                             prop="date"
                             label="修改日期"
+                            sortable
                             width="180">
                     </el-table-column>
                     <el-table-column
                             prop="type"
-                            label="类型">
+                            label="类型"
+                            width="180">
                     </el-table-column>
                     <el-table-column
                             prop="size"
-                            label="大小">
+                            sortable
+                            label="大小"
+                            width="180">
                     </el-table-column>
                 </el-table>
             </div>
@@ -207,6 +213,16 @@
                 }
             },
 
+            sortFiles(a, b) {
+              if (a.isDir && b.isDir) {
+                  return true;
+              } else if (a.isDir && !b.isDir) {
+                  return true;
+              } else if (!a.isDir && b.isDir) {
+                  return true
+              }
+            },
+
             showFiles(data) {
                 //eslint-disable-next-line
 //                console.log(data);
@@ -312,6 +328,7 @@
         display: flex;
         width: 100%;
         height: 100%;
+        margin-bottom: 2px;
         max-height: 900px;
     }
 
@@ -319,6 +336,7 @@
         width: 30%;
         height: 100%;
         border: solid 1px lightgrey;
+        border-radius: 0 0 0 8px;
     }
 
     .right {
@@ -327,6 +345,7 @@
         border: solid 1px lightgrey;
         display: flex;
         align-items: stretch;
+        border-radius: 0 0 8px 0;
     }
 
     .table_header {

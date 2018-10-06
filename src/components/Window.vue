@@ -386,7 +386,7 @@
                         box.style.top = "5px";
 
                         content.style.width = document.body.scrollWidth - 10 + "px";
-                        content.style.height = document.body.scrollHeight - 40 - 30 + "px";
+                        content.style.height = document.body.scrollHeight - 39 - 30 + "px";
                         content.style.left = "2px";
                         content.style.top = "37px";
 
