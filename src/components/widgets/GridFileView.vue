@@ -7,6 +7,7 @@
                 <div>{{item.name}}</div>
             </div>
         </div>
+        <div v-if="files.length == 0" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center"><span>暂无数据</span></div>
     </div>
 </template>
 
@@ -29,6 +30,7 @@
 <style scoped>
     .container {
         display: flex;
+        align-items: center;
     }
 
     .grid {

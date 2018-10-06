@@ -236,7 +236,10 @@
                 if (node.loaded) {
                     var r = this.getFiles(node);
                     this.showFiles(r);
+                } else if (node.isLeaf) {
+                    this.showFiles([]);
                 }
+
             },
 
             onTableRowDbClick(row) {
