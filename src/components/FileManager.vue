@@ -35,6 +35,14 @@
                             prop="name"
                             label="名称"
                             width="180">
+                        <template slot-scope="scope" >
+                            <div style="display: flex; ">
+                                <img v-if="scope.row.isDir"
+                                        style="width: 22px; height: 22px; margin-right: 5px"
+                                        :src="require('../assets/grid_dirempty.png')"/>
+                                <span>{{ scope.row.name }}</span>
+                            </div>
+                        </template>
                     </el-table-column>
                     <el-table-column
                             prop="date"
@@ -119,7 +127,7 @@
 
             findFromTree(path, tree) {
                 //eslint-disable-next-line
-                console.log("entry:" + path);
+//                console.log("entry:" + path);
                 let index = path.indexOf('/');
                 // Android/tencent/QQ
                 if (index != -1) {
@@ -168,14 +176,14 @@
 //                    this.getFiles(node.data.path, resolve);
                     setTimeout(() => {
                         var data = this.getFiles(node);
+                        let treeData = [];
                         for (let i = 0; i < data.length; i++) {
-                            if (data[i].isDir) {
+                            if (data[i].isDir && data[i].children.length > 0) {
                                 data[i].leaf = false;
-                            } else {
-                                data[i].leaf = true;
+                                treeData.push(data[i]);
                             }
                         }
-                        resolve(data);
+                        resolve(treeData);
                         var that = this;
                         if (node.loadFromClk != undefined) {
                             //
@@ -192,15 +200,15 @@
                 //eslint-disable-next-line
                 console.log(data);
                 var files = [];
-                var nodes = node.childNodes;
-                for (let i = 0; i < nodes.length; i++) {
+                let children = data;
+                for (let i = 0; i < children.length; i++) {
                     //eslint-disable-next-line
 //                    console.log(nodes[i].data);
 //                    files.push(nodes[i].data);
-                    files.push({date: '2018-10-04', name: nodes[i].data.name, type: '文件', size: "1.2M"});
+                    files.push({name: children[i].name, isDir: children[i].isDir, date: children[i].modifyDateTime, type: children[i].type, size: children[i].size});
                 }
                 //eslint-disable-next-line
-                console.log(files);
+//                console.log(files);
                 this.$set(this, 'tableData', files);
             },
 
@@ -217,11 +225,12 @@
             },
 
             onNodeClick(data, node) {
-                if (node.childNodes.length <= 0 && !node.isloded && !node.isloading) {
+                if (!node.loaded && !node.loading) {
                     node.loadFromClk = true;
                     node.loadData();
                 } else {
-                    this.showFiles(node, data);
+                    var r = this.getFiles(node);
+                    this.showFiles(node, r);
                 }
             },
         }
