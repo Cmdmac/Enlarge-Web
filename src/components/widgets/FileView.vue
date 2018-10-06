@@ -62,13 +62,20 @@
             },
 
             sortFiles(a, b) {
-                if (a.isDir && b.isDir) {
-                    return true;
-                } else if (a.isDir && !b.isDir) {
-                    return true;
-                } else if (!a.isDir && b.isDir) {
-                    return true
+//                if (a.isDir && !b.isDir) {
+//                    return true;
+//                } else if (!a.isDir && b.isDir) {
+//                    return false;
+//                } else if (a.isDir && b.isDir) {
+//                    return true;
+//                } else if (!a.isDir && !b.isDir) {
+//                    return false;
+//                }
+                if (a.isDir) {
+                    return false;
                 }
+
+                return true;
             },
 
             /* eslint-disable */

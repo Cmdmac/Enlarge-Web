@@ -2,9 +2,9 @@
     <div class="container">
         <div class="header">
             <input style="width: 300px;" placeholder="搜索"/>
-            <div>
-                <button>列表</button>
-                <button>网格</button>
+            <div class="switchFile">
+                <i class="el-icon-tickets" style="width: 20px; height: 20px; margin-right: 5px" @click="onShowListFile"></i>
+                <i class="el-icon-menu" style="width: 20px; height: 20px; margin-left: 5px" @click="onShowGridFile"></i>
             </div>
         </div>
         <div class="navigator">
@@ -31,7 +31,7 @@
                 </el-tree>
             </div>
             <div class="right">
-                <FileView v-on:onTableRowDbClick="onTableRowDbClick" :files="tableData"/>
+                <FileView :is="showFileType" v-on:onTableRowDbClick="onTableRowDbClick" :files="tableData"/>
             </div>
         </div>
     </div>
@@ -40,15 +40,17 @@
 <script>
     import PathNavigator from '@/components/widgets/PathNavigator.vue';
     import FileView from '@/components/widgets/FileView.vue'
+    import GridFileView from '@/components/widgets/GridFileView.vue'
 
     export default {
         name: 'FileManager',
-        components: { PathNavigator, FileView },
+        components: { PathNavigator, FileView, GridFileView },
         props: {
             msg: String
         },
         data() {
             return {
+                showFileType: "FileView",
                 tableData: [],
                 currentPath: "/",
                 tree_items: {
@@ -88,8 +90,21 @@
                                 children: [
                                     {name: "tt.mp3", isDir: false, modifyDateTime: "2018-11-03 11:32:40", size: "4 MB"},
                                 ]},
-                            {name: "update.bin", isDir: false, modifyDateTime: "2018-10-04 11:30:12", size: "1 G"},
-                        ]
+                            {name: "new.html", isDir: false, modifyDateTime: "2018-10-04 11:30:12", size: "10 KB"},
+                            {name: "Hello", isDir: true, modifyDateTime: "2008-1-04 11:30:12",
+                                children: []
+                            },
+                            {name: "xix.ppt", isDir: false, modifyDateTime: "2018-10-04 11:30:12", size: "2.2 MB"},
+                            {name: "Kitty.key", isDir: false, modifyDateTime: "2018-10-04 11:30:12", size: "3 MB"},
+                            {name: "baby.css", isDir: false, modifyDateTime: "2018-10-04 11:30:12", size: "22 K"},
+                            {name: "思程", isDir: true, modifyDateTime: "2015-11-05 11:30:12",
+                                children: []
+                            },
+                            {name: "工作安排", isDir: true, modifyDateTime: "2013-5-06 5:30:12",
+                                children: [{name: "收集.xsl", isDir: false, modifyDateTime: "2008-11-03 11:32:40", size: "302 KB"},
+                                    {name: "H.apk", isDir: false, modifyDateTime: "2011-11-03 11:32:40", size: "12 KB"},]
+                            },
+                    ]
                     },
             };
         },
@@ -247,6 +262,14 @@
                 this.showFiles(data);
                 this.$set(this, 'currentPath', enterPath);
             },
+
+            onShowListFile() {
+                this.$set(this, 'showFileType', 'FileView');
+            },
+
+            onShowGridFile() {
+                this.$set(this, 'showFileType', 'GridFileView');
+            }
         }
     }
 </script>
@@ -265,8 +288,16 @@
     .header {
         width: 100%;
         display: flex;
+        justify-content: space-between;
+        align-items: center;
         height: 30px;
-        margin: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-left: 5px;
+    }
+
+    .switchFile {
+        margin-right: 10px;
     }
 
     .navigator {
