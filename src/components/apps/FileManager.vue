@@ -6,7 +6,7 @@
             <button>网格</button>
         </div>
         <div class="navigator">
-            <button>后退</button><button>前进</button> <span style="margin-left: 10px">{{ currentPath }}</span>
+            <button>后退</button><button>前进</button> <PathNavigator :currentPath="currentPath" style="margin-left: 10px"></PathNavigator>
         </div>
         <div ref="content" class="content">
             <div class="left">
@@ -20,7 +20,7 @@
                      <div class="custom-tree-node" slot-scope="{ node, data }" style="display: flex; justify-content: center">
                               <img v-if="node.data.isDir"
                                    style="width: 22px; height: 22px; "
-                                   :src="require('../assets/grid_dirempty.png')"/>
+                                   :src="require('../../assets/grid_dirempty.png')"/>
                               <span style="line-height: 24px; height: 100%; text-align: center; ">{{ node.label
                                   }}</span>
                      </div>
@@ -41,7 +41,7 @@
                             <div style="display: flex; ">
                                 <img v-if="scope.row.isDir"
                                         style="width: 22px; height: 22px; margin-right: 5px"
-                                        :src="require('../assets/grid_dirempty.png')"/>
+                                        :src="require('../../assets/grid_dirempty.png')"/>
                                 <span>{{ scope.row.name }}</span>
                             </div>
                         </template>
@@ -66,8 +66,10 @@
 </template>
 
 <script>
+    import PathNavigator from '@/components/widgets/PathNavigator.vue';
     export default {
         name: 'FileManager',
+        components: { PathNavigator },
         props: {
             msg: String
         },

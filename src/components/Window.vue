@@ -31,8 +31,8 @@
 </template>
 
 <script>
-    import FileManager from "@/components/FileManager.vue";
-    import Calendar from "@/components/Calendar.vue";
+    import FileManager from "@/components/apps/FileManager.vue";
+    import Calendar from "@/components/apps/Calendar.vue";
 
     export default {
         name: 'Window',
