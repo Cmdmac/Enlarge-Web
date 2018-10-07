@@ -3,6 +3,9 @@
         <div class="header">
             <input style="width: 300px;" placeholder="搜索"/>
             <div class="switchFile">
+                <i class="el-icon-refresh" style="width: 20px; height: 20px; margin-right: 5px" @click="onRefreshClick"></i>
+                <i class="el-icon-plus" style="width: 20px; height: 20px; margin-right: 5px" @click="onNewDirClick"></i>
+                <i class="el-icon-edit" style="width: 20px; height: 20px; margin-right: 20px" @click="onEditNameClick"></i>
                 <i class="el-icon-tickets" style="width: 20px; height: 20px; margin-right: 5px" @click="onShowListFile"></i>
                 <i class="el-icon-menu" style="width: 20px; height: 20px; margin-left: 5px" @click="onShowGridFile"></i>
             </div>
@@ -168,10 +171,35 @@
                 return data;
             },
 
+            convertToTreeItem(node, item) {
+                var treeItem = {};
+//                if (item.isDir) {
+                    treeItem.name = item.name;
+                    treeItem.isDir = item.isDir;
+                    treeItem.id = node.level + '-' + item.name;
+                    treeItem.children = [];
+                    let subDirCount = 0;
+                    for (let i = 0; i < item.children.length; i++) {
+                        let child = item.children[i];
+                        if (child.isDir) {
+                            subDirCount++;
+                        }
+                        let h = {name: child.name, isDir: child.isDir};
+                        treeItem.children.push(h);
+                    }
+                    if (subDirCount > 0) {
+                        treeItem.leaf = false;
+                    } else {
+                        treeItem.leaf = true;
+                    }
+//                }
+                return treeItem;
+            },
+
             loadNode(node, resolve) {
                 if (node.level === 0) {
                     this.$set(this, 'currentPath', this.fileTree.name);
-                    return resolve([this.fileTree]);
+                    return resolve([ this.convertToTreeItem(node, this.fileTree)]);
                 }
 //                if (node.level > 1) return resolve([]);
                 if (!node.isLeaf) {
@@ -182,13 +210,8 @@
                         for (let i = 0; i < data.length; i++) {
                             let item = data[i];
                             if (item.isDir) {
-                                item.id = node.level + '-' + item.name;
-                                if (item.children.length > 0) {
-                                    item.leaf = false;
-                                } else {
-                                    item.leaf = true;
-                                }
-                                treeData.push(item);
+                                let treeItem = this.convertToTreeItem(node, item);
+                                treeData.push(treeItem);
                             }
                         }
                         resolve(treeData);
@@ -244,12 +267,13 @@
             onNodeClick(data, node) {
                 let path = this.buildPath(node);
                 this.$set(this, 'currentPath', path);
-                if (node.loaded) {
+//                if (node.loaded) {
                     var r = this.getFiles(node);
                     this.showFiles(r);
-                } else if (node.isLeaf) {
-                    this.showFiles([]);
-                }
+//                } else if (node.isLeaf) {
+//                    var r = this.getFiles(node);
+//                    this.showFiles(r);
+//                }
 
             },
 
@@ -298,6 +322,24 @@
 
             onForward() {
                 alert('forward')
+            },
+
+            onRefreshClick() {
+                alert('refresh')
+            },
+
+            onNewDirClick() {
+                //alert('new dir')
+                let data = this.findFromTree(this.currentPath, this.fileTree);
+                if (data != undefined) {
+                    let dir = {name: '新建文件夹', idDir: true, modifyDateTime: new Date(), children: []};
+                    data.push(dir);
+                    this.showFiles(data);
+                }
+            },
+
+            onEditNameClick() {
+                alert('edit name')
             }
         }
     }
