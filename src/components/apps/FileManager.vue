@@ -331,19 +331,14 @@
                 if (data != undefined) {
                     let dir = {name: '新建文件夹', isDir: true, modifyDateTime: "2000-5-08 10:20:5", type: "文件夹", children: []};
                     data.push(dir);
-                    let index = this.currentPath.lastIndexOf('/');
-                    if (index != -1) {
-                        let dir = this.currentPath.substring(index + 1);
-                        let count = 0;
-                        for (let i = 0; i < this.currentPath.length; i++) {
-                            if (this.currentPath.charAt(i) == '/') {
-                                count++;
-                            }
-                        }
-                        this.$refs.folderTree.updateKeyChildren(count + '-' + dir, data);
-                    } else {
-//                        this.$refs.folderTree.updateKeyChildren('0-' + this.currentPath, data);
-                    }
+                    let dirs = this.currentPath.split('/');
+                    let count = dirs.length;
+                    let key  = count - 1 + '-' + dirs[dirs.length - 1];
+                    let node = this.$refs.folderTree.getNode(key);
+                    let children = this.convertToTreeItem(node, data);
+//                    this.$refs.folderTree.updateKeyChildren(key, []);
+//                    this.$refs.folderTree.updateKeyChildren(key, children);
+                    node.data.children = children;
                     this.showFiles(data);
                 }
             },
