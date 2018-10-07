@@ -8,7 +8,9 @@
             </div>
         </div>
         <div class="navigator">
-            <button>后退</button><button>前进</button> <PathNavigator :currentPath="currentPath" style="margin-left: 10px" v-on:onNavigatorTo="onNavigatorTo"></PathNavigator>
+            <i class="el-icon-arrow-left" style="width: 20px; height: 20px; margin-right: 5px" @click="onBackward"></i>
+            <i class="el-icon-arrow-right" style="width: 20px; height: 20px; margin-right: 5px" @click="onForward"></i>
+            <PathNavigator :currentPath="currentPath" style="margin-left: 10px" v-on:onNavigatorTo="onNavigatorTo"></PathNavigator>
         </div>
         <div ref="content" class="content">
             <div class="left">
@@ -288,6 +290,14 @@
 
             onShowGridFile() {
                 this.$set(this, 'showFileType', 'GridFileView');
+            },
+
+            onBackward() {
+                alert('backward')
+            },
+
+            onForward() {
+                alert('forward')
             }
         }
     }
