@@ -73,6 +73,11 @@
                                         children: [
                                             {name: "abc.txt", isDir: false, modifyDateTime: "2018-11-03 11:32:40", size: "2 KB"},
                                             {name: "秘密.doc", isDir: false, modifyDateTime: "2012-11-03 11:32:40", size: "10 KB"},
+                                            {name: "xiaomi", isDir: true, modifyDateTime: "2018-10-14 12:30:12",
+                                                children: [
+                                                    {name: "dd.log", isDir: false, modifyDateTime: "2018-11-03 11:32:40", size: "2 KB"},
+                                                ]
+                                            },
                                         ]
                                     },
                                     {name: "MicroMsg", isDir: true, modifyDateTime: "2016-11-03 9:32:40",
@@ -171,60 +176,52 @@
                 return data;
             },
 
+            //原始数据转变成tree数据
             convertToTreeItem(node, item) {
-                var treeItem = {};
+                if (Array.isArray(item) == true) {
+                    let children = [];
+                    for (let i = 0; i < item.length; i++) {
+                        let child = item[i];
+                        if (child.isDir) {
+                            let h = this.convertToTreeItem(node, child);//{name: child.name, isDir: child.isDir, leaf: false};
+                            children.push(h);
+                        }
+                    }
+                    return children;
+                } else {
+                    var treeItem = {};
 //                if (item.isDir) {
                     treeItem.name = item.name;
                     treeItem.isDir = item.isDir;
                     treeItem.id = node.level + '-' + item.name;
                     treeItem.children = [];
-                    let subDirCount = 0;
-                    for (let i = 0; i < item.children.length; i++) {
-                        let child = item.children[i];
-                        if (child.isDir) {
-                            subDirCount++;
-                        }
-                        let h = {name: child.name, isDir: child.isDir};
-                        treeItem.children.push(h);
-                    }
-                    if (subDirCount > 0) {
+                    let children = this.convertToTreeItem(node, item.children);
+                    treeItem.children = children;
+                    if (children.length > 0) {
                         treeItem.leaf = false;
                     } else {
                         treeItem.leaf = true;
                     }
 //                }
-                return treeItem;
+                    return treeItem;
+                }
             },
 
             loadNode(node, resolve) {
-                if (node.level === 0) {
-                    this.$set(this, 'currentPath', this.fileTree.name);
-                    return resolve([ this.convertToTreeItem(node, this.fileTree)]);
-                }
+
 //                if (node.level > 1) return resolve([]);
-                if (!node.isLeaf) {
 //                    this.getFiles(node.data.path, resolve);
-                    setTimeout(() => {
-                        var data = this.getFiles(node);
-                        let treeData = [];
-                        for (let i = 0; i < data.length; i++) {
-                            let item = data[i];
-                            if (item.isDir) {
-                                let treeItem = this.convertToTreeItem(node, item);
-                                treeData.push(treeItem);
-                            }
-                        }
+                setTimeout(() => {
+                    if (node.level === 0) {
+                        this.$set(this, 'currentPath', this.fileTree.name);
+                        resolve([this.convertToTreeItem(node, this.fileTree)]);
+                    } else {
+                        let data = this.getFiles(node);
+                        let treeData = this.convertToTreeItem(node, data);
                         resolve(treeData);
-                        var that = this;
-//                        if (node.loadFromClk != undefined) {
-                            //
-                            that.showFiles(data);
-//                            node.loadFromClk = undefined;
-//                        }
-                    }, 100);
-                } else {
-                    return resolve([]);
-                }
+                        this.showFiles(data);
+                    }
+                }, 100);
             },
 
             showFiles(data) {
@@ -332,8 +329,21 @@
                 //alert('new dir')
                 let data = this.findFromTree(this.currentPath, this.fileTree);
                 if (data != undefined) {
-                    let dir = {name: '新建文件夹', idDir: true, modifyDateTime: new Date(), children: []};
+                    let dir = {name: '新建文件夹', isDir: true, modifyDateTime: "2000-5-08 10:20:5", type: "文件夹", children: []};
                     data.push(dir);
+                    let index = this.currentPath.lastIndexOf('/');
+                    if (index != -1) {
+                        let dir = this.currentPath.substring(index + 1);
+                        let count = 0;
+                        for (let i = 0; i < this.currentPath.length; i++) {
+                            if (this.currentPath.charAt(i) == '/') {
+                                count++;
+                            }
+                        }
+                        this.$refs.folderTree.updateKeyChildren(count + '-' + dir, data);
+                    } else {
+//                        this.$refs.folderTree.updateKeyChildren('0-' + this.currentPath, data);
+                    }
                     this.showFiles(data);
                 }
             },
