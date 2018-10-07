@@ -53,7 +53,7 @@
             return {
                 showFileType: "FileView",
                 tableData: [],
-                currentPath: "/",
+                currentPath: "",
                 tree_items: {
                     label: 'name',
                     children: 'children',
@@ -168,6 +168,7 @@
 
             loadNode(node, resolve) {
                 if (node.level === 0) {
+                    this.$set(this, 'currentPath', this.fileTree.name);
                     return resolve([this.fileTree]);
                 }
 //                if (node.level > 1) return resolve([]);
@@ -179,7 +180,7 @@
                         for (let i = 0; i < data.length; i++) {
                             let item = data[i];
                             if (item.isDir) {
-                                item.id = node.level + item.name;
+                                item.id = node.level + '-' + item.name;
                                 if (item.children.length > 0) {
                                     item.leaf = false;
                                 } else {
@@ -256,14 +257,21 @@
                     let enterPath = this.currentPath + '/' + row.name;
                     let data = this.findFromTree(enterPath, this.fileTree);
                     this.showFiles(data);
+                    let count = 0;
+                    for (let i = 0; i < this.currentPath.length; i++) {
+                        if (this.currentPath.charAt(i) == '/') {
+                            count++;
+                        }
+                    }
                     this.$set(this, 'currentPath', enterPath);
-                }
-                let node = this.$refs.folderTree.store.currentNode;
+                    let node = this.$refs.folderTree.getNode((count + 1) + '-' + row.name);
+//                    let node = this.$refs.folderTree.store.currentNode;
 //                if (node == undefined) {
 //                    node = this.$refs.folderTree.currentNode;
 //                }
-                node.expand();
-                this.$refs.folderTree.store.currentNode = node;
+                    node.expand();
+//                    this.$refs.folderTree.store.currentNode = node;
+                }
             },
 
             onNavigatorTo(to) {
