@@ -334,11 +334,13 @@
                     let dirs = this.currentPath.split('/');
                     let count = dirs.length;
                     let key  = count - 1 + '-' + dirs[dirs.length - 1];
-                    let node = this.$refs.folderTree.getNode(key);
-                    let children = this.convertToTreeItem(node, data);
-//                    this.$refs.folderTree.updateKeyChildren(key, []);
+//                    let node = this.$refs.folderTree.getNode(key);
+//                    let children = this.convertToTreeItem(node, data);
+                    this.$refs.folderTree.updateKeyChildren(key, []);
+
+                    this.$refs.folderTree.append({name: '新建文件夹', leaf: true, children: []}, key);
 //                    this.$refs.folderTree.updateKeyChildren(key, children);
-                    node.data.children = children;
+//                    node.data.children.push({name: '新建文件夹', leaf: true, children: []});
                     this.showFiles(data);
                 }
             },
