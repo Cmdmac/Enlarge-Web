@@ -572,7 +572,7 @@
         content: '';
         position: absolute;
         display: block;
-        background-color: transparent;
+        background-color: #fff;
         height: 2px;
         -webkit-transform: scale(0.5);
         transform: scale(0.5);
@@ -590,7 +590,7 @@
     box-sizing: border-box;
     width: 14px;
     height: 14px;
-    background-color: transparent;
+    background-color: #fff;
     z-index: 1;
     -webkit-transition: border-color 0.25s cubic-bezier(0.71, -0.46, 0.29, 1.46), background-color 0.25s cubic-bezier(0.71, -0.46, 0.29, 1.46);
     transition: border-color 0.25s cubic-bezier(0.71, -0.46, 0.29, 1.46), background-color 0.25s cubic-bezier(0.71, -0.46, 0.29, 1.46); }
@@ -600,7 +600,7 @@
       -webkit-box-sizing: content-box;
       box-sizing: content-box;
       content: "";
-      border: 1px solid transparent;
+      border: 1px solid #fff;
       border-left: 0;
       border-top: 0;
       height: 7px;
@@ -642,7 +642,7 @@
     white-space: nowrap;
     vertical-align: middle;
     cursor: pointer;
-    background: transparent;
+    background: #fff;
     border: 1px solid #dcdfe6;
     border-left: 0;
     color: #606266;
@@ -676,18 +676,18 @@
     margin: 0;
     z-index: -1; }
   .el-checkbox-button.is-checked .el-checkbox-button__inner {
-    color: transparent;
+    color: #fff;
     background-color: #409EFF;
     border-color: #409EFF;
-    -webkit-box-shadow: -1px 0 0 0 rgba(64, 158, 255, 0.6);
-    box-shadow: -1px 0 0 0 rgba(64, 158, 255, 0.6); }
+    -webkit-box-shadow: -1px 0 0 0 #8cc5ff;
+    box-shadow: -1px 0 0 0 #8cc5ff; }
   .el-checkbox-button.is-checked:first-child .el-checkbox-button__inner {
     border-left-color: #409EFF; }
   .el-checkbox-button.is-disabled .el-checkbox-button__inner {
     color: #c0c4cc;
     cursor: not-allowed;
     background-image: none;
-    background-color: transparent;
+    background-color: #fff;
     border-color: #ebeef5;
     -webkit-box-shadow: none;
     box-shadow: none; }
@@ -984,7 +984,7 @@
       display: block; }
     .el-tag .el-icon-close:hover {
       background-color: #409EFF;
-      color: transparent; }
+      color: #fff; }
   .el-tag--info {
     background-color: rgba(144, 147, 153, 0.1);
     border-color: rgba(144, 147, 153, 0.2);
@@ -995,7 +995,7 @@
       color: #909399; }
     .el-tag--info .el-tag__close:hover {
       background-color: #909399;
-      color: transparent; }
+      color: #fff; }
   .el-tag--success {
     background-color: rgba(103, 194, 58, 0.1);
     border-color: rgba(103, 194, 58, 0.2);
@@ -1006,7 +1006,7 @@
       color: #67c23a; }
     .el-tag--success .el-tag__close:hover {
       background-color: #67c23a;
-      color: transparent; }
+      color: #fff; }
   .el-tag--warning {
     background-color: rgba(230, 162, 60, 0.1);
     border-color: rgba(230, 162, 60, 0.2);
@@ -1017,7 +1017,7 @@
       color: #e6a23c; }
     .el-tag--warning .el-tag__close:hover {
       background-color: #e6a23c;
-      color: transparent; }
+      color: #fff; }
   .el-tag--danger {
     background-color: rgba(245, 108, 108, 0.1);
     border-color: rgba(245, 108, 108, 0.2);
@@ -1028,7 +1028,7 @@
       color: #f56c6c; }
     .el-tag--danger .el-tag__close:hover {
       background-color: #f56c6c;
-      color: transparent; }
+      color: #fff; }
   .el-tag--medium {
     height: 28px;
     line-height: 26px; }
@@ -1168,7 +1168,7 @@
 .el-table-filter {
   border: solid 1px #ebeef5;
   border-radius: 2px;
-  background-color: transparent;
+  background-color: #fff;
   -webkit-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   -webkit-box-sizing: border-box;
@@ -1186,11 +1186,11 @@
     cursor: pointer;
     font-size: 14px; }
     .el-table-filter__list-item:hover {
-      background-color: rgba(64, 158, 255, 0.1);
-      color: rgba(64, 158, 255, 0.8); }
+      background-color: #ecf5ff;
+      color: #66b1ff; }
     .el-table-filter__list-item.is-active {
       background-color: #409EFF;
-      color: transparent; }
+      color: #fff; }
   .el-table-filter__content {
     min-width: 100px; }
   .el-table-filter__bottom {

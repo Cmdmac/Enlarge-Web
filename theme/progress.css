@@ -306,7 +306,7 @@
   .el-progress-bar__innerText {
     display: inline-block;
     vertical-align: middle;
-    color: transparent;
+    color: #fff;
     font-size: 12px;
     margin: 0 5px; }
 

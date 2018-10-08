@@ -348,7 +348,7 @@
     line-height: 1;
     white-space: nowrap;
     vertical-align: middle;
-    background: transparent;
+    background: #fff;
     border: 1px solid #dcdfe6;
     font-weight: 500;
     border-left: 0;
@@ -385,7 +385,7 @@
     position: absolute;
     z-index: -1; }
     .el-radio-button__orig-radio:checked + .el-radio-button__inner {
-      color: transparent;
+      color: #fff;
       background-color: #409EFF;
       border-color: #409EFF;
       -webkit-box-shadow: -1px 0 0 0 #409EFF;
@@ -394,7 +394,7 @@
       color: #c0c4cc;
       cursor: not-allowed;
       background-image: none;
-      background-color: transparent;
+      background-color: #fff;
       border-color: #ebeef5;
       -webkit-box-shadow: none;
       box-shadow: none; }

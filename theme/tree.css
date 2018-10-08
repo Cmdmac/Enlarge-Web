@@ -908,7 +908,7 @@
         content: '';
         position: absolute;
         display: block;
-        background-color: transparent;
+        background-color: #fff;
         height: 2px;
         -webkit-transform: scale(0.5);
         transform: scale(0.5);
@@ -926,7 +926,7 @@
     box-sizing: border-box;
     width: 14px;
     height: 14px;
-    background-color: transparent;
+    background-color: #fff;
     z-index: 1;
     -webkit-transition: border-color 0.25s cubic-bezier(0.71, -0.46, 0.29, 1.46), background-color 0.25s cubic-bezier(0.71, -0.46, 0.29, 1.46);
     transition: border-color 0.25s cubic-bezier(0.71, -0.46, 0.29, 1.46), background-color 0.25s cubic-bezier(0.71, -0.46, 0.29, 1.46); }
@@ -936,7 +936,7 @@
       -webkit-box-sizing: content-box;
       box-sizing: content-box;
       content: "";
-      border: 1px solid transparent;
+      border: 1px solid #fff;
       border-left: 0;
       border-top: 0;
       height: 7px;
@@ -978,7 +978,7 @@
     white-space: nowrap;
     vertical-align: middle;
     cursor: pointer;
-    background: transparent;
+    background: #fff;
     border: 1px solid #dcdfe6;
     border-left: 0;
     color: #606266;
@@ -1012,18 +1012,18 @@
     margin: 0;
     z-index: -1; }
   .el-checkbox-button.is-checked .el-checkbox-button__inner {
-    color: transparent;
+    color: #fff;
     background-color: #409EFF;
     border-color: #409EFF;
-    -webkit-box-shadow: -1px 0 0 0 rgba(64, 158, 255, 0.6);
-    box-shadow: -1px 0 0 0 rgba(64, 158, 255, 0.6); }
+    -webkit-box-shadow: -1px 0 0 0 #8cc5ff;
+    box-shadow: -1px 0 0 0 #8cc5ff; }
   .el-checkbox-button.is-checked:first-child .el-checkbox-button__inner {
     border-left-color: #409EFF; }
   .el-checkbox-button.is-disabled .el-checkbox-button__inner {
     color: #c0c4cc;
     cursor: not-allowed;
     background-image: none;
-    background-color: transparent;
+    background-color: #fff;
     border-color: #ebeef5;
     -webkit-box-shadow: none;
     box-shadow: none; }
@@ -1063,7 +1063,7 @@
 .el-tree {
   position: relative;
   cursor: default;
-  background: transparent;
+  background: #fff;
   color: #606266; }
   .el-tree__empty-block {
     position: relative;
@@ -1145,4 +1145,4 @@
     display: block; }
 
 .el-tree--highlight-current .el-tree-node.is-current > .el-tree-node__content {
-  background-color: rgba(64, 158, 255, 0.08); }
+  background-color: #f0f7ff; }

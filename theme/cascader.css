@@ -473,7 +473,7 @@
     width: 100%;
     font-size: inherit;
     color: #606266;
-    background-color: transparent;
+    background-color: #fff;
     background-image: none;
     border: 1px solid #dcdfe6;
     border-radius: 4px;
@@ -534,7 +534,7 @@
       color: #909399; }
   .el-input__inner {
     -webkit-appearance: none;
-    background-color: transparent;
+    background-color: #fff;
     background-image: none;
     border-radius: 4px;
     border: 1px solid #dcdfe6;
@@ -965,7 +965,7 @@
   .el-popper[x-placement^="top"] .popper__arrow::after {
     bottom: 1px;
     margin-left: -6px;
-    border-top-color: transparent;
+    border-top-color: #fff;
     border-bottom-width: 0; }
 
 .el-popper[x-placement^="bottom"] {
@@ -981,7 +981,7 @@
     top: 1px;
     margin-left: -6px;
     border-top-width: 0;
-    border-bottom-color: transparent; }
+    border-bottom-color: #fff; }
 
 .el-popper[x-placement^="right"] {
   margin-left: 12px; }
@@ -995,7 +995,7 @@
   .el-popper[x-placement^="right"] .popper__arrow::after {
     bottom: -6px;
     left: 1px;
-    border-right-color: transparent;
+    border-right-color: #fff;
     border-left-width: 0; }
 
 .el-popper[x-placement^="left"] {
@@ -1012,7 +1012,7 @@
     bottom: -6px;
     margin-left: -6px;
     border-right-width: 0;
-    border-left-color: transparent; }
+    border-left-color: #fff; }
 
 .el-cascader {
   display: inline-block;
@@ -1093,7 +1093,7 @@
   height: 204px;
   overflow: auto;
   border-right: solid 1px #e4e7ed;
-  background-color: transparent;
+  background-color: #fff;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   margin: 0;
@@ -1124,16 +1124,16 @@
       right: 15px; }
     .el-cascader-menu__item.is-disabled {
       color: #c0c4cc;
-      background-color: transparent;
+      background-color: #fff;
       cursor: not-allowed; }
       .el-cascader-menu__item.is-disabled:hover {
-        background-color: transparent; }
+        background-color: #fff; }
     .el-cascader-menu__item.is-active {
       color: #409EFF; }
     .el-cascader-menu__item:hover, .el-cascader-menu__item:focus:not(:active) {
       background-color: #f5f7fa; }
     .el-cascader-menu__item.selected {
-      color: transparent;
+      color: #fff;
       background-color: #f5f7fa; }
   .el-cascader-menu__item__keyword {
     font-weight: bold; }

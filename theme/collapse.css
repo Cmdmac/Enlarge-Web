@@ -461,7 +461,7 @@
 .el-collapse-item__header {
   height: 48px;
   line-height: 48px;
-  background-color: transparent;
+  background-color: #fff;
   color: #303133;
   cursor: pointer;
   border-bottom: 1px solid #ebeef5;
@@ -489,7 +489,7 @@
 
 .el-collapse-item__wrap {
   will-change: height;
-  background-color: transparent;
+  background-color: #fff;
   overflow: hidden;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;

@@ -427,7 +427,7 @@
   .el-progress-bar__innerText {
     display: inline-block;
     vertical-align: middle;
-    color: transparent;
+    color: #fff;
     font-size: 12px;
     margin: 0 5px; }
 
@@ -752,7 +752,7 @@
       display: inline-block; }
       .el-upload-list--picture-card .el-upload-list__item .el-icon-check,
       .el-upload-list--picture-card .el-upload-list__item .el-icon-circle-check {
-        color: transparent; }
+        color: #fff; }
       .el-upload-list--picture-card .el-upload-list__item .el-icon-close {
         display: none; }
       .el-upload-list--picture-card .el-upload-list__item:hover .el-upload-list__item-status-label {
@@ -835,7 +835,7 @@
     height: 92px; }
     .el-upload-list--picture .el-upload-list__item .el-icon-check,
     .el-upload-list--picture .el-upload-list__item .el-icon-circle-check {
-      color: transparent; }
+      color: #fff; }
     .el-upload-list--picture .el-upload-list__item:hover .el-upload-list__item-status-label {
       background: transparent;
       -webkit-box-shadow: none;
@@ -947,7 +947,7 @@
     text-align: center; }
     .el-upload-cover__interact .btn {
       display: inline-block;
-      color: transparent;
+      color: #fff;
       font-size: 14px;
       cursor: pointer;
       vertical-align: middle;
@@ -970,7 +970,7 @@
         .el-upload-cover__interact .btn:hover span {
           opacity: 1; }
       .el-upload-cover__interact .btn i {
-        color: transparent;
+        color: #fff;
         display: block;
         font-size: 24px;
         line-height: inherit;
@@ -979,7 +979,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    background-color: transparent;
+    background-color: #fff;
     height: 36px;
     width: 100%;
     overflow: hidden;

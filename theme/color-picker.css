@@ -509,7 +509,7 @@
     left: 50%;
     -webkit-transform: translate3d(-50%, -50%, 0);
     transform: translate3d(-50%, -50%, 0);
-    color: transparent;
+    color: #fff;
     text-align: center;
     font-size: 12px; }
   .el-color-picker__panel {
@@ -518,7 +518,7 @@
     padding: 6px;
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
-    background-color: transparent;
+    background-color: #fff;
     border: 1px solid #ebeef5;
     border-radius: 4px;
     -webkit-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);

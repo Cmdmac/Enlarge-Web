@@ -258,7 +258,7 @@
       display: block; }
     .el-tag .el-icon-close:hover {
       background-color: #409EFF;
-      color: transparent; }
+      color: #fff; }
   .el-tag--info {
     background-color: rgba(144, 147, 153, 0.1);
     border-color: rgba(144, 147, 153, 0.2);
@@ -269,7 +269,7 @@
       color: #909399; }
     .el-tag--info .el-tag__close:hover {
       background-color: #909399;
-      color: transparent; }
+      color: #fff; }
   .el-tag--success {
     background-color: rgba(103, 194, 58, 0.1);
     border-color: rgba(103, 194, 58, 0.2);
@@ -280,7 +280,7 @@
       color: #67c23a; }
     .el-tag--success .el-tag__close:hover {
       background-color: #67c23a;
-      color: transparent; }
+      color: #fff; }
   .el-tag--warning {
     background-color: rgba(230, 162, 60, 0.1);
     border-color: rgba(230, 162, 60, 0.2);
@@ -291,7 +291,7 @@
       color: #e6a23c; }
     .el-tag--warning .el-tag__close:hover {
       background-color: #e6a23c;
-      color: transparent; }
+      color: #fff; }
   .el-tag--danger {
     background-color: rgba(245, 108, 108, 0.1);
     border-color: rgba(245, 108, 108, 0.2);
@@ -302,7 +302,7 @@
       color: #f56c6c; }
     .el-tag--danger .el-tag__close:hover {
       background-color: #f56c6c;
-      color: transparent; }
+      color: #fff; }
   .el-tag--medium {
     height: 28px;
     line-height: 26px; }

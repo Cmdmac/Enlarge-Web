@@ -391,7 +391,7 @@
 .el-dialog {
   position: relative;
   margin: 0 auto 50px;
-  background: transparent;
+  background: #fff;
   border-radius: 2px;
   -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);

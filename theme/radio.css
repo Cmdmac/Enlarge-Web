@@ -435,7 +435,7 @@
     border-radius: 100%;
     width: 14px;
     height: 14px;
-    background-color: transparent;
+    background-color: #fff;
     position: relative;
     cursor: pointer;
     display: inline-block;
@@ -447,7 +447,7 @@
       width: 4px;
       height: 4px;
       border-radius: 100%;
-      background-color: transparent;
+      background-color: #fff;
       content: "";
       position: absolute;
       left: 50%;
