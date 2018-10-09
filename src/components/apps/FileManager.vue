@@ -44,7 +44,7 @@
                 </el-tree>
             </div>
             <div class="right">
-                <FileView :is="showFileType" v-on:onTableRowDbClick="onTableRowDbClick" :files="tableData"/>
+                <component :is="showFileType" v-on:onTableRowDbClick="onTableRowDbClick" :files="tableData"/>
             </div>
         </div>
     </div>
@@ -121,6 +121,10 @@
                                 children: []
                             },
                             {name: "工作安排", isDir: true, modifyDateTime: "2013-5-06 5:30:12",
+                                children: [{name: "收集.xsl", isDir: false, modifyDateTime: "2008-11-03 11:32:40", size: "302 KB"},
+                                    {name: "H.apk", isDir: false, modifyDateTime: "2011-11-03 11:32:40", size: "12 KB"},]
+                            },
+                            {name: "工作安排1", isDir: true, modifyDateTime: "2013-5-06 5:30:12",
                                 children: [{name: "收集.xsl", isDir: false, modifyDateTime: "2008-11-03 11:32:40", size: "302 KB"},
                                     {name: "H.apk", isDir: false, modifyDateTime: "2011-11-03 11:32:40", size: "12 KB"},]
                             },

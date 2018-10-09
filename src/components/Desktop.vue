@@ -12,7 +12,7 @@
             </tr>
             </tbody>
         </table>
-        <div id="window" v-for="app in launchers" :key="app.id">
+        <div id="window" v-for="app in launchers" :key="app.id">+
             <Window :ref="app.id" :args="app" v-on:onClose="onWindowClose">
             </Window>
         </div>

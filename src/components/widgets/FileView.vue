@@ -1,11 +1,11 @@
 <template>
-    <div class="container">
+    <div ref="container" class="container">
         <el-table
                 :highlight-current = "true"
                 :data="files"
+                height="tableHeight"
                 @row-dblclick="onTableRowDbClick"
                 :default-sort = "{prop: 'name', order: 'descending'}"
-                height="tableHeight"
                 :row-class-name="tableRowClass"
                 :max-height="800">
             <el-table-column
@@ -50,7 +50,7 @@
         props: {files: Array},
         data() {
             return {
-                tableHeight: window.innerHeight - 300
+                tableHeight: this.$refs.container
             }
         },
 
