@@ -2,8 +2,8 @@
     <div class="container">
         <div class="grid">
             <div class="gridItem" v-for="(item, index) in files" :key="index" @dblclick="onItemDoubleClick(item)">
-                <img v-if="item.isDir" class="icon" :src="require('../../assets/grid_dirempty.png')" />
-                <img v-else class="icon" :src="require('../../assets/unknow.png')" />
+                <img v-if="item.isDir" class="icon" :src="require('../../../public/images/grid_dirempty.png')" />
+                <img v-else class="icon" :src="item.icon" />
                 <div>{{item.name}}</div>
             </div>
         </div>

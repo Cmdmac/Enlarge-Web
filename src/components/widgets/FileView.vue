@@ -18,8 +18,9 @@
                 <template slot-scope="scope" >
                     <div style="display: flex; width: 100% ">
                         <img v-if="scope.row.isDir"
-                             style="width: 22px; height: 22px; margin-right: 5px"
-                             :src="require('../../assets/grid_dirempty.png')"/>
+                             class="icon"
+                             :src="require('../../../public/images/grid_dirempty.png')"/>
+                        <img class="icon" v-else :src="scope.row.icon"/>
                         <span>{{ scope.row.name }}</span>
                     </div>
                 </template>
@@ -107,5 +108,11 @@
 
     .tableRow {
         cursor: pointer;
+    }
+
+    .icon {
+        width: 22px;
+        height: 22px;
+        margin-right: 5px;
     }
 </style>

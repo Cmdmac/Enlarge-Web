@@ -32,7 +32,7 @@
                      <div class="custom-tree-node" slot-scope="{ node, data }" style="display: flex; justify-content: center">
                               <img v-if="node.data.isDir"
                                    style="width: 22px; height: 22px; "
-                                   :src="require('../../assets/grid_dirempty.png')"/>
+                                   :src="require('../../../public/images/grid_dirempty.png')"/>
                               <span style="line-height: 24px; height: 100%; text-align: center; ">{{ node.label
                                   }}</span>
                      </div>
@@ -232,6 +232,35 @@
                 }, 100);
             },
 
+            getIcon(type) {
+                if (type == 'txt') {
+                    return require('../../../public/images/txt.png');
+                } else if (type == 'pdf') {
+                    return require('../../../public/images/grid_dirempty.png');
+                } else if (type == 'doc') {
+                    return require('../../../public/images/doc.png');
+                } else if (type == 'docx') {
+                    return require('../../../public/images/docx.png');
+                } else if (type == 'jpg') {
+                    return require('../../../public/images/jpg.png');
+                } else if (type == 'mp4') {
+                    return require('../../../public/images/mp4.png');
+                } else if (type == 'png') {
+                    return require('../../../public/images/png.png');
+                } else if (type == 'wav') {
+                    return require('../../../public/images/wav.png');
+                } else if (type == 'zip') {
+                    return require('../../../public/images/zip.png');
+                } else if (type == 'gz') {
+                    return require('../../../public/images/gz.png');
+                } else if (type == 'rar') {
+                    return require('../../../public/images/rar.png');
+                } else if (type == 'apk') {
+                    return require('../../../public/images/apk.png');
+                }
+                return require('../../../public/images/unknow.png');
+            },
+
             showFiles(data) {
                 //eslint-disable-next-line
 //                console.log(data);
@@ -250,7 +279,7 @@
                             type = children[i].name.substring(index + 1);
                         }
                     }
-                    files.push({name: children[i].name, isDir: children[i].isDir, date: children[i].modifyDateTime, type: type, size: children[i].size});
+                    files.push({name: children[i].name, isDir: children[i].isDir, date: children[i].modifyDateTime, type: type, icon: this.getIcon(type), size: children[i].size});
                 }
                 //eslint-disable-next-line
 //                console.log(files);
