@@ -398,14 +398,18 @@
                     let key = count - 1 + '-' + dirs[dirs.length - 1];
 
                    let node = this.$refs.folderTree.getNode(key);
-                   for(let j = 0; j < node.childNodes.length; j++) {
-                       this.$refs.folderTree.remove(node.childNodes[j]);
+                   let len = node.childNodes.length;
+                   for(let j = 0; j < len; j++) {
+                       this.$refs.folderTree.remove(node.childNodes[0]);
                    }
-                   // let children = this.convertToTreeItem(node, data);
-                    // this.$refs.folderTree.updateKeyChildren(key, []);
+                   let children = this.convertToTreeItem(node, data);
+                   //  this.$refs.folderTree.updateKeyChildren(key, []);
 //
+                    var that = this;
+                    this.$nextTick(function () {
+                        that.$refs.folderTree.updateKeyChildren(key, children);
+                    });
 //                     this.$refs.folderTree.append(key, []);
-//                    this.$refs.folderTree.updateKeyChildren(key, children);
 //                     for (let i = 0; i < children.length; i++) {
 //                         node.append(children[i]);
 //                     }
