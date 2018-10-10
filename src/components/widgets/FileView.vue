@@ -3,6 +3,8 @@
         <el-table
                 :highlight-current = "true"
                 :data="files"
+                :highlight-current-row="true"
+                @current-change="onRowChange"
                 height="tableHeight"
                 @row-dblclick="onTableRowDbClick"
                 :default-sort = "{prop: 'name', order: 'descending'}"
@@ -50,7 +52,8 @@
         props: {files: Array},
         data() {
             return {
-                tableHeight: this.$refs.container
+                tableHeight: this.$refs.container,
+                currentRow: -1
             }
         },
 
@@ -84,6 +87,10 @@
             /* eslint-disable */
             tableRowClass(row) {
                 return "tableRow";
+            },
+
+            onRowChange(currentRow, oldCurrentRow) {
+                this.$set(this, 'currentRow', currentRow);
             }
         }
     }

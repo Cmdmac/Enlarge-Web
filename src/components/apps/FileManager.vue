@@ -1,12 +1,6 @@
 <template>
     <div class="container">
-        <el-dialog title="新建文件夹" :visible.sync="showDialog"   width="30%">
-            <el-input name="folder_name" v-model="newFolderName" placeholder="请输入文件夹名" clearable></el-input>
-            <div slot="footer" class="dialog-footer">
-                <el-button @click="showDialog = false">取 消</el-button>
-                <el-button type="primary" @click="doNewDirClick">确 定</el-button>
-            </div>
-        </el-dialog>
+        <Dialog ref="dialog" v-on:onConfirm="doConfirm"></Dialog>
         <div class="header">
             <input style="width: 300px;" placeholder="搜索"/>
             <div class="switchFile">
@@ -27,6 +21,7 @@
                 <el-tree
                         :default-expanded-keys='["0-Android"]'
                         nodeKey="id"
+                        :highlight-current="true"
                         ref="folderTree"
                         :props="tree_items"
                         :load="loadNode"
@@ -44,7 +39,7 @@
                 </el-tree>
             </div>
             <div class="right">
-                <component :is="showFileType" v-on:onTableRowDbClick="onTableRowDbClick" :files="tableData"/>
+                <component ref="filesListComponent" :is="showFileType" v-on:onTableRowDbClick="onTableRowDbClick" :files="tableData"/>
             </div>
         </div>
     </div>
@@ -54,17 +49,17 @@
     import PathNavigator from '@/components/widgets/PathNavigator.vue';
     import FileView from '@/components/widgets/FileView.vue'
     import GridFileView from '@/components/widgets/GridFileView.vue'
+    import Dialog from '@/components/widgets/Dialog.vue'
+
 
     export default {
         name: 'FileManager',
-        components: { PathNavigator, FileView, GridFileView },
+        components: { PathNavigator, FileView, GridFileView, Dialog },
         props: {
             msg: String
         },
         data() {
             return {
-                newFolderName: "新建文件夹",
-                showDialog: false,
                 showFileType: "FileView",
                 tableData: [],
                 currentPath: "",
@@ -339,45 +334,36 @@
             },
 
             onNewDirClick() {
-                this.$set(this, 'showDialog', true);
+                let d = this.$refs.dialog;
+                d.show('新建文件夹', '新建文件夹');
+                d.extra = 'new';
                 //alert('new dir')
             },
 
-            doNewDirClick() {
-                this.$set(this, 'showDialog', false);
+            doConfirm(name, oldName) {
+                let d = this.$refs.dialog;
+                if (d.extra == 'new') {
+                    this.doNewDirClick(name);
+                } else if (d.extra == 'modify') {
+                    this.doModify(oldName, name);
+                }
+            },
 
-                if (this.newFolderName == '') {
-                    // this.$alert('这是一段内容', '标题名称', {
-                    //     confirmButtonText: '确定',
-                    //     callback: action => {
-                    //         this.$message({
-                    //             type: 'info',
-                    //             message: `action: ${ action }`
-                    //         });
-                    //     }
-                    // });
+            doNewDirClick(name) {
+                if (name == '') {
                     alert('名字不能为空');
                     return;
                 }
                 let data = this.findFromTree(this.currentPath, this.fileTree);
                 if (data != undefined) {
                     for (let i = 0; i < data.length; i++) {
-                        if (data[i].name == this.newFolderName) {
-                            // this.$alert(this.newFolderName + '已存在', '提示', {
-                            //     confirmButtonText: '确定',
-                            //     callback: action => {
-                            //         this.$message({
-                            //             type: 'info',
-                            //             message: `action: ${ action }`
-                            //         });
-                            //     }
-                            // });
-                            alert(this.newFolderName + '已存在');
+                        if (data[i].name == name) {
+                            alert(name + '已存在');
                             return;
                         }
                     }
                     let dir = {
-                        name: this.newFolderName,
+                        name: name,
                         isDir: true,
                         modifyDateTime: "2000-5-08 10:20:5",
                         type: "文件夹",
@@ -391,15 +377,50 @@
 //                    let children = this.convertToTreeItem(node, data);
                     this.$refs.folderTree.updateKeyChildren(key, []);
 
-                    this.$refs.folderTree.append({id: count + '-' + this.newFolderName, name: this.newFolderName, isDir: true, leaf: true, children: []}, key);
+                    this.$refs.folderTree.append({id: count + '-' + name, name: name, isDir: true, leaf: true, children: []}, key);
 //                    this.$refs.folderTree.updateKeyChildren(key, children);
 //                    node.data.children.push({name: '新建文件夹', leaf: true, children: []});
                     this.showFiles(data);
                 }
             },
 
+            doModify(oldName, name) {
+                let data = this.findFromTree(this.currentPath, this.fileTree);
+                if (data != undefined) {
+                    for (let i = 0; i < data.length; i++) {
+                        if (data[i].name == oldName) {
+                            data[i].name = name;
+                            break;
+                        }
+                    }
+                    let dirs = this.currentPath.split('/');
+                    let count = dirs.length;
+                    let key = count - 1 + '-' + dirs[dirs.length - 1];
+
+                   let node = this.$refs.folderTree.getNode(key);
+                   for(let j = 0; j < node.childNodes.length; j++) {
+                       this.$refs.folderTree.remove(node.childNodes[j]);
+                   }
+                   // let children = this.convertToTreeItem(node, data);
+                    // this.$refs.folderTree.updateKeyChildren(key, []);
+//
+//                     this.$refs.folderTree.append(key, []);
+//                    this.$refs.folderTree.updateKeyChildren(key, children);
+//                     for (let i = 0; i < children.length; i++) {
+//                         node.append(children[i]);
+//                     }
+
+//                    node.data.children.push({name: '新建文件夹', leaf: true, children: []});
+                    this.showFiles(data);
+                }
+            },
+
             onEditNameClick() {
-                alert('edit name')
+                if (this.$refs.filesListComponent.currentRow != -1) {
+                    let d = this.$refs.dialog;
+                    d.show('修改', this.$refs.filesListComponent.currentRow.name);
+                    d.extra = 'modify';
+                }
             }
         }
     }
