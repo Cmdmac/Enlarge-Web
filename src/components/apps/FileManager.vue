@@ -19,6 +19,7 @@
         <div ref="content" class="content">
             <div class="left">
                 <el-tree
+                        class="tree"
                         :default-expanded-keys='["0-Android"]'
                         nodeKey="id"
                         :highlight-current="true"
@@ -50,6 +51,7 @@
     import FileView from '@/components/widgets/FileView.vue'
     import GridFileView from '@/components/widgets/GridFileView.vue'
     import Dialog from '@/components/widgets/Dialog.vue'
+    import axios from "axios";
 
 
     export default {
@@ -69,6 +71,7 @@
                     isLeaf: 'leaf'
                 },
                 fileTree: {
+                    /*
                     name: "Android", isDir: true, modifyDateTime: "2018-10-04 11:30:12", id: "0-Android",
                     children: [
                             {name: "tencent", isDir: true, modifyDateTime: "2018-11-03 11:32:40",
@@ -123,13 +126,15 @@
                                 children: [{name: "收集.xsl", isDir: false, modifyDateTime: "2008-11-03 11:32:40", size: "302 KB"},
                                     {name: "H.apk", isDir: false, modifyDateTime: "2011-11-03 11:32:40", size: "12 KB"},]
                             },
-                    ]
+                    ]*/
                     },
             };
         },
 
         mounted() {
-//            let tree = this.$refs.folderTree;
+           let tree = this.$refs.content;
+           //eslint-disable-next-line
+            console.log(tree.offsetHeight);
         },
 
         methods: {
@@ -188,6 +193,9 @@
             convertToTreeItem(node, item) {
                 if (Array.isArray(item) == true) {
                     let children = [];
+                    if (item == undefined) {
+                        return children;
+                    }
                     for (let i = 0; i < item.length; i++) {
                         let child = item[i];
                         if (child.isDir) {
@@ -198,6 +206,9 @@
                     return children;
                 } else {
                     var treeItem = {};
+                    if (item == undefined) {
+                        return treeItem;
+                    }
 //                if (item.isDir) {
                     treeItem.name = item.name;
                     treeItem.isDir = item.isDir;
@@ -219,17 +230,33 @@
 
 //                if (node.level > 1) return resolve([]);
 //                    this.getFiles(node.data.path, resolve);
-                setTimeout(() => {
+//                 setTimeout(() => {
+                var that = this;
                     if (node.level === 0) {
-                        this.$set(this, 'currentPath', this.fileTree.name);
-                        resolve([this.convertToTreeItem(node, this.fileTree)]);
+                        // this.$set(this, 'currentPath', this.fileTree.name);
+                        axios.get('http://localhost:9090/filemanager/list')
+                            .then(function (response) {
+                                //eslint-disable-next-line
+                                console.log(response.data);
+                                that.$set(that, 'fileTree', response.data);
+                                let c = that.convertToTreeItem(node, response.data);
+                                //eslint-disable-next-line
+                                console.log(c);
+                                resolve([c]);
+                            })
+                            .catch(function (error) {
+                                //eslint-disable-next-line
+                                console.log(error);
+                            });
+
+                        // resolve([this.convertToTreeItem(node, this.fileTree)]);
                     } else {
                         let data = this.getFiles(node);
                         let treeData = this.convertToTreeItem(node, data);
                         resolve(treeData);
                         this.showFiles(data);
                     }
-                }, 100);
+                // }, 100);
             },
 
             getIcon(type) {
@@ -506,6 +533,13 @@
         height: 100%;
         border: solid 1px lightgrey;
         border-radius: 0 0 0 8px;
+    }
+
+    .tree {
+        width: 100%;
+        height: 100%;
+        overflow-y: scroll;
+        overflow-x: scroll;
     }
 
     .right {
