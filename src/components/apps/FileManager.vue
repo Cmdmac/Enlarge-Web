@@ -305,12 +305,14 @@
                         let index = children[i].name.lastIndexOf('.');
                         if (index != -1) {
                             type = children[i].name.substring(index + 1);
+                        } else {
+                            type = "unknown";
                         }
                     }
                     files.push({name: children[i].name, isDir: children[i].isDir,
                         date: new Date(children[i].lastModify).format("yyyy-MM-dd hh:mm:ss"),
                         type: type, icon: this.getIcon(type),
-                        size: toSizeString(children[i].size)
+                        size: children[i].isDir ? "" : toSizeString(children[i].size)
                     });
                 }
                 //eslint-disable-next-line

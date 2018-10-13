@@ -1,10 +1,10 @@
 <template>
     <div class="container">
         <div class="grid">
-            <div class="gridItem" v-for="(item, index) in files" :key="index" @dblclick="onItemDoubleClick(item)">
+            <div v-for="(item, index) in files" :key="index" @dblclick="onItemDoubleClick(index)" @click="onItemClick(index) " v-bind:class="{'gridItem-checked': checked == index, 'gridItem': checked != index}">
                 <img v-if="item.isDir" class="icon" :src="require('../../../public/images/grid_dirempty.png')" />
                 <img v-else class="icon" :src="item.icon" />
-                <div>{{item.name}}</div>
+                <div class="text">{{item.name}}</div>
             </div>
         </div>
         <div v-if="files.length == 0" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center"><span>暂无数据</span></div>
@@ -16,12 +16,24 @@
         name: "GridFileView",
         props: {files: Array},
         data() {
-            return {};
+            // eslint-disable-next-line
+            return {checked: -1}
         },
         methods: {
-            onItemDoubleClick(item) {
+            onItemDoubleClick(index) {
 //                alert(item);
-                this.$emit('onTableRowDbClick', item);
+                this.$emit('onTableRowDbClick', index);
+            },
+
+            onItemClick(index) {
+//                for (let i = 0; i < this.files.length; i++) {
+//                    if (index == i) {
+//                        this.files[i].checked = true;
+//                    } else {
+//                        this.files[i].checked = false;
+//                    }
+//                }
+                this.$set(this, 'checked', index);
             }
         }
     }
@@ -36,17 +48,34 @@
     .grid {
         display: flex;
         flex-wrap: wrap;
-        margin: 12px;
+        overflow: scroll;
     }
 
     .gridItem {
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100px;
+    }
+
+    .gridItem-checked {
+        background-color: #409eff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100px;
     }
 
     .icon {
         width: 80px;
         height: 70px;
+    }
+
+    .text {
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+        max-width: 95px;
+
     }
 </style>
