@@ -117,7 +117,7 @@
                 box.style.height = "500px";
 
                 content.style.width = "800px";
-                content.style.height = 500 - 31 + "px";
+                content.style.height = 500 - 33 + "px";
 
                 var boxSide = content.childNodes;//getElementsByTagName("div");
                 var bSizeChanging = false;
@@ -283,7 +283,7 @@
 //                    content.style.left = box.style.left;
 //                    content.style.top = box.style.top - 30;
                     content.style.width = parseInt(getStyle(box, "width")) + "px";
-                    content.style.height = parseInt(getStyle(box, "height")) - 31 + "px";
+                    content.style.height = parseInt(getStyle(box, "height")) - 33 + "px";
                     //eslint-disable-next-line
 //                    console.log(box.style.height);
                     //eslint-disable-next-line
@@ -386,7 +386,7 @@
                         box.style.top = "5px";
 
                         content.style.width = document.body.scrollWidth - 10 + "px";
-                        content.style.height = document.body.scrollHeight - 39 - 30 + "px";
+                        content.style.height = document.body.scrollHeight - 39 - 33 + "px";
                         content.style.left = "2px";
                         content.style.top = "37px";
 
@@ -450,7 +450,7 @@
                 box.style.height = this.height + "px";
 
                 content.style.width = this.width + "px";
-                content.style.height = this.height - 31 + "px";
+                content.style.height = this.height - 33 + "px";
             }
         }
     }

@@ -52,6 +52,7 @@
     import GridFileView from '@/components/widgets/GridFileView.vue'
     import Dialog from '@/components/widgets/Dialog.vue'
     import axios from "axios";
+    import { toSizeString } from "../util.js"
 
 
     export default {
@@ -234,7 +235,7 @@
                 var that = this;
                     if (node.level === 0) {
                         // this.$set(this, 'currentPath', this.fileTree.name);
-                        axios.get('http://localhost:9090/filemanager/list')
+                        axios.get('http://192.168.31.213:9090/filemanager/list')
                             .then(function (response) {
                                 //eslint-disable-next-line
                                 console.log(response.data);
@@ -306,7 +307,11 @@
                             type = children[i].name.substring(index + 1);
                         }
                     }
-                    files.push({name: children[i].name, isDir: children[i].isDir, date: children[i].modifyDateTime, type: type, icon: this.getIcon(type), size: children[i].size});
+                    files.push({name: children[i].name, isDir: children[i].isDir,
+                        date: new Date(children[i].lastModify).format("yyyy-MM-dd hh:mm:ss"),
+                        type: type, icon: this.getIcon(type),
+                        size: toSizeString(children[i].size)
+                    });
                 }
                 //eslint-disable-next-line
 //                console.log(files);
