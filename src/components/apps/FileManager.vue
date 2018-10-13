@@ -279,7 +279,7 @@
                     files.push({name: children[i].name, isDir: children[i].isDir,
                         date: new Date(children[i].lastModify).format("yyyy-MM-dd hh:mm:ss"),
                         type: type, icon: getIcon(type),
-                        size: children[i].isDir ? "" : toSizeString(children[i].size)
+                        size: children[i].isDir ? "" : toSizeString(children[i].size), thumb: "http://192.168.31.213:9090/filemanager/getThumb?path=" + this.currentPath + "/" + children[i].name
                     });
                 }
                 //eslint-disable-next-line

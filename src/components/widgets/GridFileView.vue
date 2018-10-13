@@ -3,6 +3,7 @@
         <div class="grid">
             <div v-for="(item, index) in files" :key="index" @dblclick="onItemDoubleClick(index)" @click="onItemClick(index) " v-bind:class="{'gridItem-checked': checked == index, 'gridItem': checked != index}">
                 <img v-if="item.isDir" class="icon" :src="require('../../../public/images/grid_dirempty.png')" />
+                <img class="icon" v-else-if="item.type == 'jpg'" v-lazy="item.thumb"/>
                 <img v-else class="icon" :src="item.icon" />
                 <div class="text">{{item.name}}</div>
             </div>

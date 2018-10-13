@@ -14,6 +14,12 @@ Vue.use(Dialog);
 Vue.use(Input);
 Vue.use(Loading);
 
+import VueLazyLoad from 'vue-lazyload'
+Vue.use(VueLazyLoad,{
+    error:'images/png.png',
+    loading:'images/png.png'
+})
+
 new Vue({
   render: h => h(App)
 }).$mount('#app')

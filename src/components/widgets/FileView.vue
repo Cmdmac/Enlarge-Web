@@ -20,6 +20,7 @@
                         <img v-if="scope.row.isDir"
                              class="icon"
                              :src="require('../../../public/images/grid_dirempty.png')"/>
+                        <img class="icon" v-else-if="scope.row.type == 'jpg'" v-lazy="scope.row.thumb"/>
                         <img class="icon" v-else :src="scope.row.icon"/>
                         <span>{{ scope.row.name }}</span>
                     </div>
