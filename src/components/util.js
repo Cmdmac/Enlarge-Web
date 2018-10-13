@@ -36,6 +36,35 @@ Date.prototype.format = function (format) {
     return format;
 }
 
+function getIcon(type) {
+    if (type == 'txt') {
+        return require('../../public/images/txt.png');
+    } else if (type == 'pdf') {
+        return require('../../public/images/grid_dirempty.png');
+    } else if (type == 'doc') {
+        return require('../../public/images/doc.png');
+    } else if (type == 'docx') {
+        return require('../../public/images/docx.png');
+    } else if (type == 'jpg') {
+        return require('../../public/images/jpg.png');
+    } else if (type == 'mp4') {
+        return require('../../public/images/mp4.png');
+    } else if (type == 'png') {
+        return require('../../public/images/png.png');
+    } else if (type == 'wav') {
+        return require('../../public/images/wav.png');
+    } else if (type == 'zip') {
+        return require('../../public/images/zip.png');
+    } else if (type == 'gz') {
+        return require('../../public/images/gz.png');
+    } else if (type == 'rar') {
+        return require('../../public/images/rar.png');
+    } else if (type == 'apk') {
+        return require('../../public/images/apk.png');
+    }
+    return require('../../public/images/unknow.png');
+}
+
 function toSizeString(size) {
     if  (size < 1024) {
         return size + " B";
@@ -52,5 +81,5 @@ function toSizeString(size) {
 }
 
 export {
-    toSizeString
+    toSizeString, getIcon
 }

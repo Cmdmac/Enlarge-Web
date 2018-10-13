@@ -52,7 +52,7 @@
     import GridFileView from '@/components/widgets/GridFileView.vue'
     import Dialog from '@/components/widgets/Dialog.vue'
     import axios from "axios";
-    import { toSizeString } from "../util.js"
+    import { toSizeString, getIcon } from "../util.js"
 
 
     export default {
@@ -256,35 +256,6 @@
                 }
             },
 
-            getIcon(type) {
-                if (type == 'txt') {
-                    return require('../../../public/images/txt.png');
-                } else if (type == 'pdf') {
-                    return require('../../../public/images/grid_dirempty.png');
-                } else if (type == 'doc') {
-                    return require('../../../public/images/doc.png');
-                } else if (type == 'docx') {
-                    return require('../../../public/images/docx.png');
-                } else if (type == 'jpg') {
-                    return require('../../../public/images/jpg.png');
-                } else if (type == 'mp4') {
-                    return require('../../../public/images/mp4.png');
-                } else if (type == 'png') {
-                    return require('../../../public/images/png.png');
-                } else if (type == 'wav') {
-                    return require('../../../public/images/wav.png');
-                } else if (type == 'zip') {
-                    return require('../../../public/images/zip.png');
-                } else if (type == 'gz') {
-                    return require('../../../public/images/gz.png');
-                } else if (type == 'rar') {
-                    return require('../../../public/images/rar.png');
-                } else if (type == 'apk') {
-                    return require('../../../public/images/apk.png');
-                }
-                return require('../../../public/images/unknow.png');
-            },
-
             showFiles(data) {
                 //eslint-disable-next-line
 //                console.log(data);
@@ -307,7 +278,7 @@
                     }
                     files.push({name: children[i].name, isDir: children[i].isDir,
                         date: new Date(children[i].lastModify).format("yyyy-MM-dd hh:mm:ss"),
-                        type: type, icon: this.getIcon(type),
+                        type: type, icon: getIcon(type),
                         size: children[i].isDir ? "" : toSizeString(children[i].size)
                     });
                 }
@@ -436,7 +407,7 @@
                     let dir = {
                         name: name,
                         isDir: true,
-                        modifyDateTime: "2000-5-08 10:20:5",
+                        lastModify: 0,
                         type: "文件夹",
                         children: []
                     };
@@ -446,7 +417,7 @@
                     let key = count - 1 + '-' + dirs[dirs.length - 1];
 //                    let node = this.$refs.folderTree.getNode(key);
 //                    let children = this.convertToTreeItem(node, data);
-                    this.$refs.folderTree.updateKeyChildren(key, []);
+//                    this.$refs.folderTree.updateKeyChildren(key, []);
 
                     this.$refs.folderTree.append({id: count + '-' + name, name: name, isDir: true, leaf: true, children: []}, key);
 //                    this.$refs.folderTree.updateKeyChildren(key, children);
