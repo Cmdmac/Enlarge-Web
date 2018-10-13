@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" v-loading="loading">
         <Dialog ref="dialog" v-on:onConfirm="doConfirm"></Dialog>
         <div class="header">
             <input style="width: 300px;" placeholder="搜索"/>
@@ -63,6 +63,7 @@
         },
         data() {
             return {
+                loading: false,
                 showFileType: "FileView",
                 tableData: [],
                 currentPath: "",
@@ -71,64 +72,7 @@
                     children: 'children',
                     isLeaf: 'leaf'
                 },
-                fileTree: {
-                    /*
-                    name: "Android", isDir: true, modifyDateTime: "2018-10-04 11:30:12", id: "0-Android",
-                    children: [
-                            {name: "tencent", isDir: true, modifyDateTime: "2018-11-03 11:32:40",
-                                children: [
-                                    {name: "QQ", isDir: true, modifyDateTime: "2017-11-03 10:32:40",
-                                        children: [
-                                            {name: "abc.txt", isDir: false, modifyDateTime: "2018-11-03 11:32:40", size: "2 KB"},
-                                            {name: "秘密.doc", isDir: false, modifyDateTime: "2012-11-03 11:32:40", size: "10 KB"},
-                                            {name: "xiaomi", isDir: true, modifyDateTime: "2018-10-14 12:30:12",
-                                                children: [
-                                                    {name: "dd.log", isDir: false, modifyDateTime: "2018-11-03 11:32:40", size: "2 KB"},
-                                                ]
-                                            },
-                                        ]
-                                    },
-                                    {name: "MicroMsg", isDir: true, modifyDateTime: "2016-11-03 9:32:40",
-                                        children: [
-                                            {name: "收集.xsl", isDir: false, modifyDateTime: "2008-11-03 11:32:40", size: "302 KB"},
-                                            {name: "H.apk", isDir: false, modifyDateTime: "2011-11-03 11:32:40", size: "12 KB"},
-                                        ]},
-                                    {name: "update.log", isDir: false, modifyDateTime: "2018-11-03 11:32:40", size: "102 KB"},
-                                ]
-                            },
-                            {name: "xiaomi", isDir: true, modifyDateTime: "2018-10-14 12:30:12",
-                                children: [
-                                    {name: "dd.log", isDir: false, modifyDateTime: "2018-11-03 11:32:40", size: "2 KB"},
-                                ]
-                            },
-                            {name: "huwwei", isDir: true, modifyDateTime: "2018-9-04 11:30:12",
-                                children: [
-                                    {name: "aaa.mp4", isDir: false, modifyDateTime: "2018-11-03 11:32:40", size: "2 MB"},
-                                ]},
-                            {name: "SangSumg", isDir: true, modifyDateTime: "2018-5-09 10:32:12",
-                                children: [
-                                    {name: "tt.mp3", isDir: false, modifyDateTime: "2018-11-03 11:32:40", size: "4 MB"},
-                                ]},
-                            {name: "new.html", isDir: false, modifyDateTime: "2018-10-04 11:30:12", size: "10 KB"},
-                            {name: "Hello", isDir: true, modifyDateTime: "2008-1-04 11:30:12",
-                                children: []
-                            },
-                            {name: "xix.ppt", isDir: false, modifyDateTime: "2018-10-04 11:30:12", size: "2.2 MB"},
-                            {name: "Kitty.key", isDir: false, modifyDateTime: "2018-10-04 11:30:12", size: "3 MB"},
-                            {name: "baby.css", isDir: false, modifyDateTime: "2018-10-04 11:30:12", size: "22 K"},
-                            {name: "思程", isDir: true, modifyDateTime: "2015-11-05 11:30:12",
-                                children: []
-                            },
-                            {name: "工作安排", isDir: true, modifyDateTime: "2013-5-06 5:30:12",
-                                children: [{name: "收集.xsl", isDir: false, modifyDateTime: "2008-11-03 11:32:40", size: "302 KB"},
-                                    {name: "H.apk", isDir: false, modifyDateTime: "2011-11-03 11:32:40", size: "12 KB"},]
-                            },
-                            {name: "工作安排1", isDir: true, modifyDateTime: "2013-5-06 5:30:12",
-                                children: [{name: "收集.xsl", isDir: false, modifyDateTime: "2008-11-03 11:32:40", size: "302 KB"},
-                                    {name: "H.apk", isDir: false, modifyDateTime: "2011-11-03 11:32:40", size: "12 KB"},]
-                            },
-                    ]*/
-                    },
+                fileTree: {},
             };
         },
 
@@ -257,6 +201,9 @@
             },
 
             loadFromNetwork(dir, node, resolve) {
+
+                this.$set(this, 'loading', true);
+
                 var that = this;
                 axios.get('http://192.168.31.213:9090/filemanager/list', {params: { dir: dir }})
                     .then(function (response) {
@@ -282,10 +229,12 @@
                             resolve([c]);
                         }
                         that.showFiles(response.data.children);
+                        that.$set(that, 'loading', false);
                     })
                     .catch(function (error) {
                         //eslint-disable-next-line
                         console.log(error);
+                        that.$set(that, 'loading', false);
                     });
             },
 
