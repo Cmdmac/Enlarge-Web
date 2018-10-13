@@ -19,6 +19,15 @@
             // eslint-disable-next-line
             return {checked: -1}
         },
+
+        watch: {
+
+            //eslint-disable-next-line
+            files: function (files) {
+                this.$set(this, 'checked', -1);
+            }
+        },
+
         methods: {
             onItemDoubleClick(index) {
 //                alert(item);
@@ -46,9 +55,11 @@
     }
 
     .grid {
+        width: 100%;
+        /*height: 100%;*/
         display: flex;
         flex-wrap: wrap;
-        overflow: scroll;
+        overflow: auto;
     }
 
     .gridItem {
