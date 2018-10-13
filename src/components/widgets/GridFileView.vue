@@ -22,7 +22,7 @@
         methods: {
             onItemDoubleClick(index) {
 //                alert(item);
-                this.$emit('onTableRowDbClick', index);
+                this.$emit('onTableRowDbClick', this.files[index]);
             },
 
             onItemClick(index) {

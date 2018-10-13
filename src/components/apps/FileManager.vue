@@ -20,7 +20,7 @@
             <div class="left">
                 <el-tree
                         class="tree"
-                        :default-expanded-keys='["0-Android"]'
+                        :default-expanded-keys='["0-sdcard"]'
                         nodeKey="id"
                         :highlight-current="true"
                         ref="folderTree"
@@ -184,6 +184,35 @@
                 }
             },
 
+            updateTreeData(path, tree, data) {
+                let pos = 0;
+                let index = 0;
+                let parent = tree;
+                let node = tree;
+                let parts = path.split("/");
+                while (pos < parts.length) {
+                    if (pos + 1 == parts.length) {
+                        //find
+                        node = data;
+                        parent.children.splice(index, 1, data);
+                        break;
+                    }
+                    if (parts[pos] == node.name) {
+                        for (let i = 0; i < node.children.length; i++) {
+                            let item = node.children[i];
+                            if (item.name == parts[pos + 1]) {
+                                parent = node;
+                                node = node.children[i];
+                                index = i;
+                                break;
+                            }
+                        }
+
+                    }
+                    pos++;
+                }
+            },
+
             getFiles(node) {
                 let path = this.buildPath(node);
                 let data = this.findFromTree(path, this.fileTree);
@@ -191,7 +220,7 @@
             },
 
             //原始数据转变成tree数据
-            convertToTreeItem(node, item) {
+            convertToTreeItem(level, item) {
                 if (Array.isArray(item) == true) {
                     let children = [];
                     if (item == undefined) {
@@ -200,7 +229,7 @@
                     for (let i = 0; i < item.length; i++) {
                         let child = item[i];
                         if (child.isDir) {
-                            let h = this.convertToTreeItem(node, child);//{name: child.name, isDir: child.isDir, leaf: false};
+                            let h = this.convertToTreeItem(level, child);//{name: child.name, isDir: child.isDir, leaf: false};
                             children.push(h);
                         }
                     }
@@ -213,9 +242,9 @@
 //                if (item.isDir) {
                     treeItem.name = item.name;
                     treeItem.isDir = item.isDir;
-                    treeItem.id = node.level + '-' + item.name;
+                    treeItem.id = level + '-' + item.name;
                     treeItem.children = [];
-                    let children = this.convertToTreeItem(node, item.children);
+                    let children = this.convertToTreeItem(level + 1, item.children);
                     treeItem.children = children;
                     if (children.length > 0) {
                         treeItem.leaf = false;
@@ -227,37 +256,55 @@
                 }
             },
 
+            loadFromNetwork(dir, node, resolve) {
+                var that = this;
+                axios.get('http://192.168.31.213:9090/filemanager/list', {params: { dir: dir }})
+                    .then(function (response) {
+                        //eslint-disable-next-line
+//                                console.log(response.data);
+                        let c = that.convertToTreeItem(node.level, response.data);
+                        //根目录名
+                        if (node.level == 0) {
+                            c.name = "sdcard"
+                            c.id = "0-sdcard";
+                            response.data.name = "sdcard";
+                            that.$set(that, 'fileTree', response.data);
+                            that.$set(that, 'currentPath', c.name);
+                        } else {
+                            //插入数据
+                            that.updateTreeData(dir, that.fileTree, response.data);
+//                            that.$refs.folderTree.updateKeyChildren(node.data.id, c);
+                            node.expand();
+                        }
+                        //eslint-disable-next-line
+//                                console.log(c);
+                        if (resolve != undefined) {
+                            resolve([c]);
+                        }
+                        that.showFiles(response.data.children);
+                    })
+                    .catch(function (error) {
+                        //eslint-disable-next-line
+                        console.log(error);
+                    });
+            },
+
             loadNode(node, resolve) {
 
-//                if (node.level > 1) return resolve([]);
-//                    this.getFiles(node.data.path, resolve);
-//                 setTimeout(() => {
-                var that = this;
-                    if (node.level === 0) {
-                        // this.$set(this, 'currentPath', this.fileTree.name);
-                        axios.get('http://192.168.31.213:9090/filemanager/list')
-                            .then(function (response) {
-                                //eslint-disable-next-line
-                                console.log(response.data);
-                                that.$set(that, 'fileTree', response.data);
-                                let c = that.convertToTreeItem(node, response.data);
-                                //eslint-disable-next-line
-                                console.log(c);
-                                resolve([c]);
-                            })
-                            .catch(function (error) {
-                                //eslint-disable-next-line
-                                console.log(error);
-                            });
-
-                        // resolve([this.convertToTreeItem(node, this.fileTree)]);
+                if (node.level == 0) {
+                    //load from network
+                    this.loadFromNetwork("", node, resolve);
+                } else {
+                    let data = this.getFiles(node);
+                    if (data == undefined) {
+                        let dir = this.buildPath(node);
+                        this.loadFromNetwork(dir, node, resolve);
                     } else {
-                        let data = this.getFiles(node);
-                        let treeData = this.convertToTreeItem(node, data);
+                        let treeData = this.convertToTreeItem(node.level, data);
                         resolve(treeData);
                         this.showFiles(data);
                     }
-                // }, 100);
+                }
             },
 
             getIcon(type) {
@@ -337,7 +384,11 @@
                 this.$set(this, 'currentPath', path);
 //                if (node.loaded) {
                     var r = this.getFiles(node);
-                    this.showFiles(r);
+                    if (r == undefined) {
+                        this.loadFromNetwork(path, node, undefined);
+                    } else {
+                        this.showFiles(r);
+                    }
 //                } else if (node.isLeaf) {
 //                    var r = this.getFiles(node);
 //                    this.showFiles(r);
@@ -350,21 +401,29 @@
                 if (row.isDir) {
                     let enterPath = this.currentPath + '/' + row.name;
                     let data = this.findFromTree(enterPath, this.fileTree);
-                    this.showFiles(data);
-                    let count = 0;
-                    for (let i = 0; i < this.currentPath.length; i++) {
-                        if (this.currentPath.charAt(i) == '/') {
-                            count++;
+                    if (data == undefined) {
+                        let count = 0;
+                        for (let i = 0; i < this.currentPath.length; i++) {
+                            if (this.currentPath.charAt(i) == '/') {
+                                count++;
+                            }
                         }
+                        this.$set(this, 'currentPath', enterPath);
+                        let node = this.$refs.folderTree.getNode((count + 1) + '-' + row.name);
+//                        node.expand();
+                        this.loadFromNetwork(enterPath, node, undefined);
+                    } else {
+                        this.showFiles(data);
+                        let count = 0;
+                        for (let i = 0; i < this.currentPath.length; i++) {
+                            if (this.currentPath.charAt(i) == '/') {
+                                count++;
+                            }
+                        }
+                        this.$set(this, 'currentPath', enterPath);
+                        let node = this.$refs.folderTree.getNode((count + 1) + '-' + row.name);
+                        node.expand();
                     }
-                    this.$set(this, 'currentPath', enterPath);
-                    let node = this.$refs.folderTree.getNode((count + 1) + '-' + row.name);
-//                    let node = this.$refs.folderTree.store.currentNode;
-//                if (node == undefined) {
-//                    node = this.$refs.folderTree.currentNode;
-//                }
-                    node.expand();
-//                    this.$refs.folderTree.store.currentNode = node;
                 }
             },
 
@@ -465,7 +524,7 @@
                    for(let j = 0; j < len; j++) {
                        this.$refs.folderTree.remove(node.childNodes[0]);
                    }
-                   let children = this.convertToTreeItem(node, data);
+                   let children = this.convertToTreeItem(node.level, data);
                    //  this.$refs.folderTree.updateKeyChildren(key, []);
 //
                     var that = this;
