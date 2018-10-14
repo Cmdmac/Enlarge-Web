@@ -53,6 +53,7 @@
     import Dialog from '@/components/widgets/Dialog.vue'
     import axios from "axios";
     import { toSizeString, getIcon } from "../util.js"
+    import {config} from '../../config.js'
 
 
     export default {
@@ -205,19 +206,22 @@
                 this.$set(this, 'loading', true);
 
                 var that = this;
-                axios.get('http://192.168.31.213:9090/filemanager/list', {params: { dir: dir }})
+                axios.get(config.api.fileManager.list, {params: { dir: dir }})
                     .then(function (response) {
                         //eslint-disable-next-line
 //                                console.log(response.data);
-                        let c = that.convertToTreeItem(node.level, response.data);
                         //根目录名
                         if (node.level == 0) {
-                            c.name = "sdcard"
-                            c.id = "0-sdcard";
+                            let root = {id: "0-sdcard", name: "sdcard", isDir: true, leaf: false, children: []}
                             response.data.name = "sdcard";
                             that.$set(that, 'fileTree', response.data);
-                            that.$set(that, 'currentPath', c.name);
+                            that.$set(that, 'currentPath', root.name);
+                            resolve([root]);
                         } else {
+                            let c = that.convertToTreeItem(node.level, response.data);
+                            if (resolve != undefined) {
+                                resolve([c]);
+                            }
                             //插入数据
                             that.updateTreeData(dir, that.fileTree, response.data);
 //                            that.$refs.folderTree.updateKeyChildren(node.data.id, c);
@@ -225,9 +229,7 @@
                         }
                         //eslint-disable-next-line
 //                                console.log(c);
-                        if (resolve != undefined) {
-                            resolve([c]);
-                        }
+
                         that.showFiles(response.data.children);
                         that.$set(that, 'loading', false);
                     })
@@ -279,7 +281,7 @@
                     files.push({name: children[i].name, isDir: children[i].isDir,
                         date: new Date(children[i].lastModify).format("yyyy-MM-dd hh:mm:ss"),
                         type: type, icon: getIcon(type),
-                        size: children[i].isDir ? "" : toSizeString(children[i].size), thumb: "http://192.168.31.213:9090/filemanager/getThumb?path=" + this.currentPath + "/" + children[i].name
+                        size: children[i].isDir ? "" : toSizeString(children[i].size), thumb: config.api.fileManager.getThumb + "?path=" + this.currentPath + "/" + children[i].name
                     });
                 }
                 //eslint-disable-next-line
@@ -415,12 +417,12 @@
                     let dirs = this.currentPath.split('/');
                     let count = dirs.length;
                     let key = count - 1 + '-' + dirs[dirs.length - 1];
-//                    let node = this.$refs.folderTree.getNode(key);
-//                    let children = this.convertToTreeItem(node, data);
+                    let node = this.$refs.folderTree.getNode(key);
+                    let children = this.convertToTreeItem(node, data);
 //                    this.$refs.folderTree.updateKeyChildren(key, []);
 
-                    this.$refs.folderTree.append({id: count + '-' + name, name: name, isDir: true, leaf: true, children: []}, key);
-//                    this.$refs.folderTree.updateKeyChildren(key, children);
+//                    this.$refs.folderTree.append({id: count + '-' + name, name: name, isDir: true, leaf: true, children: []}, key);
+                    this.$refs.folderTree.updateKeyChildren(key, children);
 //                    node.data.children.push({name: '新建文件夹', leaf: true, children: []});
                     this.showFiles(data);
                 }

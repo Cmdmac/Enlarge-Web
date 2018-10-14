@@ -1,4 +1,4 @@
-import '../theme/index.css'
+// import '../theme/index.css'
 
 import Vue from 'vue'
 import App from './App.vue'
