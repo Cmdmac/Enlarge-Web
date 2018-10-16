@@ -32,13 +32,15 @@
     </div>
 </template>
 <script>
-    import Window from '@/components/Window.vue'
+    import Window from '@/components/Window.vue';
+    import { config } from "../config.js"
 
     export default {
         name: "Desktop",
         components: {Window},
         data() {
             return {
+                websock: null,
                 apps: [
                     [{
                         name: "FileManager",
@@ -73,6 +75,14 @@
                 ]
             }
         },
+
+        created() {
+            this.initWebSocket();
+        },
+        destroyed() {
+            this.websock.close() //离开路由之后断开websocket连接
+        },
+
         methods: {
             isAppLaunched(id) {
                 for(let i = 0; i < this.launchers.length; i++) {
@@ -139,7 +149,48 @@
                         break;
                     }
                 }
-            }
+            },
+
+            initWebSocket(){ //初始化weosocket
+                const wsuri = config.ws_server;
+                this.websock = new WebSocket(wsuri);
+                this.websock.onmessage = this.websocketonmessage;
+                this.websock.onopen = this.websocketonopen;
+                this.websock.onerror = this.websocketonerror;
+                this.websock.onclose = this.websocketclose;
+            },
+
+            websocketonopen(){ //连接建立之后执行send方法发送数据
+                let actions = {'type': 100, 'msg': 'requestPermission'}
+                this.websocketsend(JSON.stringify(actions));
+            },
+
+            websocketonerror(){//连接建立失败重连
+                this.initWebSocket();
+            },
+
+            websocketonmessage(e){ //数据接收
+                const redata = JSON.parse(e.data);
+                // eslint-disable-next-line
+                console.log(redata);
+                // eslint-disable-next-line
+                console.log('onmessage');
+                var that = this;
+                setTimeout(function () {
+                    that.websocketsend(JSON.stringify({'type': 0, 'msg': 'ping'}));
+                }, 15000)
+            },
+
+            websocketsend(Data){//数据发送
+                this.websock.send(Data);
+            },
+
+            // eslint-disable-next-line
+            websocketclose(e){  //关闭
+                // eslint-disable-next-line
+                console.log('断开连接',e);
+            },
+
         }
     }
 </script>

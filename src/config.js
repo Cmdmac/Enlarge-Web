@@ -1,12 +1,12 @@
-var server = "http://192.168.31.193:9090/";
+var http_server = "http://172.29.229.54:9090/";
 var config = {
-    // server: "http://192.168.31.213:9090/",
+    ws_server : "ws://172.29.229.54:9090",
     api: {
         fileManager: {
-            list: server + "filemanager/list",
-            mkDir: server + "filemanager/mkDir",
-            rm: server + "filemanager/rm",
-            getThumb: server + "filemanager/getThumb"
+            list: http_server + "filemanager/list",
+            mkDir: http_server + "filemanager/mkDir",
+            rm: http_server + "filemanager/rm",
+            getThumb: http_server + "filemanager/getThumb"
         }
     }
 }
