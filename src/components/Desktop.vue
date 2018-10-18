@@ -29,17 +29,25 @@
                 <img class="status-icon" :src='require("../assets/compatible_ie.png")'/>
             </div>
         </div>
+        <div class="qrcode" v-if="needScan">
+            <span style="margin: 2px">请扫描二维码登录</span>
+            <img :src="qrcodeUri"/>
+        </div>
     </div>
 </template>
 <script>
     import Window from '@/components/Window.vue';
-    import { config } from "../config.js"
+    import VueSocketio from 'vue-socket.io';
+    import Vue from "vue";
+    Vue.use(VueSocketio, 'http://localhost');
 
     export default {
         name: "Desktop",
         components: {Window},
         data() {
             return {
+                needScan: true,
+                qrcodeUri: "http://localhost/qrcode",
                 websock: null,
                 apps: [
                     [{
@@ -76,9 +84,31 @@
             }
         },
 
-        created() {
-            this.initWebSocket();
+        sockets:{
+            connect: function(){
+                //eslint-disable-next-line
+                console.log('connect');
+            },
+
+            redirect: function (data) {
+                //eslint-disable-next-line
+                console.log('redirect:' + JSON.stringify(data));
+                this.config.ws_server = data.ws;
+                this.config.http_server = data.http;
+                this.initWebSocket();
+                //hide qrcode
+                this.$set(this, 'needScan', false);
+            }
         },
+
+        created() {
+            // config.ws_server = "ws://172.29.164.188:9090"
+            // this.initWebSocket();
+        },
+
+        mounted() {
+        },
+
         destroyed() {
             this.websock.close() //离开路由之后断开websocket连接
         },
@@ -152,41 +182,40 @@
             },
 
             initWebSocket(){ //初始化weosocket
-                const wsuri = config.ws_server;
+                const wsuri = this.config.ws_server;
                 this.websock = new WebSocket(wsuri);
-                this.websock.onmessage = this.websocketonmessage;
-                this.websock.onopen = this.websocketonopen;
-                this.websock.onerror = this.websocketonerror;
-                this.websock.onclose = this.websocketclose;
+                this.websock.onmessage = this.websocketOnMessage;
+                this.websock.onopen = this.websocketOnOpen;
+                this.websock.onerror = this.websocketOnError;
+                this.websock.onclose = this.websocketClose;
             },
 
-            websocketonopen(){ //连接建立之后执行send方法发送数据
+            websocketOnOpen(){ //连接建立之后执行send方法发送数据
                 let actions = {'type': 100, 'msg': 'requestPermission'}
-                this.websocketsend(JSON.stringify(actions));
+                this.websocketSend(JSON.stringify(actions));
             },
 
-            websocketonerror(){//连接建立失败重连
+            websocketOnError(){//连接建立失败重连
                 this.initWebSocket();
             },
 
-            websocketonmessage(e){ //数据接收
+            websocketOnMessage(e){ //数据接收
                 const redata = JSON.parse(e.data);
                 // eslint-disable-next-line
                 console.log(redata);
                 // eslint-disable-next-line
-                console.log('onmessage');
                 var that = this;
                 setTimeout(function () {
-                    that.websocketsend(JSON.stringify({'type': 0, 'msg': 'ping'}));
+                    that.websocketSend(JSON.stringify({'type': 0, 'msg': 'ping'}));
                 }, 15000)
             },
 
-            websocketsend(Data){//数据发送
+            websocketSend(Data){//数据发送
                 this.websock.send(Data);
             },
 
             // eslint-disable-next-line
-            websocketclose(e){  //关闭
+            websocketClose(e){  //关闭
                 // eslint-disable-next-line
                 console.log('断开连接',e);
             },
@@ -247,6 +276,17 @@
         height: 20px;
         margin-left: 5px;
         margin-right: 5px;
+    }
+
+    .qrcode {
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /*position: fixed;*/
+        /*left: 20%;*/
+        /*top: 20%;*/
     }
 
 </style>

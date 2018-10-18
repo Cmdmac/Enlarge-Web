@@ -53,8 +53,6 @@
     import Dialog from '@/components/widgets/Dialog.vue'
     import axios from "axios";
     import { toSizeString, getIcon } from "../util.js"
-    import {config} from '../../config.js'
-
 
     export default {
         name: 'FileManager',
@@ -206,7 +204,7 @@
                 this.$set(this, 'loading', true);
 
                 var that = this;
-                axios.get(config.api.fileManager.list, {params: { dir: dir }})
+                axios.get(this.config.http_server + this.config.api.fileManager.list, {params: { dir: dir }})
                     .then(function (response) {
                         //eslint-disable-next-line
 //                                console.log(response.data);
@@ -263,6 +261,7 @@
 //                console.log(data);
                 var files = [];
                 let children = data;
+                var that = this;
                 for (let i = 0; i < children.length; i++) {
                     //eslint-disable-next-line
 //                    console.log(nodes[i].data);
@@ -281,7 +280,7 @@
                     files.push({name: children[i].name, isDir: children[i].isDir,
                         date: new Date(children[i].lastModify).format("yyyy-MM-dd hh:mm:ss"),
                         type: type, icon: getIcon(type),
-                        size: children[i].isDir ? "" : toSizeString(children[i].size), thumb: config.api.fileManager.getThumb + "?path=" + this.currentPath + "/" + children[i].name
+                        size: children[i].isDir ? "" : toSizeString(children[i].size), thumb: that.config.http_server + that.config.api.fileManager.getThumb + "?path=" + this.currentPath + "/" + children[i].name
                     });
                 }
                 //eslint-disable-next-line

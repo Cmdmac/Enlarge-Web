@@ -20,6 +20,9 @@ Vue.use(VueLazyLoad,{
     loading:'images/png.png'
 })
 
+import {config} from "./config";
+Vue.prototype.config = config;
+
 new Vue({
   render: h => h(App)
 }).$mount('#app')
