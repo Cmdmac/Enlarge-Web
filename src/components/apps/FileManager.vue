@@ -280,7 +280,7 @@
                     files.push({name: children[i].name, isDir: children[i].isDir,
                         date: new Date(children[i].lastModify).format("yyyy-MM-dd hh:mm:ss"),
                         type: type, icon: getIcon(type),
-                        size: children[i].isDir ? "" : toSizeString(children[i].size), thumb: that.config.http_server + that.config.api.fileManager.getThumb + "?path=" + this.currentPath + "/" + children[i].name
+                        size: children[i].isDir ? "" : toSizeString(children[i].size), thumb: that.custom_config.http_server + that.custom_config.api.fileManager.getThumb + "?path=" + this.currentPath + "/" + children[i].name
                     });
                 }
                 //eslint-disable-next-line
