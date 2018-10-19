@@ -23,10 +23,10 @@
                 </div>
             </div>
             <div class="status-bar">
-                <img class="status-icon" :src='require("../assets/compatible_chrome.png")'/>
-                <img class="status-icon" :src='require("../assets/compatible_safari.png")'/>
-                <img class="status-icon" :src='require("../assets/compatible_opera.png")'/>
-                <img class="status-icon" :src='require("../assets/compatible_ie.png")'/>
+                <img class="status-icon" :src='require("../../public/images/compatible_chrome.png")'/>
+                <img class="status-icon" :src='require("../../public/images/compatible_safari.png")'/>
+                <img class="status-icon" :src='require("../../public/images/compatible_opera.png")'/>
+                <img class="status-icon" :src='require("../../public/images/compatible_ie.png")'/>
             </div>
         </div>
         <div class="qrcode" v-if="needScan">
@@ -52,29 +52,29 @@
                 apps: [
                     [{
                         name: "FileManager",
-                        icon: require("../assets/compatible_ie.png")
+                        icon: require("../../public/images/compatible_ie.png")
                     }, {
                         name: "Calendar",
-                        icon: require("../assets/compatible_chrome.png")
+                        icon: require("../../public/images/compatible_chrome.png")
                     }, {
                         name: "opera",
-                        icon: require("../assets/compatible_opera.png")
+                        icon: require("../../public/images/compatible_opera.png")
                     },{
                         name: "safari",
-                        icon: require("../assets/compatible_safari.png")
+                        icon: require("../../public/images/compatible_safari.png")
                     }],
                     [{
                         name: "ie",
-                        icon: require("../assets/compatible_ie.png")
+                        icon: require("../../public/images/compatible_ie.png")
                     }, {
                         name: "chrome",
-                        icon: require("../assets/compatible_chrome.png")
+                        icon: require("../../public/images/compatible_chrome.png")
                     }, {
                         name: "opera",
-                        icon: require("../assets/compatible_opera.png")
+                        icon: require("../../public/images/compatible_opera.png")
                     },{
                         name: "safari",
-                        icon: require("../assets/compatible_safari.png")
+                        icon: require("../../public/images/compatible_safari.png")
                     }]
                 ],
                 launchers: [
