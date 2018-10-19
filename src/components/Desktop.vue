@@ -37,6 +37,7 @@
 </template>
 <script>
     // import Window from '@/components/Window.vue';
+    import axios from 'axios';
     import VueSocketio from 'vue-socket.io';
     import Vue from "vue";
     Vue.use(VueSocketio, 'http://localhost');
@@ -49,34 +50,7 @@
                 needScan: true,
                 qrcodeUri: "http://localhost/qrcode",
                 websock: null,
-                apps: [
-                    [{
-                        name: "FileManager",
-                        icon: require("../../public/images/compatible_ie.png")
-                    }, {
-                        name: "Calendar",
-                        icon: require("../../public/images/compatible_chrome.png")
-                    }, {
-                        name: "opera",
-                        icon: require("../../public/images/compatible_opera.png")
-                    },{
-                        name: "safari",
-                        icon: require("../../public/images/compatible_safari.png")
-                    }],
-                    [{
-                        name: "ie",
-                        icon: require("../../public/images/compatible_ie.png")
-                    }, {
-                        name: "chrome",
-                        icon: require("../../public/images/compatible_chrome.png")
-                    }, {
-                        name: "opera",
-                        icon: require("../../public/images/compatible_opera.png")
-                    },{
-                        name: "safari",
-                        icon: require("../../public/images/compatible_safari.png")
-                    }]
-                ],
+                apps: [],
                 launchers: [
 //                    {name: "dd", extras: {name: "hello"}},
                     //{name: "tt", extras: {name: "挺好用的啊"}},
@@ -107,6 +81,15 @@
         },
 
         mounted() {
+            var that = this;
+            axios.get("http://localhost/getApps")
+                .then(function (response) {
+                    that.$set(that, 'apps', response.data);
+                })
+                .catch(function (error) {
+                    //eslint-disable-next-line
+                    console.log(error);
+                });
         },
 
         destroyed() {
@@ -152,14 +135,6 @@
                         break;
                     }
                 }
-//                this.launchers[index];
-//                let list = this.$refs.windows;
-//                let nodes = list.childNodes[index];
-//                 eslint-disable-next-line
-//                console.log(this.launchers);
-//                list.removeChild(nodes);
-//                this.launchers.splice(index, 1);
-//                this.$set(this, 'launchers', this.launchers);
             },
 
             onResumeWindow(id) {
