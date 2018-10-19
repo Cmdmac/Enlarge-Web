@@ -21,7 +21,7 @@ Vue.use(VueLazyLoad,{
 })
 
 import {config} from "./config";
-Vue.prototype.config = config;
+Vue.prototype.custom_config = config;
 
 new Vue({
   render: h => h(App)

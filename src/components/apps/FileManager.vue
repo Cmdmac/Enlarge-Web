@@ -204,7 +204,7 @@
                 this.$set(this, 'loading', true);
 
                 var that = this;
-                axios.get(this.config.http_server + this.config.api.fileManager.list, {params: { dir: dir }})
+                axios.get(this.custom_config.http_server + this.custom_config.api.fileManager.list, {params: { dir: dir }})
                     .then(function (response) {
                         //eslint-disable-next-line
 //                                console.log(response.data);

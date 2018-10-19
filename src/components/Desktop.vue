@@ -47,7 +47,7 @@
         data() {
             return {
                 needScan: true,
-                qrcodeUri: this.config.server.qrcode,
+                qrcodeUri: this.custom_config.server.qrcode,
                 websock: null,
                 apps: [],
                 launchers: [
@@ -66,14 +66,14 @@
             redirect: function (data) {
                 //eslint-disable-next-line
                 console.log('redirect:' + JSON.stringify(data));
-                this.config.ws_server = data.ws;
-                this.config.http_server = data.http;
+                this.custom_config.ws_server = data.ws;
+                this.custom_config.http_server = data.http;
                 this.initWebSocket();
                 //hide qrcode
                 this.$set(this, 'needScan', false);
 
                 var that = this;
-                axios.get(this.config.server.getApps)
+                axios.get(this.custom_config.server.getApps)
                     .then(function (response) {
                         that.$set(that, 'apps', response.data);
                     })
@@ -85,7 +85,11 @@
         },
 
         created() {
-            Vue.use(VueSocketio, this.config.server.host);
+//            Vue.use(VueSocketio, this.custom_config.server.host);
+            //eslint-disable-next-line
+//            console.log(VueSocketio);
+            Vue.use(VueSocketio, this.custom_config.server.host);
+
         },
 
         mounted() {
@@ -157,7 +161,7 @@
             },
 
             initWebSocket(){ //初始化weosocket
-                const wsuri = this.config.ws_server;
+                const wsuri = this.custom_config.ws_server;
                 this.websock = new WebSocket(wsuri);
                 this.websock.onmessage = this.websocketOnMessage;
                 this.websock.onopen = this.websocketOnOpen;
