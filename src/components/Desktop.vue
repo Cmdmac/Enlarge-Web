@@ -40,6 +40,7 @@
     import axios from 'axios';
     import VueSocketio from 'vue-socket.io';
     import Vue from "vue";
+    Vue.use(VueSocketio, "http://localhost");
 
     export default {
         name: "Desktop",
@@ -85,10 +86,6 @@
         },
 
         created() {
-//            Vue.use(VueSocketio, this.custom_config.server.host);
-            //eslint-disable-next-line
-//            console.log(VueSocketio);
-            Vue.use(VueSocketio, this.custom_config.server.host);
 
         },
 
