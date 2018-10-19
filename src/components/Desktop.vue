@@ -193,6 +193,10 @@
             websocketOnOpen(){ //连接建立之后执行send方法发送数据
                 let actions = {'type': 100, 'msg': 'requestPermission'}
                 this.websocketSend(JSON.stringify(actions));
+                var that = this;
+                setInterval(function () {
+                    that.websocketSend(JSON.stringify({'type': 0, 'msg': 'ping'}));
+                }, 15000);
             },
 
             websocketOnError(){//连接建立失败重连
@@ -204,10 +208,7 @@
                 // eslint-disable-next-line
                 console.log(redata);
                 // eslint-disable-next-line
-                var that = this;
-                setTimeout(function () {
-                    that.websocketSend(JSON.stringify({'type': 0, 'msg': 'ping'}));
-                }, 15000)
+
             },
 
             websocketSend(Data){//数据发送
