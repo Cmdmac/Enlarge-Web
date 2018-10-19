@@ -31,12 +31,12 @@
 </template>
 
 <script>
-    import FileManager from "@/components/apps/FileManager.vue";
+    // import FileManager from "@/components/apps/FileManager.vue";
     import Calendar from "@/components/apps/Calendar.vue";
 
     export default {
         name: 'Window',
-        components: { FileManager, Calendar },
+        components: { 'FileManager' : () => import("@/components/apps/FileManager.vue"), Calendar },
         props: {args: Object},
         data() {
             return {

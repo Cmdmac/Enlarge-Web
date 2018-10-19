@@ -36,14 +36,14 @@
     </div>
 </template>
 <script>
-    import Window from '@/components/Window.vue';
+    // import Window from '@/components/Window.vue';
     import VueSocketio from 'vue-socket.io';
     import Vue from "vue";
     Vue.use(VueSocketio, 'http://localhost');
 
     export default {
         name: "Desktop",
-        components: {Window},
+        components: {'Window' : () => import("@/components/Window.vue")},
         data() {
             return {
                 needScan: true,
