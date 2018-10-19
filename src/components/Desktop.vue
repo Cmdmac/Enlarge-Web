@@ -40,7 +40,6 @@
     import axios from 'axios';
     import VueSocketio from 'vue-socket.io';
     import Vue from "vue";
-    Vue.use(VueSocketio, Vue.config.server);
 
     export default {
         name: "Desktop",
@@ -86,8 +85,7 @@
         },
 
         created() {
-            // config.ws_server = "ws://172.29.164.188:9090"
-            // this.initWebSocket();
+            Vue.use(VueSocketio, this.config.server);
         },
 
         mounted() {

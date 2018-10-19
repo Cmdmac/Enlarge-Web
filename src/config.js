@@ -11,7 +11,8 @@ var config = {
     },
 
     server: {
-        qrcode : "http://localhost",
+        host: "http://localhost",
+        qrcode : "http://localhost/qrcode",
         getApps: "http://localhost/getApps"
     }
 }

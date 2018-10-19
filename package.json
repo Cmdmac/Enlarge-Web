@@ -20,9 +20,9 @@
     "vue-socket.io": "^2.1.1-b"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.4",
-    "@vue/cli-plugin-eslint": "^3.0.4",
-    "@vue/cli-service": "^3.0.4",
+    "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-plugin-eslint": "^3.0.5",
+    "@vue/cli-service": "^3.0.5",
     "babel-plugin-component": "^1.1.1",
     "element-theme-chalk": "^2.4.8",
     "vue-template-compiler": "^2.5.17"
