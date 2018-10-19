@@ -85,7 +85,7 @@
         },
 
         created() {
-            Vue.use(VueSocketio, this.config.server);
+            Vue.use(VueSocketio, this.config.server.host);
         },
 
         mounted() {
