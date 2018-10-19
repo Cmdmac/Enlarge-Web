@@ -40,7 +40,7 @@
     import axios from 'axios';
     import VueSocketio from 'vue-socket.io';
     import Vue from "vue";
-    Vue.use(VueSocketio, 'http://localhost');
+    Vue.use(VueSocketio, Vue.config.server);
 
     export default {
         name: "Desktop",
@@ -48,7 +48,7 @@
         data() {
             return {
                 needScan: true,
-                qrcodeUri: "http://localhost/qrcode",
+                qrcodeUri: this.config.server.qrcode,
                 websock: null,
                 apps: [],
                 launchers: [
@@ -72,6 +72,16 @@
                 this.initWebSocket();
                 //hide qrcode
                 this.$set(this, 'needScan', false);
+
+                var that = this;
+                axios.get(this.config.server.getApps)
+                    .then(function (response) {
+                        that.$set(that, 'apps', response.data);
+                    })
+                    .catch(function (error) {
+                        //eslint-disable-next-line
+                        console.log(error);
+                    });
             }
         },
 
@@ -81,15 +91,7 @@
         },
 
         mounted() {
-            var that = this;
-            axios.get("http://localhost/getApps")
-                .then(function (response) {
-                    that.$set(that, 'apps', response.data);
-                })
-                .catch(function (error) {
-                    //eslint-disable-next-line
-                    console.log(error);
-                });
+
         },
 
         destroyed() {

@@ -8,6 +8,11 @@ var config = {
             rm:  "/filemanager/rm",
             getThumb: "/filemanager/getThumb"
         }
+    },
+
+    server: {
+        qrcode : "http://localhost",
+        getApps: "http://localhost/getApps"
     }
 }
 
