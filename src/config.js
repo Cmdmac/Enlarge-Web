@@ -6,14 +6,17 @@ var config = {
             list: "/filemanager/list",
             mkDir: "/filemanager/mkDir",
             rm:  "/filemanager/rm",
-            getThumb: "/filemanager/getThumb"
+            getThumb: "/filemanager/getThumb",
+        },
+
+        desktop: {
+            getApps: "/getApps"
         }
     },
 
     server: {
         host: "http://localhost",
         qrcode : "http://localhost/qrcode",
-        getApps: "http://localhost/getApps"
     }
 }
 

@@ -74,7 +74,7 @@
                 this.$set(this, 'needScan', false);
 
                 var that = this;
-                axios.get(this.custom_config.server.getApps)
+                axios.get(this.custom_config.http_server + this.custom_config.api.desktop.getApps)
                     .then(function (response) {
                         that.$set(that, 'apps', response.data);
                     })
