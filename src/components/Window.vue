@@ -32,11 +32,15 @@
 
 <script>
     // import FileManager from "@/components/apps/FileManager.vue";
-    import Calendar from "@/components/apps/Calendar.vue";
+//    import Calendar from "@/components/apps/Calendar.vue";
 
     export default {
         name: 'Window',
-        components: { 'FileManager' : () => import("@/components/apps/FileManager.vue"), Calendar },
+        components: { 'FileManager' : () => import("@/components/apps/FileManager.vue"),
+            'Calendar' : () => import("@/components/apps/Calendar.vue"),
+            'Phone' : () => import ("@/components/apps/Phone.vue"),
+            'Photo' : () => import("@/components/apps/Photo.vue")
+        },
         props: {args: Object},
         data() {
             return {
@@ -478,7 +482,7 @@
     .boxHeader {
         width: 100%;
         height: 30px;
-        background: #CCCCCC !important;
+        background: #DDDDDD !important;
         border-bottom: 1px solid #CCC;
         border-radius: 5px 5px 0 0;
     }
@@ -500,7 +504,7 @@
         height: 15px;
         margin: 5px 5px 0 0 !important;
         margin: 5px 2px 0 0;
-        background: #DDD;
+        background: #BBB;
         border-radius: 5px;
     }
 
