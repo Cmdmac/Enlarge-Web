@@ -1,17 +1,15 @@
 <template>
     <div>
-        <table class="apps">
-            <tbody>
-            <tr v-for="(row, index) in apps" :key="index">
-                <td class="app-item" v-for="app in row" v-bind:key="app.id">
-                    <div @click="onLaunchApp(app.name)">
-                        <img :src="app.icon"/>
+        <div class="apps">
+            <div v-for="(app, index) in apps" :key="index" >
+                <div class="app-item" >
+                    <div @click="onLaunchApp(app)">
+                        <img class="app-icon" :src="app.icon"/>
                         <div>{{app.name}}</div>
                     </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
         <div id="window" v-for="app in launchers" :key="app.id">+
             <Window :ref="app.id" :args="app" v-on:onClose="onWindowClose">
             </Window>
@@ -19,7 +17,7 @@
         <div class="bottom-bar">
             <div class="task-bar">
                 <div class="task-item" v-for="app in launchers" :key="app.id" @click="onResumeWindow(app.id)">
-                    <div>{{app.id}}</div>
+                    <img class="task-icon" :src="app.icon"/><span>{{app.id}}</span>
                 </div>
             </div>
             <div class="status-bar">
@@ -67,8 +65,32 @@
             redirect: function (data) {
                 //eslint-disable-next-line
                 console.log('redirect:' + JSON.stringify(data));
-                this.custom_config.ws_server = data.ws;
-                this.custom_config.http_server = data.http;
+                this.launchDesktop(data.ws, data.http);
+            }
+        },
+
+        created() {
+//            var u = navigator.userAgent;
+//            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+            if (this.needScan == false) {
+                //android client, not show qrcode to login
+//                this.$set(this, 'needScan', false);
+                this.launchDesktop('ws://' + window.location.host, 'http://' + window.location.host)
+            }
+        },
+
+        mounted() {
+
+        },
+
+        destroyed() {
+            this.websock.close() //离开路由之后断开websocket连接
+        },
+
+        methods: {
+            launchDesktop(ws, http) {
+                this.custom_config.ws_server = ws;
+                this.custom_config.http_server = http;
                 this.initWebSocket();
                 //hide qrcode
                 this.$set(this, 'needScan', false);
@@ -82,22 +104,8 @@
                         //eslint-disable-next-line
                         console.log(error);
                     });
-            }
-        },
+            },
 
-        created() {
-
-        },
-
-        mounted() {
-
-        },
-
-        destroyed() {
-            this.websock.close() //离开路由之后断开websocket连接
-        },
-
-        methods: {
             isAppLaunched(id) {
                 for(let i = 0; i < this.launchers.length; i++) {
                     let item = this.launchers[i];
@@ -109,11 +117,11 @@
                 return false;
             },
 
-            onLaunchApp(name) {
-                if (this.isAppLaunched(name)) {
+            onLaunchApp(app) {
+                if (this.isAppLaunched(app.name)) {
                     return;
                 }
-                var d = {id: name, target: name, extras: {name: name}};
+                var d = {id: app.name, target: app.name, icon: app.icon, extras: {name: app.name}};
 //                this.$set(this.launchers, d);
                 this.launchers.push(d);
                 //不set不会更新的
@@ -205,12 +213,22 @@
         /*background-color: #8EC6FF;*/
     /*}*/
     .apps {
+        margin: 10px;
+        max-width: 80%;
+        display: flex;
+        flex-wrap: wrap;
     }
 
     .app-item
     {
         width: 90px;
         height: 90px;
+        margin: 5px;
+    }
+
+    .app-icon {
+        width: 80px;
+        height: 80px;
     }
 
     .app-item:active {
@@ -236,8 +254,18 @@
         text-align: center;
         color: white;
         background-color: #708090AA;
-        margin-left: 1px;
-        margin-right: 1px;
+        margin-left: 2px;
+        margin-right: 2px;
+        display: flex;
+        align-items: center;
+        padding-right: 5px;
+    }
+
+    .task-icon {
+        margin-left: 5px;
+        margin-right:5px;
+        width: 25px;
+        height: 25px;
     }
 
     .status-bar {

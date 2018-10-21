@@ -10,7 +10,7 @@ var config = {
         },
 
         desktop: {
-            getApps: "/getApps"
+            getApps: "/desktop/getApps"
         }
     },
 
