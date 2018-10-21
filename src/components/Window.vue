@@ -2,7 +2,11 @@
     <div>
         <div ref="box" class="box">
             <div ref="boxHeader" class="boxHeader">
-                <div ref="title" class="title">{{title}}</div>
+                <div class="titleBox">
+                    <img class="icon" :src="args.icon"/>
+                    <div ref="title" class="title">{{title}}</div>
+                </div>
+
                 <div ref="button" class="button">
                     <div class="minimize"></div>
                     <div class="maximize"></div>
@@ -461,6 +465,17 @@
 </script>
 
 <style media="screen">
+
+    .titleBox {
+        align-items: center;
+        margin-left: 5px;
+        display: flex;
+    }
+
+    .icon {
+        width: 24px;
+        height: 24px;
+    }
     .title {
         float:left;
         padding: 5px;
@@ -480,10 +495,13 @@
 
     /*标题栏*/
     .boxHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         width: 100%;
         height: 30px;
         background: #DDDDDD !important;
-        border-bottom: 1px solid #CCC;
+        border-bottom: 1px solid #DDD;
         border-radius: 5px 5px 0 0;
     }
 
@@ -499,11 +517,13 @@
     }
 
     .button {
-        float: right;
+        justify-self: flex-end;
+        align-self: center;
         width: 79px;
         height: 15px;
-        margin: 5px 5px 0 0 !important;
-        margin: 5px 2px 0 0;
+        /*margin: 5px 5px 0 0 !important;*/
+        /*margin: 5px 2px 0 0;*/
+        margin-right: 5px;
         background: #BBB;
         border-radius: 5px;
     }
