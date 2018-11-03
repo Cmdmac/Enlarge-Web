@@ -7,6 +7,8 @@ var config = {
             mkDir: "/filemanager/mkDir",
             rm:  "/filemanager/rm",
             getThumb: "/filemanager/getThumb",
+            download: "/filemanager/download",
+            open: "/filemanager/open"
         },
 
         desktop: {

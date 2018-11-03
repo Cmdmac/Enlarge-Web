@@ -4,6 +4,7 @@
         <div class="header">
             <input style="width: 300px;" placeholder="搜索"/>
             <div class="switchFile">
+                <i class="el-icon-download" style="width: 20px; height: 20px; margin-right: 5px" @click="onDownload"></i>
                 <i class="el-icon-refresh" style="width: 20px; height: 20px; margin-right: 5px" @click="onRefreshClick"></i>
                 <i class="el-icon-plus" style="width: 20px; height: 20px; margin-right: 5px" @click="onNewDirClick"></i>
                 <i class="el-icon-edit" style="width: 20px; height: 20px; margin-right: 20px" @click="onEditNameClick"></i>
@@ -345,6 +346,10 @@
                         let node = this.$refs.folderTree.getNode((count + 1) + '-' + row.name);
                         node.expand();
                     }
+                } else {
+                    let path = this.currentPath + '/' + this.$refs.filesListComponent.currentRow.name;
+                    let url = this.custom_config.http_server + this.custom_config.api.fileManager.open + '?path=' + path;
+                    window.open(url);
                 }
             },
 
@@ -374,6 +379,13 @@
 
             onRefreshClick() {
                 alert('refresh')
+            },
+
+            onDownload() {
+                // eslint-disable-next-line
+                let path = this.currentPath + '/' + this.$refs.filesListComponent.currentRow.name;
+                let url = this.custom_config.http_server + this.custom_config.api.fileManager.download + '?path=' + path;
+                window.open(url);
             },
 
             onNewDirClick() {
