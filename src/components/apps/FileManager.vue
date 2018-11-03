@@ -417,25 +417,32 @@
                             return;
                         }
                     }
-                    let dir = {
-                        name: name,
-                        isDir: true,
-                        lastModify: 0,
-                        type: "文件夹",
-                        children: []
-                    };
-                    data.push(dir);
-                    let dirs = this.currentPath.split('/');
-                    let count = dirs.length;
-                    let key = count - 1 + '-' + dirs[dirs.length - 1];
-                    let node = this.$refs.folderTree.getNode(key);
-                    let children = this.convertToTreeItem(node, data);
-//                    this.$refs.folderTree.updateKeyChildren(key, []);
+                    var that = this;
+                    axios.get(this.custom_config.http_server + this.custom_config.api.fileManager.mkDir, {params: { dir: this.currentPath, name: name }})
+                        .then(function (response) {
+                            if (response.data.code == 200) {
+                                let dir = {
+                                    name: name,
+                                    isDir: true,
+                                    lastModify: 0,
+                                    type: "文件夹",
+                                    children: []
+                                };
+                                data.push(dir);
+                                let dirs = that.currentPath.split('/');
+                                let count = dirs.length;
+                                let key = count - 1 + '-' + dirs[dirs.length - 1];
+                                let node = that.$refs.folderTree.getNode(key);
+                                let children = that.convertToTreeItem(node, data);
+                                that.$refs.folderTree.updateKeyChildren(key, children);
+                                that.showFiles(data);
+                            }
+                        })
+                        .catch(function (error) {
+                            //eslint-disable-next-line
+                            console.log(error);
+                        });
 
-//                    this.$refs.folderTree.append({id: count + '-' + name, name: name, isDir: true, leaf: true, children: []}, key);
-                    this.$refs.folderTree.updateKeyChildren(key, children);
-//                    node.data.children.push({name: '新建文件夹', leaf: true, children: []});
-                    this.showFiles(data);
                 }
             },
 
