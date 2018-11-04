@@ -27,6 +27,11 @@
         },
 
         methods: {
+
+            lastPath() {
+                return this.pathItems[this.pathItems.length - 1];
+            },
+
             splitPath(path) {
                 let paths = path.split("/");
                 this.$set(this, 'pathItems', paths);

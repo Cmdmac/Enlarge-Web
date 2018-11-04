@@ -17,7 +17,7 @@
         <div class="navigator">
             <i class="el-icon-arrow-left" style="width: 20px; height: 20px; margin-right: 5px" @click="onBackward"></i>
             <i class="el-icon-arrow-right" style="width: 20px; height: 20px; margin-right: 5px" @click="onForward"></i>
-            <PathNavigator :currentPath="currentPath" style="margin-left: 10px" v-on:onNavigatorTo="onNavigatorTo"></PathNavigator>
+            <PathNavigator  ref="pathNavigator" :currentPath="currentPath" style="margin-left: 10px" v-on:onNavigatorTo="onNavigatorTo"></PathNavigator>
         </div>
         <div ref="content" class="content">
             <div class="left">
@@ -103,10 +103,15 @@
                 let instance = axios.create({
                     headers: { 'Content-Type': 'charset=UTF-8; multipart/form-data;' }
                 });
+                var that = this;
                 instance.post(this.custom_config.http_server + this.custom_config.api.fileManager.upload, data)
                     .then(function(data){
-                    //eslint-disable-next-line
-                    console.log(data);
+                        //eslint-disable-next-line
+//                        console.log(data);
+                        if (data.data.code == 200) {
+                            //refresh
+                            that.onRefreshClick();
+                        }
                 },function(err){
                     //eslint-disable-next-line
                     console.log(err);
@@ -415,7 +420,15 @@
             },
 
             onRefreshClick() {
-                alert('refresh')
+                let count = 0;
+                for (let i = 0; i < this.currentPath.length; i++) {
+                    if (this.currentPath.charAt(i) == '/') {
+                        count++;
+                    }
+                }
+                let node = this.$refs.folderTree.getNode(count + '-' + this.$refs.pathNavigator.lastPath());
+//                        node.expand();
+                this.loadFromNetwork(this.currentPath, node, undefined);
             },
 
             onDownload() {
