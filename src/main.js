@@ -2,7 +2,7 @@
 
 import Vue from 'vue'
 import App from './App.vue'
-import { Button, Tree, Table, TableColumn, Dialog, Input, Loading } from 'element-ui';
+import { Button, Tree, Table, TableColumn, Dialog, Input, Loading, Upload } from 'element-ui';
 
 Vue.config.productionTip = false
 
@@ -13,6 +13,7 @@ Vue.use(TableColumn);
 Vue.use(Dialog);
 Vue.use(Input);
 Vue.use(Loading);
+Vue.use(Upload);
 
 import VueLazyLoad from 'vue-lazyload'
 Vue.use(VueLazyLoad,{

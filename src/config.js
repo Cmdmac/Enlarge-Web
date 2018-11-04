@@ -8,7 +8,8 @@ var config = {
             rm:  "/filemanager/rm",
             getThumb: "/filemanager/getThumb",
             download: "/filemanager/download",
-            open: "/filemanager/open"
+            open: "/filemanager/open",
+            upload: "/filemanager/upload"
         },
 
         desktop: {

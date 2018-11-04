@@ -4,6 +4,8 @@
         <div class="header">
             <input style="width: 300px;" placeholder="搜索"/>
             <div class="switchFile">
+                <input ref="upload" type="file" style="display: none;" multiple="true" @change="onFileSelected"/>
+                <i class="el-icon-upload2" style="width: 20px; height: 20px; margin-right: 5px" @click="submitUpload"></i>
                 <i class="el-icon-download" style="width: 20px; height: 20px; margin-right: 5px" @click="onDownload"></i>
                 <i class="el-icon-refresh" style="width: 20px; height: 20px; margin-right: 5px" @click="onRefreshClick"></i>
                 <i class="el-icon-plus" style="width: 20px; height: 20px; margin-right: 5px" @click="onNewDirClick"></i>
@@ -53,6 +55,7 @@
     import GridFileView from '@/components/widgets/GridFileView.vue'
     import Dialog from '@/components/widgets/Dialog.vue'
     import axios from "axios";
+    import qs from 'qs';
     import { toSizeString, getIcon } from "../util.js"
 
     export default {
@@ -73,6 +76,7 @@
                     isLeaf: 'leaf'
                 },
                 fileTree: {},
+                uploadUrl: this.custom_config.http_server + this.custom_config.api.fileManager.upload
             };
         },
 
@@ -83,13 +87,46 @@
         },
 
         methods: {
-            getNextPath(path) {
-                let index = path.indexOf('/');
-                if (index != -1) {
-                    return path.substring(index + 1);
-                } else {
-                    return undefined;
+            onFileSelected(e) {
+                //eslint-disable-next-line
+                console.log(e.target.files);
+                var data = new FormData();//重点在这里 如果使用 var data = {}; data.inputfile=... 这样的方式不能正常上传
+                for (let i = 0; i < e.target.files.length; i++) {
+                    data.append(e.target.files[i].name, e.target.files[i]);
                 }
+
+                data.append("dir", this.currentPath)    ;
+                // var cfg = {
+                //   'Content-type':'multipart/form-data'
+                // }
+//                axios.defaults.headers.post['Content-Type']='multipart/form-data; charset=UTF-8;'
+                let instance = axios.create({
+                    headers: { 'Content-Type': 'charset=UTF-8; multipart/form-data;' }
+                });
+                instance.post(this.custom_config.http_server + this.custom_config.api.fileManager.upload, data)
+                    .then(function(data){
+                    //eslint-disable-next-line
+                    console.log(data);
+                },function(err){
+                    //eslint-disable-next-line
+                    console.log(err);
+                })
+//                this.$refs.uploadForm.submit();
+                this.$refs.upload.value = null;
+            },
+
+            submitUpload() {
+                this.$refs.upload.click();
+//                this.$refs.upload.submit();
+            },
+
+            beforeUpload: function (file) {
+                //eslint-disable-next-line
+                console.log(file)
+                //这里是重点，将文件转化为formdata数据上传
+                let fd = new FormData()
+                fd.append('file', file)
+                return false;
             },
 
             findFromTree(path, tree) {
@@ -418,8 +455,12 @@
                         }
                     }
                     var that = this;
-                    axios.get(this.custom_config.http_server + this.custom_config.api.fileManager.mkDir, {params: { dir: this.currentPath, name: name }})
-                        .then(function (response) {
+                    let instance = axios.create({
+                        headers: { 'content-type': 'application/x-www-form-urlencoded' }
+                    });
+                    instance.post(this.custom_config.http_server + this.custom_config.api.fileManager.mkDir,
+                        qs.stringify({ dir: this.currentPath, name: name }
+                    )).then(function (response) {
                             if (response.data.code == 200) {
                                 let dir = {
                                     name: name,
